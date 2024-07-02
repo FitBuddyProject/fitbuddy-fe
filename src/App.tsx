@@ -1,25 +1,42 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
+
+import { createGlobalStyle } from "styled-components";
+import reset from "styled-reset";
+
+export const GlobalStyle = createGlobalStyle`
+${reset}
+* {
+    box-sizing: border-box;
+  }
+  a {
+  color: inherit;
+  text-decoration: none;
+  }
+  li {
+  list-style: none;
+  }
+
+  button{
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+  }
+`;
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <GlobalStyle />
+      <Routes>
+        <Route path="/home" element={<Home />}></Route>
+      </Routes>
+    </>
   );
 }
 
