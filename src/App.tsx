@@ -1,26 +1,22 @@
-import {Route, Routes, useLocation} from "react-router-dom";
-import GlobalStyle from './styles/GlobalStyle'
+import { BrowserRouter, Router, useLocation } from "react-router-dom";
 import DefaultLayout from "./layouts/DefaultLayout";
-import {useState} from "react";
-import BlankLayout from "./layouts/BlankLayout";
-// import Home from "./pages/Home";
-// import Header from './components/Header'
-
+import { useState } from "react";
+import GlobalStyle from "./styles/globalStyles";
+import RoutesGroup from "./routes/RoutesGroup";
 
 const App = () => {
-    const location = useLocation();
-    const [isDefault, setIsDefault] = useState(true);
+  // const location = useLocation();
+  // const [isDefault, setIsDefault] = useState(true);
 
-    return (
-        <>
-            <GlobalStyle/>
-            {isDefault
-                ? <DefaultLayout/>
-                : <BlankLayout/>
-            }
-
-        </>
-    );
-}
+  // return <>{isDefault ? <DefaultLayout /> : <BlankLayout />}</>;
+  return (
+    <BrowserRouter>
+      <GlobalStyle />
+      <DefaultLayout>
+        <RoutesGroup />
+      </DefaultLayout>
+    </BrowserRouter>
+  );
+};
 
 export default App;

@@ -1,21 +1,28 @@
-import Header from "../components/Header";
-import AppContainer from "./DefaultLayoutStyle";
-import RoutesGroup from "../RoutesGroup";
+import styled from "styled-components";
+import Footer from "./Footer";
+import Header from "./Header";
+import MainContent from "./MainContent";
+import { ReactNode } from "react";
 
-const DefaultLayout = () => {
-
-    return (
-        <AppContainer>
-            <div id="wrap">
-                <header><Header/></header>
-                <aside></aside>
-                <section>
-                    <RoutesGroup/>
-                </section>
-                <footer></footer>
-            </div>
-        </AppContainer>
-    )
+interface LayoutProps {
+  children: ReactNode;
 }
+
+const LayoutContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+`;
+
+
+const DefaultLayout = ({ children }: LayoutProps) => {
+  return (
+    <LayoutContainer>
+      <Header />
+      <MainContent>{children}</MainContent>
+      <Footer />
+    </LayoutContainer>
+  );
+};
 
 export default DefaultLayout;
