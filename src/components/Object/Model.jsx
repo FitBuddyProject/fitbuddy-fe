@@ -19,11 +19,11 @@ const Model = ({ url, color = "black", ...props }) => {
     useLayoutEffect(() => {
         group.traverse((child) => {
             if (child.isMesh) {
-                child.material.color.set("#F29BDB");
-                // child.material[0].color.set("#D9C791");
-                // child.material[1].color.set("#BF3434");
-                // child.material[2].color.set("#27331F");
-                // child.material[3].color.set("#E39EA3");
+                // child.material.color.set("#F29BDB");
+                child.material[0].color.set("#D9C791");
+                child.material[1].color.set("#BF3434");
+                child.material[2].color.set("#27331F");
+                child.material[3].color.set("#E39EA3");
             } else if (child.isLine) child.material.color.set("white");
         });
     }, [group, color]);

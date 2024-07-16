@@ -1,11 +1,12 @@
-const colors = {
-  white: "#ffffff",
-  black: "#222222",
-  grey: "#6c757f",
-  lightgrey: "#606060",
-  darkGrey: "#343638",
+import { DefaultTheme } from "styled-components";
+
+const theme: DefaultTheme = {
+    colors: {
+        white: "#fff",
+        black: "#000000",
+        headerBg: "#333",
+        background: "grey",
+    },
 };
 
-export const myTheme = {
-  colors,
-};
+export { theme };

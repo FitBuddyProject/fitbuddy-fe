@@ -16,7 +16,7 @@ const CanvasComponent = () => {
             <Suspense fallback={<Loader />}>
                 <OrbitControls />
                 <LightController />
-                <Model url="models/bunny.obj" color="hotpink" />
+                <Model url="models/dinosaur.obj" />
             </Suspense>
         </Canvas>
     );
