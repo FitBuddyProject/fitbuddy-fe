@@ -1,22 +1,21 @@
-import { BrowserRouter, Router, useLocation } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import DefaultLayout from "./layouts/DefaultLayout";
-import { useState } from "react";
 import GlobalStyle from "./styles/globalStyles";
 import RoutesGroup from "./routes/RoutesGroup";
+import { Provider } from "react-redux";
+import store from "./store/store";
 
 const App = () => {
-  // const location = useLocation();
-  // const [isDefault, setIsDefault] = useState(true);
-
-  // return <>{isDefault ? <DefaultLayout /> : <BlankLayout />}</>;
-  return (
-    <BrowserRouter>
-      <GlobalStyle />
-      <DefaultLayout>
-        <RoutesGroup />
-      </DefaultLayout>
-    </BrowserRouter>
-  );
+    return (
+        <BrowserRouter>
+            <Provider store={store}>
+                <GlobalStyle/>
+                <DefaultLayout>
+                    <RoutesGroup/>
+                </DefaultLayout>
+            </Provider>
+        </BrowserRouter>
+    );
 };
 
 export default App;
