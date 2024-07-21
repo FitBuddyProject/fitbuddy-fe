@@ -6,6 +6,7 @@ const theme: DefaultTheme = {
         black: "#000000",
         headerBg: "#333",
         background: "grey",
+        primary: "9544FF",
     },
 };
 

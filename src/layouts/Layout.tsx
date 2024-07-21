@@ -4,6 +4,7 @@ import Header from "./Header";
 import MainContent from "./MainContent";
 import { ReactNode, useState } from "react";
 import AlertModal from "components/Modal/AlertModal";
+import { ModalPortal } from "components/ModalPortal";
 
 interface LayoutProps {
     children: ReactNode;
@@ -28,10 +29,9 @@ const DefaultLayout = ({ children }: LayoutProps) => {
             <MainContent>{children}</MainContent>
             <button onClick={toggleModal}>open Modal</button>
             {isModalOpen && (
-                <AlertModal onClose={toggleModal}>
-                    <h2>This is a modal</h2>
-                    <p>You can add any content here.</p>
-                </AlertModal>
+                <ModalPortal>
+                    <AlertModal title="title" message="text" modalClose={toggleModal} />
+                </ModalPortal>
             )}
         </LayoutContainer>
     );
