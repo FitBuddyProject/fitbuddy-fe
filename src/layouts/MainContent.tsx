@@ -2,17 +2,16 @@ import { ReactNode } from "react";
 import styled from "styled-components";
 
 interface MainContentProps {
-  children: ReactNode;
+    children: ReactNode;
 }
 
 const MainContainer = styled.main`
-  flex: 1;
-  padding: 16px;
-  overflow-y: auto;
+    flex: 1;
+    overflow-y: auto;
 `;
 
 const MainContent = ({ children }: MainContentProps) => {
-  return <MainContainer>{children}</MainContainer>;
+    return <MainContainer>{children}</MainContainer>;
 };
 
 export default MainContent;
