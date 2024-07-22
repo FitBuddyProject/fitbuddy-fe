@@ -2,11 +2,13 @@ import { DefaultTheme } from "styled-components";
 
 const theme: DefaultTheme = {
     colors: {
-        white: "#fff",
+        primary: "#9544FF",
+        white: "#FFFFFF",
         black: "#000000",
-        headerBg: "#333",
+        error: "#FF2020",
+        blueGrey05: "#ECEFF1",
         background: "grey",
-        primary: "9544FF",
+        headerBg: "#333",
     },
 };
 
