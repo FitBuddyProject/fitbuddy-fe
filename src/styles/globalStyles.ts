@@ -37,6 +37,11 @@ li {
   list-style: none;
 }
 
+button {
+  border: none;
+  background-color: transparent;
+}
+
 `;
 
 export default GlobalStyle;
