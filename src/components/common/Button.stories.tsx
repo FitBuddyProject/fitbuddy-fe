@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta } from "@storybook/react";
 
 import { Button } from "./Button";
 import styled from "styled-components";
@@ -12,6 +12,7 @@ export default {
     tags: ["autodocs"],
 } as Meta;
 
+// 버튼을 보기 쉽게 하기 위해 추가
 const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
@@ -20,19 +21,19 @@ const Wrapper = styled.div`
 
 export const Large = () => {
     return (
-        <Wrapper>
-            <Button type="button" size="large" variant="primary">
-                Primary Button
-            </Button>
-            <Button type="button" size="large" variant="secondary">
-                Secondary Button
-            </Button>
-            <Button type="button" size="large" variant="dark">
-                Dark Button
-            </Button>
-            <Button type="button" size="large" variant="danger">
-                Danger Button
-            </Button>
-        </Wrapper>
+      <Wrapper>
+        <Button type="button" size="large" color="primary">
+          Primary Button
+        </Button>
+        <Button type="button" size="large" color="secondary">
+          Secondary Button
+        </Button>
+        <Button type="button" size="large" color="dark">
+          Dark Button
+        </Button>
+        <Button type="button" size="large" color="danger">
+          Danger Button
+        </Button>
+      </Wrapper>
     );
 };
