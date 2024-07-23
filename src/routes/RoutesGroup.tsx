@@ -3,12 +3,14 @@ import { Route, Routes } from "react-router-dom";
 import MyPage from "pages/MyPage";
 import MainPage from "../pages/MainPage";
 import Intro from "pages/Intro";
+import LoginPage from "pages/LoginPage";
 
 const RoutesGroup = () => {
   return (
     <Routes>
       <Route path="/" element={<MainPage />}></Route>
       <Route path="/intro" element={<Intro />}></Route>
+      <Route path="/login" element={<LoginPage />}></Route>
       <Route path="/my-page" element={<MyPage />}></Route>
     </Routes>
   );

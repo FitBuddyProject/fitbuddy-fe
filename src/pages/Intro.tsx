@@ -25,7 +25,7 @@ const Intro = () => {
   return (
     <IntroContainer>
       <Logo width={171} height={38} />
-      <Button type="button" color="primary" size="large" onClick={() => navigate("/")}>
+      <Button type="button" color="primary" size="large" onClick={() => navigate("/login")}>
         시작하기
       </Button>
     </IntroContainer>
