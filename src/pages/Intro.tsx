@@ -1,6 +1,8 @@
-import { Button } from "components/common/Button";
 import { useNavigate } from "react-router-dom";
+
 import { styled } from "styled-components";
+import { Button } from "components/common/Button";
+import { ReactComponent as Logo } from "assets/icons/logo.svg";
 
 const IntroContainer = styled.div`
   height: 100%;
@@ -8,11 +10,6 @@ const IntroContainer = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  h1 {
-    font-size: ${({ theme }) => theme.fontSize.title};
-    font-weight: ${({ theme }) => theme.fontWeight.bold};
-    color: ${({ theme }) => theme.color.primary};
-  }
   button {
     position: fixed;
     bottom: 16px;
@@ -24,7 +21,7 @@ const Intro = () => {
 
   return (
     <IntroContainer>
-      <h1>Fit Buddy</h1>
+      <Logo />
       <Button type="button" color="primary" size="large" onClick={() => navigate("/")}>
         시작하기
       </Button>
