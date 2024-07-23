@@ -10,6 +10,9 @@ const IntroContainer = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  svg {
+    fill: ${({ theme }) => theme.color.primary};
+  }
   button {
     position: fixed;
     bottom: 16px;
@@ -21,7 +24,7 @@ const Intro = () => {
 
   return (
     <IntroContainer>
-      <Logo />
+      <Logo width={171} height={38} />
       <Button type="button" color="primary" size="large" onClick={() => navigate("/")}>
         시작하기
       </Button>
