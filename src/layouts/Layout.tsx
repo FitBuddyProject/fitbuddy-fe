@@ -4,22 +4,22 @@ import Header from "./Header";
 import MainContent from "./MainContent";
 
 interface LayoutProps {
-  children: React.ReactNode;
+    children: React.ReactNode;
 }
 
 const LayoutContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 `;
 
-const DefaultLayout = ({ children }: LayoutProps) => {
-  return (
-    <LayoutContainer>
-      <Header />
-      <MainContent>{children}</MainContent>
-    </LayoutContainer>
-  );
+const Layout = ({ children }: LayoutProps) => {
+    return (
+        <LayoutContainer>
+            <Header />
+            <MainContent>{children}</MainContent>
+        </LayoutContainer>
+    );
 };
 
-export default DefaultLayout;
+export default Layout;
