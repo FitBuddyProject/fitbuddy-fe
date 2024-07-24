@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 
 import { styled } from "styled-components";
 import { Button } from "components/common/Button";
-import { ReactComponent as Logo } from "assets/icons/logo.svg";
 import Icon from "components/common/Icon";
 import { theme } from "styles/theme";
 
