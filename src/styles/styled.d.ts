@@ -18,8 +18,10 @@ declare module "styled-components" {
             white: string;
             black: string;
             error: string;
+            blueGrey03: string;
             blueGrey05: string;
             blueGrey09: string;
+            blueLight: string;
         };
     }
 }
