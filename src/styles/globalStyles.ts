@@ -42,6 +42,10 @@ button {
   background-color: transparent;
 }
 
+svg {
+  fill: ${({ theme }) => theme.color.blueGrey09}
+}
+
 `;
 
 export default GlobalStyle;
