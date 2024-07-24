@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import styled, { css } from "styled-components";
-import { IconBack, IconQuestion, IconSetting, Logo } from "components/icons";
+import Icon from "components/common/Icon";
 
 const HeaderContainer = styled.header<{ inMain: boolean }>`
   height: 56px;
@@ -49,17 +49,17 @@ const Header = () => {
     <HeaderContainer inMain={isMain}>
       {isMain ? (
         <>
-          <Logo width={90} height={20} onClick={() => navigate("/", { replace: true })} />
+          <Icon icon="Logo" width={90} height={20} onClick={() => navigate("/", { replace: true })} />
           <ButtonWrap>
-            <IconQuestion />
+            <Icon icon="IconQuestion" />
             <Link to="my-page">
-              <IconSetting />
+              <Icon icon="IconSetting" />
             </Link>
           </ButtonWrap>
         </>
       ) : (
         <>
-          <IconBack onClick={() => navigate(-1)} />
+          <Icon icon="IconBack" fill={"none"} onClick={() => navigate(-1)} />
           <h1>{title}</h1>
         </>
       )}
