@@ -12,13 +12,15 @@ function Loader() {
 
 const CanvasComponent = () => {
     return (
-        <Canvas>
-            <Suspense fallback={<Loader />}>
-                <OrbitControls />
-                <LightController />
-                <Model url="models/dinosaur.obj" />
-            </Suspense>
-        </Canvas>
+        <div style={{ width: "auto", height: "40%" }}>
+            <Canvas>
+                <Suspense fallback={<Loader />}>
+                    <OrbitControls />
+                    <LightController />
+                    <Model url="models/dinosaur.obj" />
+                </Suspense>
+            </Canvas>
+        </div>
     );
 };
 export default CanvasComponent;

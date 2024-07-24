@@ -11,6 +11,7 @@ declare module "styled-components" {
             title: string;
         };
         fontWeight: {
+            semiBold: number;
             bold: number;
         };
         color: {
@@ -18,8 +19,11 @@ declare module "styled-components" {
             white: string;
             black: string;
             error: string;
-            blueGrey03: string;
             blueGrey05: string;
+            blueGrey03: string;
+            blueGrey40: string;
+            blueGrey50: string;
+            blueGrey08: string;
             blueGrey09: string;
             blueLight: string;
         };
