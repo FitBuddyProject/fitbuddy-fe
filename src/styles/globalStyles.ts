@@ -8,6 +8,7 @@ ${reset}
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  color: ${({ theme }) => theme.color.blueGrey09}
 }
 
 html {

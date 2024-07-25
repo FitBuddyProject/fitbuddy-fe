@@ -5,7 +5,7 @@ import { Button } from "components/common/Button";
 import Icon from "components/common/Icon";
 import { theme } from "styles/theme";
 
-const IntroContainer = styled.div`
+const IntroContainer = styled.main`
   height: 100%;
   display: flex;
   align-items: center;
@@ -16,7 +16,7 @@ const IntroContainer = styled.div`
   }
   button {
     position: fixed;
-    bottom: 16px;
+    bottom: 1.6rem;
   }
 `;
 

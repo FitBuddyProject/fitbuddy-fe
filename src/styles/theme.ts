@@ -1,6 +1,6 @@
 import { DefaultTheme } from "styled-components";
 
-const calRem = (size: number) => `${size / 16}rem`;
+const calRem = (size: number) => `${size / 10}rem`;
 
 const fontSize = {
     xs: calRem(12), // 0.75rem
@@ -13,6 +13,7 @@ const fontSize = {
 };
 
 const fontWeight = {
+    semiBold: 600,
     bold: 700,
 };
 
@@ -22,7 +23,12 @@ const color = {
     black: "#000000",
     error: "#FF2020",
     blueGrey05: "#ECEFF1",
+    blueGrey03: "#F4F7F9",
+    blueGrey40: "#78909C",
+    blueGrey50: "#607D8B",
+    blueGrey08: "#37474F",
     blueGrey09: "#263238",
+    blueLight: "#eef7ff",
 };
 
 const theme: DefaultTheme = { fontSize, fontWeight, color };

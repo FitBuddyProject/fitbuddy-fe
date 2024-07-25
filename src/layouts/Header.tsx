@@ -3,12 +3,14 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import styled, { css } from "styled-components";
 import Icon from "components/common/Icon";
+import { useSelector } from "react-redux";
+import { RootState } from "store/store";
 
 const HeaderContainer = styled.header<{ inMain: boolean }>`
-  height: 56px;
+  height: 5.6rem;
   display: flex;
   align-items: center;
-  padding: 0 16px;
+  padding: 0 1.6rem;
   width: 100%;
   ${(props) =>
     props.inMain &&
@@ -20,7 +22,7 @@ const HeaderContainer = styled.header<{ inMain: boolean }>`
 const ButtonWrap = styled.div`
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 1rem;
   cursor: pointer;
   a {
     display: flex;
@@ -31,9 +33,9 @@ const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const { title } = useSelector((state: RootState) => state.header);
+
   const [visible, setVisible] = useState(true);
-  // TODO :: 페이지별 타이틀 설정
-  const [title, setTitle] = useState("title");
   const [isMain, setIsMain] = useState(true);
 
   useEffect(() => {
@@ -51,7 +53,9 @@ const Header = () => {
         <>
           <Icon icon="Logo" width={90} height={20} onClick={() => navigate("/", { replace: true })} />
           <ButtonWrap>
-            <Icon icon="IconQuestion" />
+            <Link to="info">
+              <Icon icon="IconQuestion" />
+            </Link>
             <Link to="my-page">
               <Icon icon="IconSetting" />
             </Link>
