@@ -1,17 +1,19 @@
 import { Route, Routes } from "react-router-dom";
 
 import MyPage from "pages/MyPage";
-import MainPage from "../pages/MainPage";
+import Home from "../pages/Home";
 import Intro from "pages/Intro";
 import LoginPage from "pages/LoginPage";
+import InfoPage from "pages/InfoPage";
 
 const RoutesGroup = () => {
   return (
     <Routes>
-      <Route path="/" element={<MainPage />}></Route>
+      <Route path="/" element={<Home />}></Route>
       <Route path="/intro" element={<Intro />}></Route>
       <Route path="/login" element={<LoginPage />}></Route>
       <Route path="/my-page" element={<MyPage />}></Route>
+      <Route path="/info" element={<InfoPage />}></Route>
     </Routes>
   );
 };
