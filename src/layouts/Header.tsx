@@ -5,6 +5,7 @@ import styled, { css } from "styled-components";
 import Icon from "components/common/Icon";
 import { useSelector } from "react-redux";
 import { RootState } from "store/store";
+import { theme } from "styles/theme";
 
 const HeaderContainer = styled.header<{ inMain: boolean }>`
   height: 5.6rem;
@@ -51,7 +52,13 @@ const Header = () => {
     <HeaderContainer inMain={isMain}>
       {isMain ? (
         <>
-          <Icon icon="Logo" width={90} height={20} onClick={() => navigate("/", { replace: true })} />
+          <Icon
+            icon="Logo"
+            width={90}
+            height={20}
+            fill={theme.color.blueGrey90}
+            onClick={() => navigate("/", { replace: true })}
+          />
           <ButtonWrap>
             <Link to="info">
               <Icon icon="IconQuestion" />
@@ -63,7 +70,7 @@ const Header = () => {
         </>
       ) : (
         <>
-          <Icon icon="IconBack" fill={"none"} onClick={() => navigate(-1)} />
+          <Icon icon="IconBack" onClick={() => navigate(-1)} />
           <h1>{title}</h1>
         </>
       )}

@@ -12,7 +12,7 @@ export interface IconProps extends SVGAttributes<SVGElement> {
   fill?: string;
 }
 
-export default function Icon({ icon, width, height, fill, ...props }: IconProps) {
+export default function Icon({ icon, width, height, fill = "none", ...props }: IconProps) {
   const SVGIcon = icons[icon];
   return <SVGIcon width={width} height={height} fill={fill} {...props} />;
 }
@@ -20,5 +20,4 @@ export default function Icon({ icon, width, height, fill, ...props }: IconProps)
 Icon.defaultProps = {
   width: 24,
   height: 24,
-  fill: theme.color.blueGrey09,
 };

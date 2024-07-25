@@ -16,6 +16,7 @@ declare module "styled-components" {
         };
         color: {
             primary: string;
+            primaryLight: string;
             white: string;
             black: string;
             error: string;
@@ -24,7 +25,7 @@ declare module "styled-components" {
             blueGrey40: string;
             blueGrey50: string;
             blueGrey08: string;
-            blueGrey09: string;
+            blueGrey90: string;
             blueLight: string;
         };
     }
