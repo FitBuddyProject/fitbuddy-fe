@@ -1,5 +1,6 @@
 import Icon from "components/common/Icon";
-import { useEffect } from "react";
+import Toggle from "components/common/Toggle";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { headerActions } from "store/slices/header";
 import styled from "styled-components";
@@ -35,13 +36,26 @@ const MenuBox = styled.li`
   display: flex;
   align-items: center;
   gap: 0.4rem;
+
+  &.push {
+    display: flex;
+    justify-content: space-between;
+  }
 `;
 
 const MyPage = () => {
   const dispatch = useDispatch();
+  const [isActive, setIsActive] = useState(false);
+
+  const handleToggle = () => {
+    // TODO :: push api 연결
+    setIsActive((prev) => !prev);
+  };
+
   useEffect(() => {
     dispatch(headerActions.setTitle("마이페이지"));
   }, [dispatch]);
+
   return (
     <Container>
       <NicknameBox>
@@ -65,9 +79,9 @@ const MyPage = () => {
           <Icon icon="IconNote" />
           이용약관
         </MenuBox>
-        <MenuBox>
+        <MenuBox className="push">
           푸시 알림
-          <span>toggle</span>
+          <Toggle isActive={isActive} handleChange={handleToggle} />
         </MenuBox>
       </MenuWrap>
     </Container>
