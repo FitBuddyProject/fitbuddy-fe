@@ -28,7 +28,7 @@ const InfoBox = styled.div`
 const Calendar = () => {
   return (
     <Container>
-      <Icon icon="IconDoubleUp" fill="none" />
+      <Icon icon="IconDoubleUp" />
       <InfoBox>
         아직 이번주에 운동을 시작하지 않았어요! <br />
         올망이와 함께 운동을 시작해볼까요?
