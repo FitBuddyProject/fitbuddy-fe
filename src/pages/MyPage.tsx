@@ -1,8 +1,12 @@
 import Icon from "components/common/Icon";
 import Toggle from "components/common/Toggle";
+import Modal from "components/Modal/Modal";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { headerActions } from "store/slices/header";
+import { modalActions } from "store/slices/modal";
+import { RootState } from "store/store";
 import styled from "styled-components";
 
 const Container = styled.div``;
@@ -46,21 +50,32 @@ const MenuBox = styled.li`
 const MyPage = () => {
   const dispatch = useDispatch();
   const [isActive, setIsActive] = useState(false);
+  const { show } = useSelector((state: RootState) => state.modal);
+
+  useEffect(() => {
+    dispatch(headerActions.setTitle("마이페이지"));
+  }, [dispatch]);
 
   const handleToggle = () => {
     // TODO :: push api 연결
     setIsActive((prev) => !prev);
   };
 
-  useEffect(() => {
-    dispatch(headerActions.setTitle("마이페이지"));
-  }, [dispatch]);
+  const showLogoutModal = () => {
+    dispatch(modalActions.showModal());
+  };
+
+  const logout = () => {
+    // TODO :: 로그아웃
+    dispatch(modalActions.closeModal());
+    console.log("로그아웃");
+  };
 
   return (
     <Container>
       <NicknameBox>
         <h3>달리는사자</h3>
-        <button>로그아웃</button>
+        <button onClick={showLogoutModal}>로그아웃</button>
       </NicknameBox>
       <MenuWrap>
         <MenuBox>
@@ -84,6 +99,15 @@ const MyPage = () => {
           <Toggle isActive={isActive} handleChange={handleToggle} />
         </MenuBox>
       </MenuWrap>
+      {show && (
+        <Modal
+          type="confirm"
+          title="로그아웃 하시겠습니까?"
+          content="올망이를 보러 다시 들러주세요.🥲"
+          confirmText="로그아웃"
+          handleConfirm={logout}
+        />
+      )}
     </Container>
   );
 };

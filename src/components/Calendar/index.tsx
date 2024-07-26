@@ -22,7 +22,6 @@ const InfoBox = styled.div`
   text-align: center;
   font-size: ${({ theme }) => theme.fontSize.xs};
   color: ${({ theme }) => theme.color.blueGrey40};
-  line-height: 130%;
 `;
 
 const Calendar = () => {
