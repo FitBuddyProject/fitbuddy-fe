@@ -13,6 +13,7 @@ const fontSize = {
 };
 
 const fontWeight = {
+  medium: 500,
   semiBold: 600,
   bold: 700,
 };
@@ -22,12 +23,14 @@ const color = {
   primaryLight: "#F9F5FF",
   white: "#FFFFFF",
   black: "#000000",
+  blue: "#0064FE",
   error: "#FF2020",
+  grey80: "#424242",
   blueGrey05: "#ECEFF1",
   blueGrey03: "#F4F7F9",
   blueGrey40: "#78909C",
   blueGrey50: "#607D8B",
-  blueGrey08: "#37474F",
+  blueGrey80: "#37474F",
   blueGrey90: "#263238",
   blueLight: "#eef7ff",
 };

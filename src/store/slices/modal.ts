@@ -1,22 +1,36 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+export interface Notification {
+  id: number;
+  content: string;
+  btnText: string;
+}
+
 export interface ModalState {
-  show: boolean;
+  showModal: boolean;
+  notifications: Notification[];
 }
 
 const initialState: ModalState = {
-  show: false,
+  showModal: false,
+  notifications: [],
 };
 
 const modalSlice = createSlice({
   name: "modal",
   initialState,
   reducers: {
-    showModal(state) {
-      state.show = true;
+    openModal(state) {
+      state.showModal = true;
     },
     closeModal(state) {
-      state.show = false;
+      state.showModal = false;
+    },
+    pushNotificationModal(state, { payload }) {
+      state.notifications = [...state.notifications, payload];
+    },
+    removeNotificationModal(state, { payload }) {
+      state.notifications = state.notifications.filter((item) => item.id !== payload.id);
     },
   },
 });
