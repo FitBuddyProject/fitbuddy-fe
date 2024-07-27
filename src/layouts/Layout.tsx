@@ -1,25 +1,33 @@
 import styled from "styled-components";
 
 import Header from "./Header";
-import MainContent from "./MainContent";
+import NotificationModal from "components/Modal/NotificationModal";
 
 interface LayoutProps {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }
 
 const LayoutContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  main {
+    flex: 1;
+    overflow-y: auto;
+  }
 `;
 
 const Layout = ({ children }: LayoutProps) => {
-    return (
-        <LayoutContainer>
-            <Header />
-            <MainContent>{children}</MainContent>
-        </LayoutContainer>
-    );
+  return (
+    <LayoutContainer>
+      <Header />
+      {/* 메인 영역 */}
+      {children}
+
+      <NotificationModal />
+    </LayoutContainer>
+  );
 };
 
 export default Layout;

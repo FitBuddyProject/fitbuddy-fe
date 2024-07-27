@@ -16,7 +16,7 @@ const Box = styled.li`
     flex-direction: column;
     gap: 0.8rem;
     font-weight: ${({ theme }) => theme.fontWeight.semiBold};
-    color: ${({ theme }) => theme.color.blueGrey08};
+    color: ${({ theme }) => theme.color.blueGrey80};
 `;
 
 const ActionNav = () => {

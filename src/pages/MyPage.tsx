@@ -1,15 +1,18 @@
-import Icon from "components/common/Icon";
-import Toggle from "components/common/Toggle";
-import Modal from "components/Modal/Modal";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { headerActions } from "store/slices/header";
-import { modalActions } from "store/slices/modal";
-import { RootState } from "store/store";
+import { useSelector, useDispatch } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
+
 import styled from "styled-components";
 
-const Container = styled.div``;
+import { headerActions } from "store/slices/header";
+import { RootState } from "store/store";
+import { modalActions } from "store/slices/modal";
+
+import Icon from "components/common/Icon";
+import Modal from "components/Modal/Modal";
+import Toggle from "components/common/Toggle";
+
+const Container = styled.main``;
 
 const NicknameBox = styled.div`
   margin: 1rem 1.6rem;
@@ -49,20 +52,46 @@ const MenuBox = styled.li`
 
 const MyPage = () => {
   const dispatch = useDispatch();
-  const [isActive, setIsActive] = useState(false);
-  const { show } = useSelector((state: RootState) => state.modal);
+  const [isActive, setIsActive] = useState(true);
+  const { showModal } = useSelector((state: RootState) => state.modal);
 
   useEffect(() => {
     dispatch(headerActions.setTitle("마이페이지"));
   }, [dispatch]);
 
   const handleToggle = () => {
-    // TODO :: push api 연결
     setIsActive((prev) => !prev);
+
+    // TODO :: push api 연결
+
+    if (isActive) {
+      pushOn();
+    } else {
+      pushOff();
+    }
   };
 
-  const showLogoutModal = () => {
-    dispatch(modalActions.showModal());
+  const pushOn = () => {
+    dispatch(
+      modalActions.pushNotificationModal({
+        id: uuidv4(),
+        content: `푸시 알림 받는 것에 동의해요.`,
+      })
+    );
+  };
+
+  const pushOff = () => {
+    dispatch(
+      modalActions.pushNotificationModal({
+        id: uuidv4(),
+        content: `푸시 알림을 받지 않을래요.\n(행동 완료 알림을 받을 수 없어요.)`,
+        btnText: "취소",
+      })
+    );
+  };
+
+  const openModal = () => {
+    dispatch(modalActions.openModal());
   };
 
   const logout = () => {
@@ -75,7 +104,7 @@ const MyPage = () => {
     <Container>
       <NicknameBox>
         <h3>달리는사자</h3>
-        <button onClick={showLogoutModal}>로그아웃</button>
+        <button onClick={openModal}>로그아웃</button>
       </NicknameBox>
       <MenuWrap>
         <MenuBox>
@@ -99,14 +128,11 @@ const MyPage = () => {
           <Toggle isActive={isActive} handleChange={handleToggle} />
         </MenuBox>
       </MenuWrap>
-      {show && (
-        <Modal
-          type="confirm"
-          title="로그아웃 하시겠습니까?"
-          content="올망이를 보러 다시 들러주세요.🥲"
-          confirmText="로그아웃"
-          handleConfirm={logout}
-        />
+      {showModal && (
+        <Modal type="confirm" confirmText="로그아웃" handleConfirm={logout}>
+          <h3>로그아웃 하시겠습니까?</h3>
+          <div className="content">올망이를 보러 다시 들러주세요.🥲</div>
+        </Modal>
       )}
     </Container>
   );
