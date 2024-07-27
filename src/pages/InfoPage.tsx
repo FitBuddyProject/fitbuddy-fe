@@ -11,7 +11,6 @@ const Container = styled.main`
   }
   ul {
     font-size: ${({ theme }) => theme.fontSize.xs};
-    line-height: 150%;
   }
   li {
     margin-left: 1.2rem;

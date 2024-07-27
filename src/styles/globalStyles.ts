@@ -14,6 +14,8 @@ ${reset}
 html {
   /* root element 62.5% (which is 10px) => 1rem = 10px */
   font-size: 62.5%;
+  line-height: 150%;
+  letter-spacing: -0.02em;
 }
 
 html, 
