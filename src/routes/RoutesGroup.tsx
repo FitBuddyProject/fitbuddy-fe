@@ -1,9 +1,9 @@
 import { Route, Routes } from "react-router-dom";
 
-import MyPage from "pages/MyPage";
+import MyPage from "pages/MyPage/MyPage";
 import Home from "../pages/Home";
 import Intro from "pages/Intro";
-import LoginPage from "pages/LoginPage";
+import LoginPage from "pages/LoginPage/LoginPage";
 import InfoPage from "pages/InfoPage";
 
 const RoutesGroup = () => {
