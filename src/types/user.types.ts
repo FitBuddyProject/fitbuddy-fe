@@ -9,6 +9,9 @@ export interface UserDTO {
     joinDate: Date;
     lastModifiedDate: Date;
     lastSignInDate: Date;
+
+
+    name: string;
 }
 
 
