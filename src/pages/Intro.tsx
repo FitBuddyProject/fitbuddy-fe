@@ -26,7 +26,7 @@ const Intro = () => {
   return (
     <IntroContainer>
       <Icon icon="Logo" width={171} height={38} fill={theme.color.primary} />
-      <Button type="button" color="primary" size="large" onClick={() => navigate("/login")}>
+      <Button size="large" onClick={() => navigate("/login")}>
         시작하기
       </Button>
     </IntroContainer>

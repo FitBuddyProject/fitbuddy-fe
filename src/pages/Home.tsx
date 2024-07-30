@@ -3,6 +3,7 @@ import Calendar from "components/Calendar";
 import CanvasComponent from "components/Object/Canvas";
 import ProgressBar from "components/ProgressBar";
 import Timer from "components/Timer";
+import WorkoutForm from "components/WorkoutForm";
 import styled from "styled-components";
 import { theme } from "styles/theme";
 
@@ -37,8 +38,11 @@ const Home = () => {
       {/* 행동 영역 */}
       <ActionNav />
 
+      {/* 운동하기 폼 */}
+      <WorkoutForm />
+
       {/* 달력 영역 */}
-      <Calendar />
+      {/* <Calendar /> */}
     </MainContainer>
   );
 };

@@ -28,6 +28,7 @@ const color = {
   grey80: "#424242",
   blueGrey05: "#ECEFF1",
   blueGrey03: "#F4F7F9",
+  blueGrey30: "#90A4AE",
   blueGrey40: "#78909C",
   blueGrey50: "#607D8B",
   blueGrey80: "#37474F",

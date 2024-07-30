@@ -15,16 +15,26 @@ export interface ButtonProps {
   /** 버튼 비활성화 */
   disabled?: boolean;
   /** 커스텀 속성 */
+  btnType?: "round" | "full";
+  className?: string;
 }
 
 const ButtonStyle = styled.button<ButtonProps>`
   border: none;
-  border-radius: 8px;
   text-align: center;
   color: #fff;
   cursor: pointer;
+  font-weight: ${({ theme }) => theme.fontWeight.bold};
   ${({ size }) => size && SIZES[size]}
   ${({ color }) => color && COLORS[color]}
+  border-radius: ${(props) => (props.btnType === "round" ? "0.8rem" : "0")};
+
+  &.bottom {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 5.6rem;
+  }
 `;
 
 const COLORS = {
@@ -57,9 +67,17 @@ const SIZES = {
   `,
 };
 
-export function Button({ children, onClick, type, color, size, disabled }: ButtonProps) {
+export function Button({
+  children,
+  onClick,
+  type = "button",
+  color = "primary",
+  size,
+  disabled,
+  className,
+}: ButtonProps) {
   return (
-    <ButtonStyle type={type} size={size} color={color} onClick={onClick} disabled={disabled}>
+    <ButtonStyle className={className} type={type} size={size} color={color} onClick={onClick} disabled={disabled}>
       {children}
     </ButtonStyle>
   );
