@@ -8,9 +8,9 @@ import { headerActions } from "store/slices/header";
 import { RootState } from "store/store";
 import { modalActions } from "store/slices/modal";
 
-import Icon from "components/common/Icon";
+import Icon from "components/common/Icon/Icon";
 import Modal from "components/Modal/Modal";
-import Toggle from "components/common/Toggle";
+import Toggle from "components/common/Toggle/index";
 
 const Container = styled.main``;
 

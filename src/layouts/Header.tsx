@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import styled, { css } from "styled-components";
-import Icon from "components/common/Icon";
+import Icon from "components/common/Icon/Icon";
 import { useSelector } from "react-redux";
 import { RootState } from "store/store";
 import { theme } from "styles/theme";

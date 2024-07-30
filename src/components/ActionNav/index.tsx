@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import { workoutActions } from "store/slices/workout";
 
 import styled from "styled-components";
-import Icon from "components/common/Icon";
+import Icon from "components/common/Icon/Icon";
 
 const Container = styled.ul`
   background-color: ${({ theme }) => theme.color.white};

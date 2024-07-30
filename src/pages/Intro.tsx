@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
 
 import { styled } from "styled-components";
-import { Button } from "components/common/Button";
-import Icon from "components/common/Icon";
+import { Button } from "components/common/Button/index";
+import Icon from "components/common/Icon/Icon";
 import { theme } from "styles/theme";
 
 const IntroContainer = styled.main`
