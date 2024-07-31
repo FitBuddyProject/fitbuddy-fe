@@ -6,6 +6,7 @@ import Intro from "pages/Intro";
 import LoginPage from "pages/LoginPage/LoginPage";
 import InfoPage from "pages/InfoPage";
 import LoginPage2 from "../pages/LoginPage/LoginPage2";
+import LoginPage3 from "../pages/LoginPage/LoginPage3";
 
 const RoutesGroup = () => {
   return (
@@ -14,7 +15,7 @@ const RoutesGroup = () => {
       <Route path="/intro" element={<Intro />}></Route>
       <Route path="/login" element={<LoginPage />}></Route>
       <Route path="/login2" element={<LoginPage2 />}></Route>
-      <Route path="/login3" element={<Home />}></Route>
+      <Route path="/login3" element={<LoginPage3/>}></Route>
       <Route path="/my-page" element={<MyPage />}></Route>
       <Route path="/info" element={<InfoPage />}></Route>
     </Routes>
