@@ -33,15 +33,15 @@ const WorkoutForm = () => {
   const showForm = useSelector((state: RootState) => state.workout.showForm);
 
   const workoutList: WorkoutProps[] = [
-    { value: "유산소", label: "🏃‍♂️ 유산소" },
-    { value: "유산소", label: "🏋️‍♂️️ 헬스" },
-    { value: "유산소", label: "🏊‍♂️ 수영" },
-    { value: "유산소", label: "🚴‍♂️ 자전거" },
-    { value: "유산소", label: "️🧗‍♀️ 클라이밍" },
-    { value: "유산소", label: "🧘‍♀ 요가/필라테스" },
-    { value: "유산소", label: "🎾️ 테니스" },
-    { value: "유산소", label: "🏸 배드민턴" },
-    { value: "유산소", label: "️⛹️‍♂️ 축구/농구" },
+    { value: "cardio", label: "🏃‍♂️ 유산소" },
+    { value: "gym", label: "🏋️‍♂️️ 헬스" },
+    { value: "swimming", label: "🏊‍♂️ 수영" },
+    { value: "cycle", label: "🚴‍♂️ 자전거" },
+    { value: "climbing", label: "️🧗‍♀️ 클라이밍" },
+    { value: "yoga", label: "🧘‍♀ 요가/필라테스" },
+    { value: "tennis", label: "🎾️ 테니스" },
+    { value: "badminton", label: "🏸 배드민턴" },
+    { value: "ball", label: "️⛹️‍♂️ 축구/농구" },
   ];
 
   const handleClose = () => {

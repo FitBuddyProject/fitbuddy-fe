@@ -5,12 +5,16 @@ import { modalActions, Notification } from "store/slices/modal";
 import styled from "styled-components";
 import { useEffect } from "react";
 
-const Container = styled.ul`
+const Container = styled.div`
   margin: 0 auto;
   display: flex;
   flex-direction: column;
+  position: fixed;
+  transform: translate(-50%, 0%);
+  bottom: 0;
+  left: 50%;
 
-  li {
+  .notification {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
@@ -42,20 +46,33 @@ const NotificationModal = () => {
   const dispatch = useDispatch();
   const notifications = useSelector((state: RootState) => state.modal.notifications);
 
+  useEffect(() => {
+    // 각 팝업을 3초 후에 제거하는 타이머 설정
+    const timers = notifications.map((notification) => {
+      setTimeout(() => {
+        dispatch(modalActions.removeNotificationModal({ id: notification.id }));
+      }, 3000);
+
+      // 컴포넌트 언마운트 시 타이머 클리어
+      return () => {
+        timers.forEach((timer: any) => clearTimeout(timer));
+      };
+    });
+  }, [notifications, dispatch]);
+
   const handleClose = (id: number) => {
     dispatch(modalActions.removeNotificationModal({ id }));
   };
 
-  useEffect(() => {
-    console.log(notifications);
-  }, [notifications]);
   return (
     <Container>
-      {notifications?.map((item: Notification) => (
-        <li key={item.id}>
-          <p>{item.content}</p>
-          <button onClick={() => handleClose(item.id)}>{item.btnText ? item.btnText : "닫기"}</button>
-        </li>
+      {notifications?.map((notification: Notification) => (
+        <div key={notification.id} className="notification">
+          <p>{notification.content}</p>
+          <button onClick={() => handleClose(notification.id)}>
+            {notification.btnText ? notification.btnText : "닫기"}
+          </button>
+        </div>
       ))}
     </Container>
   );
