@@ -13,3 +13,5 @@ export { ReactComponent as LiftingWeights } from "assets/icons/lifting-weights.s
 export { ReactComponent as Bathtub } from "assets/icons/bathtub.svg";
 export { ReactComponent as Bad } from "assets/icons/bad.svg";
 export { ReactComponent as ThoughtBalloon } from "assets/icons/thought-balloon.svg";
+export { ReactComponent as Recovery } from "assets/icons/recovery.svg";
+export { ReactComponent as Love } from "assets/icons/love.svg";
