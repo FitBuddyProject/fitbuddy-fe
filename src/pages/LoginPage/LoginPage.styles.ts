@@ -60,6 +60,12 @@ export const BottomSect = styled.div`
         font-size: 14px;
         line-height: 150%;
         font-weight: 400;
+        
+        .emphasis{
+            text-decoration: underline;
+            color: ${({ theme }) => theme.color.primary};
+            
+        }
     }
 `;
 

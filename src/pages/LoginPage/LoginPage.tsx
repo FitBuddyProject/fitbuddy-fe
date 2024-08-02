@@ -4,6 +4,7 @@ import { authActions } from "../../store/slices/auth/auth.slice";
 import { useEffect, useMemo, Fragment } from "react";
 import { Button } from "components/common/Button";
 import { TopSect, LoginWrapper, Subtitle, Title, BottomSect } from "./LoginPage.styles";
+import { headerActions } from "../../store/slices/header";
 
 
 const LoginPage = () => {
@@ -11,12 +12,16 @@ const LoginPage = () => {
     const { userData } = useSelector((state: RootState) => state.auth);
 
     useEffect(() => {
+        dispatch(headerActions.setTitle("회원가입/로그인"));
+    }, [dispatch]);
+
+    useEffect(() => {
         if (userData) {
             console.log("user data added:: ", userData);
         } else {
             console.log("there is no user data");
         }
-    }, [userData, dispatch]);
+    }, [userData]);
 
     const isLogin = useMemo(() => {
         return !!(userData && Object.entries(userData)?.length > 0);
@@ -57,7 +62,7 @@ const LoginPage = () => {
                     인증번호 받기
                 </Button>
                 <div className="hint">
-                    휴대폰 번호가 바뀌었다면 <strong>이메일 인증</strong>을 해주세요.
+                    휴대폰 번호가 바뀌었다면 <span className="emphasis">이메일 인증</span>을 해주세요.
                 </div>
             </BottomSect>
 
