@@ -27,7 +27,7 @@ const modalSlice = createSlice({
       state.showModal = false;
     },
     pushNotificationModal(state, { payload }) {
-      state.notifications = [...state.notifications, payload];
+      state.notifications = [payload, ...state.notifications];
     },
     removeNotificationModal(state, { payload }) {
       state.notifications = state.notifications.filter((item) => item.id !== payload.id);

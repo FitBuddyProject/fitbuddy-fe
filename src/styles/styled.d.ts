@@ -25,6 +25,7 @@ declare module "styled-components" {
         grey80: string;
         blueGrey05: string;
         blueGrey03: string;
+        blueGrey30: string;
         blueGrey40: string;
         blueGrey50: string;
         blueGrey80: string;

@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
 
 import { styled } from "styled-components";
-import { Button } from "components/common/Button";
-import Icon from "components/common/Icon";
+import { Button } from "components/common/Button/index";
+import Icon from "components/common/Icon/Icon";
 import { theme } from "styles/theme";
 
 const IntroContainer = styled.main`
@@ -26,7 +26,7 @@ const Intro = () => {
   return (
     <IntroContainer>
       <Icon icon="Logo" width={171} height={38} fill={theme.color.primary} />
-      <Button type="button" color="primary" size="large" onClick={() => navigate("/login")}>
+      <Button size="large" onClick={() => navigate("/login")}>
         시작하기
       </Button>
     </IntroContainer>

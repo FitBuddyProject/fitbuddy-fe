@@ -1,4 +1,4 @@
-import Icon from "components/common/Icon";
+import Icon from "components/common/Icon/Icon";
 import styled from "styled-components";
 
 const Container = styled.div`

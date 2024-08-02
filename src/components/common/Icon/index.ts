@@ -7,6 +7,7 @@ export { ReactComponent as IconBook } from "assets/icons/icon-book.svg";
 export { ReactComponent as IconHistory } from "assets/icons/icon-history.svg";
 export { ReactComponent as IconKey } from "assets/icons/icon-key.svg";
 export { ReactComponent as IconNote } from "assets/icons/icon-note.svg";
+export { ReactComponent as IconClose } from "assets/icons/icon-close.svg";
 
 export { ReactComponent as LiftingWeights } from "assets/icons/lifting-weights.svg";
 export { ReactComponent as Bathtub } from "assets/icons/bathtub.svg";
