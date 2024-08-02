@@ -4,9 +4,9 @@ import headerSlice from "../slices/header";
 import modalSlice from "../slices/modal";
 
 const rootReducer = combineReducers({
-  auth: authSlice,
-  header: headerSlice,
-  modal: modalSlice,
+    auth: authSlice,
+    header: headerSlice,
+    modal: modalSlice,
 });
 
 export default rootReducer;
