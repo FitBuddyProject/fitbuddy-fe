@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import Header from "./Header";
+import Header from "../components/Header";
 import NotificationModal from "components/Modal/NotificationModal";
 
 interface LayoutProps {

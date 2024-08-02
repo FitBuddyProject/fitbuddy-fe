@@ -6,7 +6,7 @@ import { ThemeProvider } from "styled-components";
 import GlobalStyle from "styles/globalStyles";
 import { theme } from "styles/theme";
 
-import Layout from "layouts/Layout";
+import Layout from "components/Layout";
 import RoutesGroup from "routes/RoutesGroup";
 import { PersistGate } from "redux-persist/integration/react";
 
@@ -16,10 +16,10 @@ const App = () => {
             <ThemeProvider theme={theme}>
                 <Provider store={store}>
                     <PersistGate loading={null} persistor={persistor}>
-                    <GlobalStyle />
-                    <Layout>
-                        <RoutesGroup />
-                    </Layout>
+                        <GlobalStyle />
+                        <Layout>
+                            <RoutesGroup />
+                        </Layout>
                     </PersistGate>
                 </Provider>
             </ThemeProvider>
