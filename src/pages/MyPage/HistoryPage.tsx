@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { headerActions } from "store/slices/header";
 
-import Icon from "components/common/Icon";
 import { IconBox, ListItem } from "./HistoryPage.styles";
+import Icon from "components/common/Icon/Icon";
 
 interface HistoryListProps {
     id: number;

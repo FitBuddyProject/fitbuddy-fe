@@ -8,10 +8,10 @@ import { headerActions } from "store/slices/header";
 import { RootState } from "store/store";
 import { modalActions } from "store/slices/modal";
 
-import Icon from "components/common/Icon";
 import Modal from "components/Modal/Modal";
 import Toggle from "components/common/Toggle";
 import { authActions } from "../../store/slices/auth/auth.slice";
+import Icon from "components/common/Icon/Icon";
 
 const MyPage = () => {
   const dispatch = useDispatch();
