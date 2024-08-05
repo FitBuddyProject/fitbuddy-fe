@@ -65,24 +65,6 @@ const NameBox = styled.ul`
   }
 `;
 
-const InputBox = styled.div`
-  width: 100%;
-  border-radius: 0.8rem;
-  background-color: ${({ theme }) => theme.color.blueGrey03};
-  padding: 1.1rem 1rem;
-  input {
-    border: none;
-    background-color: transparent;
-    color: ${({ theme }) => theme.color.blueGrey30};
-    font-size: ${({ theme }) => theme.fontSize.md};
-  }
-`;
-
-const Validation = styled.span`
-  color: ${({ theme }) => theme.color.error};
-  font-size: ${({ theme }) => theme.fontSize.sm};
-`;
-
 const Note = styled.textarea`
   border-radius: 0.8rem;
   padding: 1rem;
@@ -98,8 +80,6 @@ const Wrap = styled.div`
   display: flex;
   gap: 1rem;
 `;
-
-const Time = styled.div``;
 
 const TimeInput = styled.div`
   background-color: ${({ theme }) => theme.color.blueGrey03};
@@ -121,6 +101,7 @@ const RadioBox = styled.div`
     padding: 1rem;
     font-size: ${({ theme }) => theme.fontSize.sm};
     background-color: ${({ theme }) => theme.color.blueGrey03};
+    line-height: 100%;
   }
   input[type=radio]: checked + label {
     color: ${({ theme }) => theme.color.primary};
@@ -151,11 +132,8 @@ export {
   WorkoutCategory,
   Label,
   NameBox,
-  InputBox,
-  Validation,
   Note,
   Wrap,
-  Time,
   TimeInput,
   RadioWrap,
   RadioBox,

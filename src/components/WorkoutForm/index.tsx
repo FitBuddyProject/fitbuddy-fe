@@ -12,16 +12,14 @@ import {
   WorkoutCategory,
   Label,
   NameBox,
-  InputBox,
-  Validation,
   Note,
   Wrap,
-  Time,
   TimeInput,
   RadioWrap,
   RadioBox,
   Intensity,
 } from "./index.styled";
+import InputField from "components/common/InputField";
 
 export interface WorkoutProps {
   value: string;
@@ -66,22 +64,20 @@ const WorkoutForm = () => {
             ))}
             <li className="add">+ 추가하기</li>
           </NameBox>
-          <InputBox>
-            <input type="text" placeholder="운동 이름을 입력해 주세요 (최대 15자)" maxLength={15} />
-          </InputBox>
-          <Validation>중복되는 이름이 있어요.</Validation>
+          <InputField
+            placeholder="운동 이름을 입력해 주세요 (최대 15자)"
+            maxLength={15}
+            validationText="중복되는 이름이 있어요."
+          />
         </WorkoutCategory>
         {/*  운동 시간 & 운동 강도*/}
         <Wrap>
-          <Time>
+          <div>
             <Label>운동 시간</Label>
             <TimeInput>
-              <InputBox>
-                <input type="text" placeholder="60" />
-                <span>분</span>
-              </InputBox>
+              <InputField type="number" placeholder="60" label="분" />
             </TimeInput>
-          </Time>
+          </div>
           <Intensity>
             <Label>운동 강도</Label>
             <RadioWrap>
