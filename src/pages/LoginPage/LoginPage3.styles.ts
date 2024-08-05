@@ -14,8 +14,8 @@ export const TopSect = styled.div`
 `;
 
 export const Title = styled.div`
-    font-size: 18px;
-    font-weight: bold;
+    font-size: ${({ theme }) => theme.fontSize.lg};
+    font-weight: ${({ theme }) => theme.fontWeight.bold};
     line-height: 130%;
     color: ${({ theme }) => theme.color.blueGrey90};
     border: 1px solid blue;
@@ -23,8 +23,8 @@ export const Title = styled.div`
 `;
 
 export const Subtitle = styled.div`
-    font-size: 14px;
-    font-weight: 400;
+    font-size: ${({ theme }) => theme.fontSize.sm};
+    font-weight: ${({ theme }) => theme.fontWeight.medium};
     line-height: 130%;
     color: ${({ theme }) => theme.color.blueGrey50};
 `;
@@ -33,9 +33,8 @@ export const Subtitle = styled.div`
 
 export const NameSect = styled.div`
     padding: 0 16px 16px 16px;
-    height: calc(100% * (93 / 844));
+    //height: calc(100% * (93 / 844));
     margin-bottom: 26px;
-
 `;
 
 export const InputBox = styled.input`
@@ -49,9 +48,9 @@ export const InputBox = styled.input`
 export const Validation = styled.div`
     margin-bottom: 10px;
     color: red;
-    font-size: 14px;
+    font-size: ${({ theme }) => theme.fontSize.sm};
     line-height: 150%;
-    font-weight: 400;
+    font-weight: ${({ theme }) => theme.fontWeight.medium};
 `;
 
 //////////////////////////////////////////////////
@@ -69,6 +68,8 @@ export const BottomSect = styled.div`
     button {
         width: 100%;
         height: 46px;
+        border-radius: 8px;
+
     }
 `;
 
@@ -77,12 +78,18 @@ export const HintWrapper = styled.div`
     padding: 10px;
     margin-bottom: 16px;
     border-radius: 8px;
+
     p {
         color: ${({ theme }) => theme.color.blueGrey40};
-        font-weight: 400;
-        font-size: 12px;
+        font-weight: ${({ theme }) => theme.fontWeight.medium};
+        font-size: ${({ theme }) => theme.fontSize.xs};
         line-height: 130%;
         display: flex;
+    }
+
+    Button {
+        border-radius: 8px;
+
     }
 
 `;

@@ -46,8 +46,10 @@ const LoginPage = () => {
         <LoginWrapper>
             <TopSect>
                 <Title>휴대폰 번호를 인증해주세요.</Title>
-                <Subtitle>휴대폰 번호로 회원가입과 로그인이 진행됩니다.</Subtitle>
-                <Subtitle>번호는 안전하게 보관됩니다</Subtitle>
+                <Subtitle>
+                    <p>휴대폰 번호로 회원가입과 로그인이 진행됩니다.</p>
+                    <p>번호는 안전하게 보관됩니다</p>
+                </Subtitle>
             </TopSect>
 
 

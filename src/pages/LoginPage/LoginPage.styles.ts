@@ -4,67 +4,80 @@ export const LoginWrapper = styled.div`
     flex: 1;
     overflow-y: auto;
     height: 100%;
-
+    padding: 16px;
 `;
 
 
 export const TopSect = styled.div`
-    margin: 0 16px 16px 16px
+    
 `;
 
 export const Title = styled.div`
-    font-size: 18px;
-    font-weight: bold;
+    font-size: ${({ theme }) => theme.fontSize.lg};
+    font-weight: ${({ theme }) => theme.fontWeight.bold};
     line-height: 130%;
-    color: ${({ theme }) => theme.color.blueGrey80};
-    margin: 0 6px 6px 6px;
+    color: ${({ theme }) => theme.color.blueGrey90};
+    margin: 0 5px 6px 5px;
 `;
 
 export const Subtitle = styled.div`
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 130%;
-    color: ${({ theme }) => theme.color.blueGrey50};
+    margin-bottom: 16px;
+
+    p {
+        font-size: ${({ theme }) => theme.fontSize.sm};
+        font-weight: ${({ theme }) => theme.fontWeight.medium};
+        color: ${({ theme }) => theme.color.blueGrey50};
+        line-height: 130%;
+    }
 `;
 
 export const BottomSect = styled.div`
-    margin: 16px;
 
     input {
+        margin-top: 16px;
         width: 100%;
-
+        border: 0.5px solid lightgray;
         height: 46px;
         border-radius: 8px;
-        border: .5px solid lightgray;
         margin-bottom: 10px;
+
+        // 글자
+        font-size: 16px;
+        font-weight: ${({ theme }) => theme.fontWeight.medium};
+        line-height: 130%;
+        padding: 10px;
     }
 
     .validation {
         margin-bottom: 10px;
         color: red;
-        font-size: 14px;
+        font-size: ${({ theme }) => theme.fontSize.sm};
         line-height: 150%;
-        font-weight: 400;
-        
+        font-weight: ${({ theme }) => theme.fontWeight.medium};
+
+
     }
 
     button {
         width: 100%;
         height: 46px;
         margin-bottom: 10px;
+        border-radius: 8px;
+        font-weight: ${({ theme }) => theme.fontWeight.bold};
+
     }
-    
+
     .hint {
         margin-bottom: 10px;
-        color: ${({ theme }) => theme.color.blueGrey50};
-        font-size: 14px;
         line-height: 150%;
-        font-weight: 400;
+        color: ${({ theme }) => theme.color.blueGrey50};
+        font-size: ${({ theme }) => theme.fontSize.sm};
+        font-weight: ${({ theme }) => theme.fontWeight.medium};
         
-        .emphasis{
+        .emphasis {
             text-decoration: underline;
             color: ${({ theme }) => theme.color.primary};
-            
+
         }
     }
 `;

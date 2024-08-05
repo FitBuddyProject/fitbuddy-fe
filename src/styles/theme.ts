@@ -8,6 +8,7 @@ const fontSize = {
   md: calRem(16), // 1rem
   lg: calRem(18), // 1.125rem
   xl: calRem(20), // 1.25rem
+  xxl: calRem(24), // 1.375rem
   // custom font
   title: calRem(36), // 2.25rem
 };

@@ -14,13 +14,13 @@ export const TopSect = styled.div`
 `;
 
 export const Title = styled.div`
-    font-size: 18px;
-    font-weight: bold;
+    font-size: ${({ theme }) => theme.fontSize.lg};
+    font-weight: ${({ theme }) => theme.fontWeight.bold};
+
     line-height: 130%;
     color: ${({ theme }) => theme.color.blueGrey90};
 
     padding: 0 16px 16px 16px;
-    border: 1px solid blue;
 
 
 `;
@@ -31,15 +31,14 @@ export const InputWrapper = styled.div`
     justify-content: center;
     align-items: center;
     margin: 16px;
-    border: 1px solid red;
     height: 50px;
 `;
 
 export const InputBox = styled.input`
     width: 40px;
     height: 40px;
-    margin: 0 5px;
-    font-size: 24px;
+    margin: 0 10px;
+    font-size: ${({ theme }) => theme.fontSize.xxl};
     text-align: center;
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -50,14 +49,13 @@ export const InputBox = styled.input`
 export const HintWrapper = styled.div`
     display: flex;
     justify-content: space-between;
-    padding: 16px;
-    border: 1px solid black;
+    padding: 0px 16px;
 `;
 
 export const HintText = styled.div`
     text-decoration: underline;
     color: ${({theme}) => theme.color.grey80};
-    font-size: 14px;
+    font-size: ${({ theme }) => theme.fontSize.sm};
     font-weight: ${({ theme }) => theme.fontWeight.medium};
     line-height: 150%;
 `;
@@ -65,8 +63,8 @@ export const HintText = styled.div`
 
 export const TimeLeft = styled.div`
     color: ${({theme}) => theme.color.primary};
-    font-size: 14px;
-    font-weight: bold;
+    font-size: ${({ theme }) => theme.fontSize.sm};
+    font-weight: ${({ theme }) => theme.fontWeight.bold};
     line-height: 150%;
 `;
 
@@ -74,10 +72,12 @@ export const TimeLeft = styled.div`
 export const BottomSect = styled.div`
     margin: 16px;
     flex: 0;
+    
     button {
         width: 100%;
         height: 46px;
         margin-bottom: 10px;
+        border-radius: 8px;
     }
 `;
 
@@ -89,7 +89,7 @@ export const PolicyWrapper = styled.div`
     div {
         text-decoration: underline;
         color: ${({theme}) => theme.color.grey80};
-        font-size: 14px;
+        font-size: ${({ theme }) => theme.fontSize.sm};
         font-weight: ${({ theme }) => theme.fontWeight.medium};
         line-height: 150%;
     }
