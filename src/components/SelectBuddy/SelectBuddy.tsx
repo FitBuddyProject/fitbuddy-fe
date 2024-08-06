@@ -3,11 +3,10 @@ import { RootState } from "../../store/store";
 import { authActions } from "../../store/slices/auth/auth.slice";
 import { useEffect, useMemo, Fragment } from "react";
 import { Button } from "components/common/Button";
-import { TopSect, LoginWrapper, Title, BottomSect, NameSect, InputBox, Validation, CharactersSect, HintWrapper } from "./LoginPage3.styles";
+import { TopSect, LoginWrapper, Title, BottomSect, NameSect, InputBox, Validation, CharactersSect, HintWrapper,Subtitle } from "./SelectBuddy.styles";
 import { headerActions } from "../../store/slices/header";
-import { Subtitle } from "./LoginPage.styles";
 
-const LoginPage3 = () => {
+const SelectBuddy = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -47,4 +46,4 @@ const LoginPage3 = () => {
     );
 };
 
-export default LoginPage3;
+export default SelectBuddy;

@@ -1,21 +1,25 @@
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store/store";
-import { authActions } from "../../store/slices/auth/auth.slice";
-import { useEffect, useMemo, Fragment } from "react";
-import { Button } from "components/common/Button";
-import {
-    TopSect,
-    LoginWrapper,
-    Title,
-    BottomSect,
-    InputWrapper,
-    InputBox,
-    HintWrapper, HintText, TimeLeft, PolicyWrapper
-} from "./LoginPage2.styles";
+import { useDispatch } from "react-redux";
+import React, { useEffect } from "react";
 import { headerActions } from "../../store/slices/header";
+import {
+    BottomSect,
+    HintText,
+    HintWrapper,
+    InputBox,
+    InputWrapper,
+    LoginWrapper, PolicyWrapper, TimeLeft,
+    Title,
+    TopSect
+} from "./VerifyVerification.styles";
+import { Button } from "../common/Button";
 
 
-const LoginPage2 = () => {
+interface VerifyVerificationProps {
+    onSubmit: () => void;
+}
+
+const VerifyVerification: React.FC<VerifyVerificationProps> = ({ onSubmit }) => {
+
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -24,7 +28,12 @@ const LoginPage2 = () => {
 
 
     const handleClickNext = () => {
-        console.log('handleClickNext:: ');
+        // validation
+
+        // if - validation 성공 시
+        onSubmit();
+
+        // else - validation 실패 시
     };
 
     return (
@@ -59,6 +68,7 @@ const LoginPage2 = () => {
 
         </LoginWrapper>
     );
+
 };
 
-export default LoginPage2;
+export default VerifyVerification;

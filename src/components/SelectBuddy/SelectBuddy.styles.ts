@@ -18,7 +18,6 @@ export const Title = styled.div`
     font-weight: ${({ theme }) => theme.fontWeight.bold};
     line-height: 130%;
     color: ${({ theme }) => theme.color.blueGrey90};
-    border: 1px solid blue;
     margin-bottom: 8px;
 `;
 
@@ -43,6 +42,13 @@ export const InputBox = styled.input`
     border-radius: 8px;
     border: .5px solid lightgray;
     margin-bottom: 10px;
+
+    // 글자
+    font-size: 16px;
+    font-weight: ${({ theme }) => theme.fontWeight.medium};
+    line-height: 130%;
+    padding: 10px;
+
 `;
 
 export const Validation = styled.div`

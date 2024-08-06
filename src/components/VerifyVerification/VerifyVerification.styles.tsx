@@ -5,12 +5,12 @@ export const LoginWrapper = styled.div`
     height: 100%;
     display: flex;
     flex-direction: column;
+    padding: 16px;
 `;
 
 
 export const TopSect = styled.div`
     flex: 1;
-    
 `;
 
 export const Title = styled.div`
@@ -42,7 +42,7 @@ export const InputBox = styled.input`
     text-align: center;
     border: 1px solid #ccc;
     border-radius: 8px;
-    background-color:${({ theme }) => theme.color.blueGrey03};
+    background-color: ${({ theme }) => theme.color.blueGrey03};
     outline: none;
 `;
 
@@ -54,7 +54,7 @@ export const HintWrapper = styled.div`
 
 export const HintText = styled.div`
     text-decoration: underline;
-    color: ${({theme}) => theme.color.grey80};
+    color: ${({ theme }) => theme.color.grey80};
     font-size: ${({ theme }) => theme.fontSize.sm};
     font-weight: ${({ theme }) => theme.fontWeight.medium};
     line-height: 150%;
@@ -62,7 +62,7 @@ export const HintText = styled.div`
 
 
 export const TimeLeft = styled.div`
-    color: ${({theme}) => theme.color.primary};
+    color: ${({ theme }) => theme.color.primary};
     font-size: ${({ theme }) => theme.fontSize.sm};
     font-weight: ${({ theme }) => theme.fontWeight.bold};
     line-height: 150%;
@@ -72,7 +72,7 @@ export const TimeLeft = styled.div`
 export const BottomSect = styled.div`
     margin: 16px;
     flex: 0;
-    
+
     button {
         width: 100%;
         height: 46px;
@@ -86,19 +86,19 @@ export const PolicyWrapper = styled.div`
     display: flex;
     justify-content: center;
     padding: 16px;
+
     div {
         text-decoration: underline;
-        color: ${({theme}) => theme.color.grey80};
+        color: ${({ theme }) => theme.color.grey80};
         font-size: ${({ theme }) => theme.fontSize.sm};
         font-weight: ${({ theme }) => theme.fontWeight.medium};
         line-height: 150%;
     }
-    
+
     p {
         padding: 0 8px;
     }
 `;
-
 
 
 export const ButtonWrap = styled.button`
