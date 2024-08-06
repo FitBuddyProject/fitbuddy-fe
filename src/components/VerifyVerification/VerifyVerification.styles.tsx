@@ -70,7 +70,7 @@ export const TimeLeft = styled.div`
 
 
 export const BottomSect = styled.div`
-    margin: 16px;
+    //margin: 16px;
     flex: 0;
 
     button {

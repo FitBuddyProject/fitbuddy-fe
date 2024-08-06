@@ -1,9 +1,18 @@
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store/store";
-import { authActions } from "../../store/slices/auth/auth.slice";
-import { useEffect, useMemo, Fragment } from "react";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 import { Button } from "components/common/Button";
-import { TopSect, LoginWrapper, Title, BottomSect, NameSect, InputBox, Validation, CharactersSect, HintWrapper,Subtitle } from "./SelectBuddy.styles";
+import {
+    TopSect,
+    LoginWrapper,
+    Title,
+    BottomSect,
+    NameSect,
+    InputBox,
+    Validation,
+    CharactersSect,
+    HintWrapper,
+    Subtitle
+} from "./SelectBuddy.styles";
 import { headerActions } from "../../store/slices/header";
 
 const SelectBuddy = () => {
@@ -25,7 +34,7 @@ const SelectBuddy = () => {
             </TopSect>
 
             <NameSect className="name-sect">
-                <InputBox type="text" />
+                <InputBox type="text"/>
                 <Validation>유효성 문구 노출 영역</Validation>
             </NameSect>
 

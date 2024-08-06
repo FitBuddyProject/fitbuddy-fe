@@ -4,12 +4,14 @@ import { authActions } from "../../store/slices/auth/auth.slice";
 import { useEffect, useMemo, Fragment, useState } from "react";
 import { Button } from "components/common/Button";
 import { headerActions } from "../../store/slices/header";
-import ReceiveVerifaction from "../../components/ReceiveVerification/ReceiveVerification";
-import VerifyVerifaction from "../../components/VerifyVerification/VerifyVerification";
+import ReceiveVerification from "../../components/ReceiveVerification/ReceiveVerification";
+import VerifyVerification from "../../components/VerifyVerification/VerifyVerification";
+import { useNavigate } from "react-router-dom";
 
 
 const LoginPage = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { userData } = useSelector((state: RootState) => state.auth);
 
     const [loginStep, setLoginStep] = useState(1);
@@ -57,13 +59,11 @@ const LoginPage = () => {
             setLoginStep(3);
             const isValid = checkValidId();
             if (isValid) {
-                console.log("yes id")
-                // 아이디 있는 경우 > mainPage 로 이동
-
+                // SEL-1: 아이디 있는 경우 > mainPage 로 이동
+                navigate("/");
             } else {
-                console.log("no id")
-                // 아이디 없는 경우 > select buddy 로 이동
-
+                // SEL-2: 아이디 없는 경우 > select buddy 로 이동
+                navigate("/select-buddy");
             }
 
         }
@@ -72,8 +72,8 @@ const LoginPage = () => {
 
     return (
         loginStep === 1
-            ? (<ReceiveVerifaction onSubmit={() => handleClickVerfication(2)}/>)
-            : (<VerifyVerifaction onSubmit={() => handleClickVerfication(3)}/>)
+            ? (<ReceiveVerification onSubmit={() => handleClickVerfication(2)}/>)
+            : (<VerifyVerification onSubmit={() => handleClickVerfication(3)}/>)
     );
 };
 

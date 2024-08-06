@@ -6,6 +6,7 @@ import LoginPage from "pages/LoginPage/LoginPage";
 import MyPage from "pages/MyPage/MyPage";
 import HistoryPage from "pages/MyPage/HistoryPage";
 import InfoPage from "pages/Home/InfoPage";
+import SelectBuddy from "../pages/SelectBuddy/SelectBuddy";
 
 const RoutesGroup = () => {
     return (
@@ -15,6 +16,7 @@ const RoutesGroup = () => {
             <Route path="/login" element={<LoginPage />}></Route>
             <Route path="/my-page" element={<MyPage />}></Route>
             <Route path="/info" element={<InfoPage />}></Route>
+            <Route path="/select-buddy" element={<SelectBuddy />}></Route>
             <Route path="/history" element={<HistoryPage />}></Route>
         </Routes>
     );
