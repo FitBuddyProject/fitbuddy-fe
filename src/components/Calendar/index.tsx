@@ -2,9 +2,6 @@ import Icon from "components/common/Icon/Icon";
 import styled from "styled-components";
 
 const Container = styled.div`
-  position: absolute;
-  bottom: 0;
-  width: 100%;
   padding: 0.6rem 1.6rem 1.6rem 1.6rem;
   background-color: ${({ theme }) => theme.color.white};
   border-radius: 1rem 1rem 0 0;

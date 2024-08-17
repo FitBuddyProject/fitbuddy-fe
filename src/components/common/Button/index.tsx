@@ -15,7 +15,7 @@ export interface ButtonProps {
   /** 버튼 비활성화 */
   disabled?: boolean;
   /** 커스텀 속성 */
-  btnType?: "round" | "full";
+  btnType?: "round" | "square";
   className?: string;
 }
 
@@ -73,11 +73,20 @@ export function Button({
   type = "button",
   color = "primary",
   size,
+  btnType = "round",
   disabled,
   className,
 }: ButtonProps) {
   return (
-    <ButtonStyle className={className} type={type} size={size} color={color} onClick={onClick} disabled={disabled}>
+    <ButtonStyle
+      className={className}
+      type={type}
+      size={size}
+      btnType={btnType}
+      color={color}
+      onClick={onClick}
+      disabled={disabled}
+    >
       {children}
     </ButtonStyle>
   );

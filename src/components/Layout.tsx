@@ -7,17 +7,6 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
-const LayoutContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-
-  main {
-    flex: 1;
-    overflow-y: auto;
-  }
-`;
-
 const Layout = ({ children }: LayoutProps) => {
   return (
     <LayoutContainer>
@@ -31,3 +20,14 @@ const Layout = ({ children }: LayoutProps) => {
 };
 
 export default Layout;
+
+const LayoutContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  main {
+    flex: 1;
+    overflow-y: auto;
+  }
+`;

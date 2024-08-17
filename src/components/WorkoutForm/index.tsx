@@ -1,9 +1,9 @@
+import { RootState } from "store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { activityActions } from "store/slices/activity";
+
 import { Button } from "components/common/Button/index";
 import Icon from "components/common/Icon/Icon";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { workoutActions } from "store/slices/workout";
-import { RootState } from "store/store";
 
 import {
   Overlay,
@@ -28,7 +28,7 @@ export interface WorkoutProps {
 
 const WorkoutForm = () => {
   const dispatch = useDispatch();
-  const showForm = useSelector((state: RootState) => state.workout.showForm);
+  const isShowForm = useSelector((state: RootState) => state.activity.isShowForm);
 
   const workoutList: WorkoutProps[] = [
     { value: "cardio", label: "🏃‍♂️ 유산소" },
@@ -43,11 +43,17 @@ const WorkoutForm = () => {
   ];
 
   const handleClose = () => {
-    dispatch(workoutActions.closeForm());
+    dispatch(activityActions.showWorkoutForm({ isShowForm: false }));
+  };
+
+  const handleSubmit = () => {
+    // TODO :: 유효성 검사 및 form submit
+    dispatch(activityActions.showWorkoutForm({ isShowForm: false }));
+    dispatch(activityActions.activeActivity({ isActive: true }));
   };
 
   return (
-    <Overlay className={showForm ? "on" : "off"}>
+    <Overlay className={isShowForm ? "on" : "off"}>
       <Container>
         <TopArea>
           <h3>운동 기록하기</h3>
@@ -100,7 +106,7 @@ const WorkoutForm = () => {
         <Label>운동 일지</Label>
         <Note placeholder="오늘의 운동 내용을 적어주세요. (최대 300자)" maxLength={300}></Note>
       </Container>
-      <Button className="bottom" btnType="full">
+      <Button className="bottom" btnType="square" onClick={handleSubmit}>
         기록 완료
       </Button>
     </Overlay>

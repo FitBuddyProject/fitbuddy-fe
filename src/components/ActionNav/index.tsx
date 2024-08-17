@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { workoutActions } from "store/slices/workout";
+import { activityActions } from "store/slices/activity";
 
 import styled from "styled-components";
 import Icon from "components/common/Icon/Icon";
@@ -26,7 +26,7 @@ const ActionNav = () => {
   const dispatch = useDispatch();
 
   const openForm = () => {
-    dispatch(workoutActions.openForm());
+    dispatch(activityActions.showWorkoutForm({ isShowForm: true }));
   };
   return (
     <Container>

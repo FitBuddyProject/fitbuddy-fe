@@ -1,9 +1,51 @@
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store/store";
 import { modalActions, Notification } from "store/slices/modal";
 
 import styled from "styled-components";
-import { useEffect } from "react";
+
+const NotificationModal = () => {
+  const dispatch = useDispatch();
+  const notifications = useSelector((state: RootState) => state.modal.notifications);
+
+  useEffect(() => {
+    // 각 팝업을 3초 후에 제거하는 타이머 설정
+    const timers = notifications.map((notification) => {
+      setTimeout(() => {
+        dispatch(modalActions.removeNotificationModal({ id: notification.id }));
+      }, 3000);
+
+      // 컴포넌트 언마운트 시 타이머 클리어
+      return () => {
+        timers.forEach((timer: any) => clearTimeout(timer));
+      };
+    });
+  }, [notifications, dispatch]);
+
+  const handleClose = (id: number) => {
+    dispatch(modalActions.removeNotificationModal({ id }));
+  };
+
+  return (
+    <Container>
+      {notifications?.map((notification: Notification) => (
+        <div key={notification.id} className="notification">
+          <p>
+            {notification.content}
+            <br />
+            <span className="sub">{notification.subContent}</span>
+          </p>
+          <button onClick={() => handleClose(notification.id)}>
+            {notification.btnText ? notification.btnText : "닫기"}
+          </button>
+        </div>
+      ))}
+    </Container>
+  );
+};
+
+export default NotificationModal;
 
 const Container = styled.div`
   margin: 0 auto;
@@ -33,6 +75,12 @@ const Container = styled.div`
     color: ${({ theme }) => theme.color.white};
     white-space: pre;
     line-height: 150%;
+
+    .sub {
+      font-size: ${({ theme }) => theme.fontSize.xs};
+      color: ${({ theme }) => theme.color.white};
+      opacity: 0.7;
+    }
   }
 
   button {
@@ -41,41 +89,3 @@ const Container = styled.div`
     line-height: 150%;
   }
 `;
-
-const NotificationModal = () => {
-  const dispatch = useDispatch();
-  const notifications = useSelector((state: RootState) => state.modal.notifications);
-
-  useEffect(() => {
-    // 각 팝업을 3초 후에 제거하는 타이머 설정
-    const timers = notifications.map((notification) => {
-      setTimeout(() => {
-        dispatch(modalActions.removeNotificationModal({ id: notification.id }));
-      }, 3000);
-
-      // 컴포넌트 언마운트 시 타이머 클리어
-      return () => {
-        timers.forEach((timer: any) => clearTimeout(timer));
-      };
-    });
-  }, [notifications, dispatch]);
-
-  const handleClose = (id: number) => {
-    dispatch(modalActions.removeNotificationModal({ id }));
-  };
-
-  return (
-    <Container>
-      {notifications?.map((notification: Notification) => (
-        <div key={notification.id} className="notification">
-          <p>{notification.content}</p>
-          <button onClick={() => handleClose(notification.id)}>
-            {notification.btnText ? notification.btnText : "닫기"}
-          </button>
-        </div>
-      ))}
-    </Container>
-  );
-};
-
-export default NotificationModal;

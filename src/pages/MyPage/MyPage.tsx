@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { v4 as uuidv4 } from "uuid";
 
 import { headerActions } from "store/slices/header";
 import { RootState } from "store/store";
@@ -41,7 +40,6 @@ const MyPage = () => {
   const pushOn = () => {
     dispatch(
       modalActions.pushNotificationModal({
-        id: uuidv4(),
         content: `푸시 알림 받는 것에 동의해요.`,
       })
     );
@@ -50,7 +48,6 @@ const MyPage = () => {
   const pushOff = () => {
     dispatch(
       modalActions.pushNotificationModal({
-        id: uuidv4(),
         content: `푸시 알림을 받지 않을래요.\n(행동 완료 알림을 받을 수 없어요.)`,
         btnText: "취소",
       })
@@ -114,7 +111,10 @@ const MyPage = () => {
           이용약관
         </MenuBox>
         <MenuBox className="push">
-          푸시 알림
+          <div className="label">
+            <Icon icon="IconBell" />
+            푸시 알림
+          </div>
           <Toggle isActive={isActive} handleChange={handleToggle} />
         </MenuBox>
       </ul>
@@ -159,6 +159,11 @@ const MenuBox = styled.li`
   &.push {
     display: flex;
     justify-content: space-between;
+    .label {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
   }
 `;
 
