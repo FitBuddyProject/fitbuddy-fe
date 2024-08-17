@@ -9,12 +9,18 @@ const GlobalStyle = createGlobalStyle`
         padding: 0;
         color: ${({ theme }) => theme.color.blueGrey90}
     }
-
+    
     html {
         /* root element 62.5% (which is 10px) => 1rem = 10px */
         font-size: 62.5%;
-        // line-height: 150%;
-        // letter-spacing: -0.02em;
+    }
+
+    body {
+        /* initial value for the font-size to be 16px or 1.6rem */
+        font-size: 1.6rem;
+        font-family: 'SUIT', sans-serif;
+        line-height: 150%;
+        letter-spacing: -0.02em;
     }
 
     html,
@@ -23,11 +29,6 @@ const GlobalStyle = createGlobalStyle`
         height: 100%;
         margin: 0;
         padding: 0;
-    }
-
-    body {
-        /* initial value for the font-size to be 16px or 1.6rem */
-        font-size: 1.6rem;
     }
 
     a {
@@ -44,9 +45,8 @@ const GlobalStyle = createGlobalStyle`
         background-color: transparent;
     }
 
-
-    body {
-        font-family: 'SUIT', sans-serif;
+   textarea:focus, input:focus {
+        outline: none;
     }
 `;
 
