@@ -6,6 +6,7 @@ import { RootState } from "store/store";
 import { modalActions } from "store/slices/modal";
 import Modal from "components/Modal/Modal";
 import { theme } from "styles/theme";
+import { activityActions } from "store/slices/activity";
 
 const Container = styled.div`
   background-color: ${({ theme }) => theme.color.white};
@@ -48,6 +49,7 @@ const Timer = () => {
     // TODO :: 운동 취소 api
     dispatch(modalActions.closeModal());
     console.log("운동 취소");
+    dispatch(activityActions.activeActivity({ isActive: false }));
   };
 
   return (
