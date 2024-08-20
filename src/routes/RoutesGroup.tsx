@@ -7,6 +7,7 @@ import MyPage from "pages/MyPage/MyPage";
 import HistoryPage from "pages/MyPage/HistoryPage";
 import InfoPage from "pages/Home/InfoPage";
 import SelectBuddy from "../pages/SelectBuddy/SelectBuddy";
+import Fitdex from "../pages/Fitdex";
 
 const RoutesGroup = () => {
     return (
@@ -18,6 +19,7 @@ const RoutesGroup = () => {
             <Route path="/info" element={<InfoPage />}></Route>
             <Route path="/select-buddy" element={<SelectBuddy />}></Route>
             <Route path="/history" element={<HistoryPage />}></Route>
+            <Route path="/my-fitdex" element={<Fitdex />}></Route>
         </Routes>
     );
 };

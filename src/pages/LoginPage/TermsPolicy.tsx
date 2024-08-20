@@ -2,9 +2,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useMemo, Fragment } from "react";
 
 import { headerActions } from "../../store/slices/header";
-import { PolicyWrapper, PolicyText } from './LoginPage4.styles';
+import { PolicyWrapper, PolicyText } from './TermsPolicy.styles';
 
-const LoginPage4 = () => {
+const TermsPolicy = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -25,4 +25,4 @@ const LoginPage4 = () => {
 
 };
 
-export default LoginPage4;
+export default TermsPolicy;
