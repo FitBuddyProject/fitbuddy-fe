@@ -8,7 +8,7 @@ import { theme } from "styles/theme";
 import ProgressBar from "components/ProgressBar";
 import Timer from "components/Timer";
 import BuddyComponent from "components/BuddyComponent";
-import Calendar from "components/Calendar";
+import CalendarComponent from "components/CalendarComponent";
 import ActionNav from "components/ActionNav";
 import WorkoutForm from "components/WorkoutForm";
 
@@ -42,7 +42,7 @@ const Home = () => {
                 {!isActive && <ActionNav />}
 
                 {/* 달력 영역 */}
-                <Calendar />
+                <CalendarComponent />
             </div>
             {/* 운동하기 폼 */}
             <WorkoutForm />
