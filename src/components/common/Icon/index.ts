@@ -6,6 +6,7 @@ export { ReactComponent as Bad } from "assets/icons/bad.svg";
 export { ReactComponent as ThoughtBalloon } from "assets/icons/thought-balloon.svg";
 export { ReactComponent as Recovery } from "assets/icons/recovery.svg";
 export { ReactComponent as Love } from "assets/icons/love.svg";
+export { ReactComponent as RoundArrow } from "assets/icons/round-arrow.svg";
 
 export { ReactComponent as IconQuestion } from "assets/icons/icon-question.svg";
 export { ReactComponent as IconSetting } from "assets/icons/icon-setting.svg";

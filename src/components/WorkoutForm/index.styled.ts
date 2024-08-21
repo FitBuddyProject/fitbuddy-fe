@@ -22,6 +22,20 @@ const Overlay = styled.div`
   }
 `;
 
+const Container = styled.div`
+  width: 100%;
+  background: ${({ theme }) => theme.color.white};
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  border-radius: 1rem 1rem 0 0;
+  padding: 1.6rem;
+  margin-bottom: 5.6rem;
+  bottom: -300px;
+  transition: 0.25s;
+  z-index: 10;
+`;
+
 const TopArea = styled.div`
   display: flex;
   align-items: center;
@@ -110,32 +124,4 @@ const RadioBox = styled.div`
   }
 `;
 
-const Intensity = styled.div``;
-
-const Container = styled.div`
-  width: 100%;
-  background: ${({ theme }) => theme.color.white};
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  border-radius: 1rem 1rem 0 0;
-  padding: 1.6rem;
-  margin-bottom: 5.6rem;
-  bottom: -300px;
-  transition: 0.25s;
-`;
-
-export {
-  Overlay,
-  Container,
-  TopArea,
-  WorkoutCategory,
-  Label,
-  NameBox,
-  Note,
-  Wrap,
-  TimeInput,
-  RadioWrap,
-  RadioBox,
-  Intensity,
-};
+export { Overlay, Container, TopArea, WorkoutCategory, Label, NameBox, Note, Wrap, TimeInput, RadioWrap, RadioBox };

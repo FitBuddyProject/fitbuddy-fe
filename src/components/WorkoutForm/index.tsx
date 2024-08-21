@@ -17,7 +17,6 @@ import {
   TimeInput,
   RadioWrap,
   RadioBox,
-  Intensity,
 } from "./index.styled";
 import InputField from "components/common/InputField";
 
@@ -84,7 +83,7 @@ const WorkoutForm = () => {
               <InputField type="number" placeholder="60" label="분" />
             </TimeInput>
           </div>
-          <Intensity>
+          <div>
             <Label>운동 강도</Label>
             <RadioWrap>
               <RadioBox>
@@ -100,7 +99,7 @@ const WorkoutForm = () => {
                 <label htmlFor="radio-3">하</label>
               </RadioBox>
             </RadioWrap>
-          </Intensity>
+          </div>
         </Wrap>
         {/*  운동 일지 */}
         <Label>운동 일지</Label>
