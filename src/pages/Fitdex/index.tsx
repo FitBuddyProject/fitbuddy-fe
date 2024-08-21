@@ -5,10 +5,11 @@ import {
     FitdexRow,
     FitdexRowHeader,
     FitdexRowBody,
-    FitdexRowHint
+    FitdexRowDescription, FitdexImageRow
 } from "./Fitdex.styled";
 import { useDispatch } from "react-redux";
 import { headerActions } from "../../store/slices/header";
+import { dummyFits } from "./Fitdex.dummy";
 
 interface FitdexProps {
 
@@ -24,47 +25,40 @@ const Fitdex: React.FC<FitdexProps> = () => {
     }, [dispatch]);
 
     return (
-        <FitdexWrapper>
-            <FitdexContainer>
-                {
-                    Array.from({ length: 5 }, () => {
-                        return (
-                            <FitdexRow>
-                                <FitdexRowHeader><p>올망이</p></FitdexRowHeader>
+        <main>
+            <FitdexWrapper>
+                <FitdexContainer>
+                    {
+                        dummyFits.map((item, index) => (
+                            <FitdexRow key={index}>
+                                <FitdexRowHeader><p>{item?.fitName}</p></FitdexRowHeader>
                                 <FitdexRowBody>
-                                    <div className="image-container">
-                                        <img
-                                            src="https://picsum.photos/98/98"
-                                            alt="Random"
-                                            width="98"
-                                            height="98"
-                                        />
-                                        <img
-                                            src="https://picsum.photos/98/98"
-                                            alt="Random"
-                                            width="98"
-                                            height="98"
-                                        />
-                                        <img
-                                            src="https://picsum.photos/98/98"
-                                            alt="Random"
-                                            width="98"
-                                            height="98"
-                                        />
-                                    </div>
+                                        {item?.fitImage.map((image, index) => (
+                                            <FitdexImageRow tag={`${index + 1}`}>
+                                                <div className="image-tag">
+                                                    <p>{`LV${index + 1}`}</p>
+                                                </div>
+                                                <img
+                                                    src={image}
+                                                    alt="Random"
+                                                    width="98"
+                                                    height="98"
+                                                    key={`image-${index + 1}`}
+                                                />
+                                            </FitdexImageRow>
+                                        ))}
                                 </FitdexRowBody>
-                                <FitdexRowHint>
+                                <FitdexRowDescription>
                                     <p>
-                                        볼에 전기를 저장하는 주머니가 있다.
-                                        숲을 거처로 삼으며, 단단한 나무열매를 전기로 익혀 먹는 등의 지혜를 가졌다.
+                                        {item?.fitDescription}
                                     </p>
-                                </FitdexRowHint>
+                                </FitdexRowDescription>
                             </FitdexRow>
-                        );
-                    })
-                }
-            </FitdexContainer>
-        </FitdexWrapper>
+                        ))
+                    }
+                </FitdexContainer>
+            </FitdexWrapper>
+        </main>
     );
 };
 
