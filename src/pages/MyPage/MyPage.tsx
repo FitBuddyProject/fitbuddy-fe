@@ -101,7 +101,7 @@ const MyPage = () => {
           <Icon icon="IconKey" />
           개인 정보
         </MenuBox>
-        <MenuBox>
+        <MenuBox onClick={() => navigate("/my-fitdex")}>
           <Icon icon="IconBook" />
           나의 도감
         </MenuBox>
