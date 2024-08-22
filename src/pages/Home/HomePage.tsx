@@ -1,6 +1,5 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "store/store";
-import { modalActions } from "store/slices/modal";
 
 import styled from "styled-components";
 import { theme } from "styles/theme";
@@ -11,20 +10,11 @@ import BuddyComponent from "components/BuddyComponent";
 import CalendarComponent from "components/CalendarComponent";
 import ActionNav from "components/ActionNav";
 import WorkoutForm from "components/WorkoutForm";
+import { useState } from "react";
 
 const Home = () => {
-    const dispatch = useDispatch();
     const isActive = useSelector((state: RootState) => state.activity.isActive);
-
-    const handlePet = () => {
-        dispatch(
-            modalActions.pushNotificationModal({
-                // content: `쓰다듬어줘서 고마워요.\n내일 다시 쓰다듬어 주세요.🥰`,
-                content: `쓰다듬어줘서 고마워요.\n내일 다시 쓰다듬어 주세요.🥰`,
-                subContent: `피로도 -2 경험치 +6`,
-            })
-        );
-    };
+    const [isCalendarUp, setIsCanlendarUp] = useState(false);
 
     return (
         <MainContainer>
@@ -39,10 +29,10 @@ const Home = () => {
             <BuddyComponent />
             <div className="bottom-wrap">
                 {/* 행동 영역 */}
-                {!isActive && <ActionNav />}
+                {!isActive && !isCalendarUp && <ActionNav />}
 
                 {/* 달력 영역 */}
-                <CalendarComponent />
+                <CalendarComponent isCalendarUp={isCalendarUp} setIsCanlendarUp={setIsCanlendarUp} />
             </div>
             {/* 운동하기 폼 */}
             <WorkoutForm />

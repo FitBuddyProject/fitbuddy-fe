@@ -1,20 +1,16 @@
-import { useState } from "react";
-
 import { Overlay, Container, InfoBox, SelectDate, DetailBox, Top, WorkoutWrap } from "./index.styled";
 import Icon from "components/common/Icon/Icon";
 import CustomCalendar from "components/Calendar";
 
-const CalendarComponent = () => {
-    const [isUp, setIsUp] = useState(true);
-
+const CalendarComponent = ({ isCalendarUp, setIsCanlendarUp }: any) => {
     const handleClick = (value: boolean) => {
-        setIsUp(value);
+        setIsCanlendarUp(value);
     };
     return (
         <>
-            <Overlay className={isUp ? "on" : "off"} onClick={() => handleClick(false)} />
-            <Container>
-                {!isUp ? (
+            <Overlay className={isCalendarUp ? "on" : "off"} onClick={() => handleClick(false)} />
+            <Container className={isCalendarUp ? "on" : "off"}>
+                {!isCalendarUp ? (
                     // 달력 작게
                     <>
                         <Icon icon="IconDoubleUp" onClick={() => handleClick(true)} />

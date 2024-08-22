@@ -10,25 +10,29 @@ const Overlay = styled.div`
 
     visibility: hidden;
     opacity: 0;
-    transition: 0.25s;
+    transition: 0.3s;
 
     &.on {
         visibility: visible;
         opacity: 1;
+        transition: 0.3s;
     }
 `;
 
 const Container = styled.div`
     position: relative;
     z-index: 2;
-    // padding: 0.6rem 1.6rem 1.6rem 1.6rem;
-    padding: 1.6rem;
+    padding: 0.6rem 1.6rem 1.6rem 1.6rem;
     background-color: ${({ theme }) => theme.color.white};
     border-radius: 1rem 1rem 0 0;
     display: flex;
-    // align-items: center;
+    align-items: center;
     flex-direction: column;
     gap: 1rem;
+    &.on {
+        align-items: flex-start;
+        padding: 1.6rem;
+    }
 `;
 
 const InfoBox = styled.div`
