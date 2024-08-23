@@ -8,6 +8,7 @@ import Icon from "components/common/Icon/Icon";
 import {
   Overlay,
   Container,
+  FormContainer,
   TopArea,
   WorkoutCategory,
   Label,
@@ -52,8 +53,9 @@ const WorkoutForm = () => {
   };
 
   return (
-    <Overlay className={isShowForm ? "on" : "off"}>
-      <Container>
+    <>
+      <Overlay className={isShowForm ? "on" : "off"} />
+      <Container className={isShowForm ? "on" : "off"}>
         <TopArea>
           <h3>운동 기록하기</h3>
           <button onClick={handleClose}>
@@ -61,54 +63,56 @@ const WorkoutForm = () => {
           </button>
         </TopArea>
         {/*  운동이름 */}
-        <WorkoutCategory>
-          <Label>운동이름</Label>
-          <NameBox>
-            {workoutList.map((item) => (
-              <li>{item.label}</li>
-            ))}
-            <li className="add">+ 추가하기</li>
-          </NameBox>
-          <InputField
-            placeholder="운동 이름을 입력해 주세요 (최대 15자)"
-            maxLength={15}
-            validationText="중복되는 이름이 있어요."
-          />
-        </WorkoutCategory>
-        {/*  운동 시간 & 운동 강도*/}
-        <Wrap>
-          <div>
-            <Label>운동 시간</Label>
-            <TimeInput>
-              <InputField type="number" placeholder="60" label="분" />
-            </TimeInput>
-          </div>
-          <div>
-            <Label>운동 강도</Label>
-            <RadioWrap>
-              <RadioBox>
-                <input id="radio-1" type="radio" name="level" value="high" checked />
-                <label htmlFor="radio-1">상</label>
-              </RadioBox>
-              <RadioBox>
-                <input id="radio-2" type="radio" name="level" value="medium" />
-                <label htmlFor="radio-2">중</label>
-              </RadioBox>
-              <RadioBox>
-                <input id="radio-3" type="radio" name="level" value="low" />
-                <label htmlFor="radio-3">하</label>
-              </RadioBox>
-            </RadioWrap>
-          </div>
-        </Wrap>
-        {/*  운동 일지 */}
-        <Label>운동 일지</Label>
-        <Note placeholder="오늘의 운동 내용을 적어주세요. (최대 300자)" maxLength={300}></Note>
+        <FormContainer>
+          <WorkoutCategory>
+            <Label>운동이름</Label>
+            <NameBox>
+              {workoutList.map((item) => (
+                <li>{item.label}</li>
+              ))}
+              <li className="add">+ 추가하기</li>
+            </NameBox>
+            <InputField
+              placeholder="운동 이름을 입력해 주세요 (최대 15자)"
+              maxLength={15}
+              validationText="중복되는 이름이 있어요."
+            />
+          </WorkoutCategory>
+          {/*  운동 시간 & 운동 강도*/}
+          <Wrap>
+            <div>
+              <Label>운동 시간</Label>
+              <TimeInput>
+                <InputField type="number" placeholder="60" label="분" />
+              </TimeInput>
+            </div>
+            <div>
+              <Label>운동 강도</Label>
+              <RadioWrap>
+                <RadioBox>
+                  <input id="radio-1" type="radio" name="level" value="high" checked />
+                  <label htmlFor="radio-1">상</label>
+                </RadioBox>
+                <RadioBox>
+                  <input id="radio-2" type="radio" name="level" value="medium" />
+                  <label htmlFor="radio-2">중</label>
+                </RadioBox>
+                <RadioBox>
+                  <input id="radio-3" type="radio" name="level" value="low" />
+                  <label htmlFor="radio-3">하</label>
+                </RadioBox>
+              </RadioWrap>
+            </div>
+          </Wrap>
+          {/*  운동 일지 */}
+          <Label>운동 일지</Label>
+          <Note placeholder="오늘의 운동 내용을 적어주세요. (최대 300자)" maxLength={300}></Note>
+        </FormContainer>
+        <Button className="bottom" btnType="square" onClick={handleSubmit}>
+          기록 완료
+        </Button>
       </Container>
-      <Button className="bottom" btnType="square" onClick={handleSubmit}>
-        기록 완료
-      </Button>
-    </Overlay>
+    </>
   );
 };
 
