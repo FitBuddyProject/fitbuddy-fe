@@ -48,7 +48,6 @@ const Timer = () => {
   const handelCancel = () => {
     // TODO :: 운동 취소 api
     dispatch(modalActions.closeModal());
-    console.log("운동 취소");
     dispatch(activityActions.activeActivity({ isActive: false }));
   };
 

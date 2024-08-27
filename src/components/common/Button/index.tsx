@@ -5,7 +5,7 @@ export interface ButtonProps {
   /** 버튼 안의 내용 */
   children?: React.ReactNode;
   /** 버튼 클릭 시 호출할 함수 */
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  onClick?: any;
   /** 버튼 타입 설정 */
   type?: "button" | "submit" | undefined;
   /** 버튼 색상 설정*/
@@ -32,6 +32,7 @@ const ButtonStyle = styled.button<ButtonProps>`
   &.bottom {
     position: absolute;
     bottom: 0;
+    left: 0;
     width: 100%;
     height: 5.6rem;
   }

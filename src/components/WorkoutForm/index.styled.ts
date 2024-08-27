@@ -15,10 +15,6 @@ const Overlay = styled.div`
   &.on {
     visibility: visible;
     opacity: 1;
-
-    //     > div {
-    //         bottom: 0;
-    //     }
   }
   z-index: 2;
 `;
@@ -31,7 +27,7 @@ const Container = styled.div`
   left: 0;
   border-radius: 1rem 1rem 0 0;
   padding: 1.6rem;
-  bottom: -300px;
+  //   bottom: -300px;
   transition: 0.25s;
   z-index: 10;
 
@@ -44,15 +40,9 @@ const Container = styled.div`
     opacity: 1;
     bottom: 0;
   }
-
-  .bottom {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-  }
 `;
 
-const FormContainer = styled.div`
+const FormContainer = styled.form`
   overflow-y: auto;
   margin-bottom: 5.6rem;
 `;
@@ -138,11 +128,11 @@ const RadioBox = styled.div`
     background-color: ${({ theme }) => theme.color.blueGrey03};
     line-height: 100%;
   }
-  /* input[type=radio]: checked + label {
+  input[type=radio]: checked + label {
     color: ${({ theme }) => theme.color.primary};
     background-color: ${({ theme }) => theme.color.primaryLight};
     border: 1px solid ${({ theme }) => theme.color.primary};
-  } */
+  } 
 `;
 
 export {

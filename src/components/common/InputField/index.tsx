@@ -4,7 +4,7 @@ interface InputProps {
   value?: string | number;
   type?: "text" | "number";
   placeholder?: string;
-  onChange?: () => void;
+  onChange?: any;
   label?: string;
   maxLength?: number;
   validationText?: string;

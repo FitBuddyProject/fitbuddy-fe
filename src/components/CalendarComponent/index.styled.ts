@@ -29,6 +29,7 @@ const Container = styled.div`
   align-items: center;
   flex-direction: column;
   gap: 1rem;
+
   &.on {
     align-items: flex-start;
     padding: 1.6rem;
@@ -43,15 +44,6 @@ const InfoBox = styled.div`
   text-align: center;
   font-size: ${({ theme }) => theme.fontSize.xs};
   color: ${({ theme }) => theme.color.blueGrey40};
-`;
-
-const SelectDate = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-
-  font-weight: 800;
-  font-size: ${({ theme }) => theme.fontSize.lg};
 `;
 
 const DetailBox = styled.div`
@@ -106,4 +98,4 @@ const WorkoutWrap = styled.div`
   }
 `;
 
-export { Overlay, Container, InfoBox, SelectDate, DetailBox, Top, WorkoutWrap };
+export { Overlay, Container, InfoBox, DetailBox, Top, WorkoutWrap };
