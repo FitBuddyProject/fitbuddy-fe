@@ -7,6 +7,7 @@ import { headerActions } from "../../store/slices/header";
 import ReceiveVerification from "../../components/ReceiveVerification/ReceiveVerification";
 import VerifyVerification from "../../components/VerifyVerification/VerifyVerification";
 import { useNavigate } from "react-router-dom";
+import main from "../../../.storybook/main";
 
 
 const LoginPage = () => {
@@ -50,7 +51,7 @@ const LoginPage = () => {
     };
 
 
-    const handleClickVerfication = (step: number) => {
+    const handleSubmit = (step: number) => () => {
         console.log(step);
         if (step === 2) {
             setLoginStep(2);
@@ -71,9 +72,13 @@ const LoginPage = () => {
     };
 
     return (
-        loginStep === 1
-            ? (<ReceiveVerification onSubmit={() => handleClickVerfication(2)}/>)
-            : (<VerifyVerification onSubmit={() => handleClickVerfication(3)}/>)
+        <main>
+            {
+                loginStep === 1
+                    ? (<ReceiveVerification onSubmit={handleSubmit(2)}/>)
+                    : (<VerifyVerification onSubmit={handleSubmit(3)}/>)
+            }
+        </main>
     );
 };
 

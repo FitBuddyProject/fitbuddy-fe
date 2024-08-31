@@ -97,7 +97,7 @@ const MyPage = () => {
       )}
 
       <ul>
-        <MenuBox>
+        <MenuBox onClick={() => navigate("/my-info")}>
           <Icon icon="IconKey" />
           개인 정보
         </MenuBox>

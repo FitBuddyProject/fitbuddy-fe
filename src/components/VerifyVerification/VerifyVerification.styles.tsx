@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const LoginWrapper = styled.div`
+export const VerifyVerificationWrapper = styled.div`
     overflow-y: auto;
     height: 100%;
     display: flex;
@@ -20,7 +20,7 @@ export const Title = styled.div`
     line-height: 130%;
     color: ${({ theme }) => theme.color.blueGrey90};
 
-    padding: 0 16px 16px 16px;
+    padding: 0 8px;
 
 
 `;
@@ -49,7 +49,7 @@ export const InputBox = styled.input`
 export const HintWrapper = styled.div`
     display: flex;
     justify-content: space-between;
-    padding: 0px 16px;
+    padding: 0 8px;
 `;
 
 export const HintText = styled.div`
@@ -82,7 +82,7 @@ export const BottomSect = styled.div`
 `;
 
 
-export const PolicyWrapper = styled.div`
+export const PolicyContainer = styled.div`
     display: flex;
     justify-content: center;
     padding: 16px;

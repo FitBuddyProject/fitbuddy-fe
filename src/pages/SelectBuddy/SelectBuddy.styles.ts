@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-export const LoginWrapper = styled.div`
+export const SelectBuddyWrapper = styled.div`
     overflow-y: auto;
-    height: 100vh;
+    height: 100%;
     display: flex;
     flex-direction: column;
 `;

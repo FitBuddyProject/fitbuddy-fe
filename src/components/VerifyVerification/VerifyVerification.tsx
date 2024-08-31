@@ -7,11 +7,12 @@ import {
     HintWrapper,
     InputBox,
     InputWrapper,
-    LoginWrapper, PolicyWrapper, TimeLeft,
+    VerifyVerificationWrapper, PolicyContainer, TimeLeft,
     Title,
     TopSect
 } from "./VerifyVerification.styles";
 import { Button } from "../common/Button";
+import main from "../../../.storybook/main";
 
 
 interface VerifyVerificationProps {
@@ -36,17 +37,28 @@ const VerifyVerification: React.FC<VerifyVerificationProps> = ({ onSubmit }) => 
         // else - validation 실패 시
     };
 
+
+    const handlePolicy = (path: string) => () => {
+        // TODO: 개인정보/이용약관 정리 시, 사용 예정
+        let url = 'https://www.naver.com';
+        if (path === 'use-terms') {
+            url = 'https://www.google.com';
+        }
+        window.open(url);
+
+    };
+
     return (
-        <LoginWrapper>
+        <VerifyVerificationWrapper>
             <TopSect>
                 <Title>인증번호 6자리를 입력하세요. </Title>
                 <InputWrapper>
-                    <InputBox></InputBox>
-                    <InputBox></InputBox>
-                    <InputBox></InputBox>
-                    <InputBox></InputBox>
-                    <InputBox></InputBox>
-                    <InputBox></InputBox>
+                    <InputBox maxLength={1}></InputBox>
+                    <InputBox maxLength={1}></InputBox>
+                    <InputBox maxLength={1}></InputBox>
+                    <InputBox maxLength={1}></InputBox>
+                    <InputBox maxLength={1}></InputBox>
+                    <InputBox maxLength={1}></InputBox>
                 </InputWrapper>
                 <HintWrapper>
                     <HintText>인증번호 다시 받기</HintText>
@@ -56,17 +68,17 @@ const VerifyVerification: React.FC<VerifyVerificationProps> = ({ onSubmit }) => 
 
 
             <BottomSect>
-                <PolicyWrapper>
-                    <div>이용약관</div>
+                <PolicyContainer>
+                    <div onClick={handlePolicy('use-terms')}>이용약관</div>
                     <p>|</p>
-                    <div>개인정보 취급방침</div>
-                </PolicyWrapper>
+                    <div onClick={handlePolicy('privacy-policy')}> 개인정보 취급방침</div>
+                </PolicyContainer>
                 <Button type="button" color="primary" size="large" onClick={handleClickNext}>
                     동의하고 다음 단계로
                 </Button>
             </BottomSect>
 
-        </LoginWrapper>
+        </VerifyVerificationWrapper>
     );
 
 };

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const LoginWrapper = styled.div`
+export const ReceiveVerificationWrapper = styled.div`
     overflow-y: auto;
     height: 100%;
     padding: 16px;
@@ -17,7 +17,7 @@ export const Title = styled.div`
     font-weight: ${({ theme }) => theme.fontWeight.bold};
     line-height: 130%;
     color: ${({ theme }) => theme.color.blueGrey90};
-    margin: 0 5px 6px 5px;
+    margin-bottom: 6px;
 `;
 
 export const Subtitle = styled.div`
