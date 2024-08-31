@@ -20,6 +20,9 @@ const MyInfo = () => {
         dispatch(headerActions.setTitle("개인정보"));
     }, []);
 
+    const handleRegisterModified = () => {
+        setModify(false);
+    };
 
     const ScreenModifyTrue = () => (
         <MyInfoModifyWrapper>
@@ -43,7 +46,7 @@ const MyInfo = () => {
                     </Button>
                 </EmailSect>
                 <FooterSect>
-                    <Button type="button" color="primary" size="large">
+                    <Button type="button" color="primary" size="large" onClick={handleRegisterModified}>
                         수정 내용 등록하기
                     </Button>
                 </FooterSect>
@@ -84,8 +87,7 @@ const MyInfo = () => {
 
 
                 <MyInfoFooterSect>
-                    <Button type="button" color="primary" size="large" onClick={() => {
-                    }}>
+                    <Button type="button" color="primary" size="large" onClick={() => setModify(true)}>
                         정보수정하기
                     </Button>
                 </MyInfoFooterSect>
