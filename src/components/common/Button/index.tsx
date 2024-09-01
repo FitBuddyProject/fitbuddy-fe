@@ -5,7 +5,7 @@ export interface ButtonProps {
   /** 버튼 안의 내용 */
   children?: React.ReactNode;
   /** 버튼 클릭 시 호출할 함수 */
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  onClick?: any;
   /** 버튼 타입 설정 */
   type?: "button" | "submit" | undefined;
   /** 버튼 색상 설정*/
@@ -15,7 +15,7 @@ export interface ButtonProps {
   /** 버튼 비활성화 */
   disabled?: boolean;
   /** 커스텀 속성 */
-  btnType?: "round" | "full";
+  btnType?: "round" | "square";
   className?: string;
 }
 
@@ -32,6 +32,7 @@ const ButtonStyle = styled.button<ButtonProps>`
   &.bottom {
     position: absolute;
     bottom: 0;
+    left: 0;
     width: 100%;
     height: 5.6rem;
   }
@@ -73,11 +74,20 @@ export function Button({
   type = "button",
   color = "primary",
   size,
+  btnType = "round",
   disabled,
   className,
 }: ButtonProps) {
   return (
-    <ButtonStyle className={className} type={type} size={size} color={color} onClick={onClick} disabled={disabled}>
+    <ButtonStyle
+      className={className}
+      type={type}
+      size={size}
+      btnType={btnType}
+      color={color}
+      onClick={onClick}
+      disabled={disabled}
+    >
       {children}
     </ButtonStyle>
   );

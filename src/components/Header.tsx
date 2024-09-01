@@ -7,29 +7,6 @@ import { useSelector } from "react-redux";
 import { RootState } from "store/store";
 import { theme } from "styles/theme";
 
-const HeaderContainer = styled.header<{ inMain: boolean }>`
-  height: 5.6rem;
-  display: flex;
-  align-items: center;
-  padding: 0 1.6rem;
-  width: 100%;
-  ${(props) =>
-    props.inMain &&
-    css`
-      justify-content: space-between;
-    `}
-`;
-
-const ButtonWrap = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  cursor: pointer;
-  a {
-    display: flex;
-  }
-`;
-
 const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -79,3 +56,26 @@ const Header = () => {
 };
 
 export default Header;
+
+const HeaderContainer = styled.header<{ inMain: boolean }>`
+  height: 5.6rem;
+  display: flex;
+  align-items: center;
+  padding: 0 1.6rem;
+  width: 100%;
+  ${(props) =>
+    props.inMain &&
+    css`
+      justify-content: space-between;
+    `}
+`;
+
+const ButtonWrap = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  a {
+    display: flex;
+  }
+`;

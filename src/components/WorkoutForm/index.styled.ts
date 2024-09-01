@@ -11,15 +11,40 @@ const Overlay = styled.div`
   visibility: hidden;
   opacity: 0;
   transition: 0.25s;
+  z-index: 2;
 
   &.on {
     visibility: visible;
     opacity: 1;
-
-    > div {
-      bottom: 0;
-    }
   }
+`;
+
+const Container = styled.div`
+  width: 100%;
+  background: ${({ theme }) => theme.color.white};
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  border-radius: 1rem 1rem 0 0;
+  padding: 1.6rem;
+  transition: 0.25s;
+  visibility: hidden;
+  z-index: 10;
+  transition: 0.25s;
+
+  &.on {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  &.off {
+    transform: translateY(100%);
+  }
+`;
+
+const FormContainer = styled.form`
+  overflow-y: auto;
+  margin-bottom: 5.6rem;
 `;
 
 const TopArea = styled.div`
@@ -43,26 +68,39 @@ const Label = styled.p`
   margin-bottom: 1rem;
 `;
 
-const NameBox = styled.ul`
+const WorkoutRadioGroup = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
 
-  li {
-    background-color: ${({ theme }) => theme.color.blueGrey03};
-    padding: 0.6rem 1rem;
-    border-radius: 5rem;
-    width: fit-content;
-    font-size: ${({ theme }) => theme.fontSize.md};
-    font-weight: ${({ theme }) => theme.fontWeight.medium};
-    font-size: ${({ theme }) => theme.fontSize.sm};
+  input[type="radio"] {
+    display: none;
   }
+`;
 
-  .add {
-    background-color: ${({ theme }) => theme.color.primaryLight};
-    border: 1px solid ${({ theme }) => theme.color.primary};
-    color: ${({ theme }) => theme.color.primary};
+const WorkoutLabel = styled.label<{ selected: boolean }>`
+  background-color: ${({ theme }) => theme.color.blueGrey03};
+  padding: 0.6rem 1rem;
+  border-radius: 5rem;
+  width: fit-content;
+  font-size: ${({ theme }) => theme.fontSize.sm};
+  font-weight: ${({ theme }) => theme.fontWeight.medium};
+  background-color: ${({ selected, theme }) => (selected ? theme.color.primaryLight : theme.color.blueGrey03)};
+  border: ${({ selected, theme }) => (selected ? `1px solid ${theme.color.primary}` : "none")};
+
+  span {
+    color: ${({ selected, theme }) => (selected ? theme.color.primary : "black")};
   }
+`;
+
+const AddWorkoutButton = styled.button`
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: 2px solid purple;
+  color: purple;
+  background-color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
 `;
 
 const Note = styled.textarea`
@@ -110,32 +148,19 @@ const RadioBox = styled.div`
   }
 `;
 
-const Intensity = styled.div``;
-
-const Container = styled.div`
-  width: 100%;
-  background: ${({ theme }) => theme.color.white};
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  border-radius: 1rem 1rem 0 0;
-  padding: 1.6rem;
-  margin-bottom: 5.6rem;
-  bottom: -300px;
-  transition: 0.25s;
-`;
-
 export {
   Overlay,
   Container,
+  FormContainer,
   TopArea,
   WorkoutCategory,
   Label,
-  NameBox,
+  WorkoutRadioGroup,
+  WorkoutLabel,
+  AddWorkoutButton,
   Note,
   Wrap,
   TimeInput,
   RadioWrap,
   RadioBox,
-  Intensity,
 };
