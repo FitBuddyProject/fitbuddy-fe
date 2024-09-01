@@ -8,35 +8,6 @@ import Modal from "components/Modal/Modal";
 import { theme } from "styles/theme";
 import { activityActions } from "store/slices/activity";
 
-const Container = styled.div`
-  background-color: ${({ theme }) => theme.color.white};
-  display: flex;
-  align-items: center;
-  padding: 1.6rem;
-  border-top: 1px solid ${({ theme }) => theme.color.blueGrey03};
-`;
-
-const TimeArea = styled.div`
-  flex: 1;
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  .txt {
-    font-size: ${({ theme }) => theme.fontSize.xs};
-    font-weight: ${({ theme }) => theme.fontWeight.semiBold};
-    color: ${({ theme }) => theme.color.blueGrey50};
-  }
-  .time {
-    font-weight: ${({ theme }) => theme.fontWeight.bold};
-  }
-`;
-const CancelBtn = styled.button`
-  border-radius: 5rem;
-  padding: 0.4rem 1.2rem;
-  background-color: ${({ theme }) => theme.color.blueGrey05};
-  font-size: ${({ theme }) => theme.fontSize.xs};
-  font-weight: ${({ theme }) => theme.fontWeight.bold};
-`;
 const Timer = () => {
   const dispatch = useDispatch();
   const { showModal } = useSelector((state: RootState) => state.modal);
@@ -76,3 +47,33 @@ const Timer = () => {
 };
 
 export default Timer;
+
+const Container = styled.div`
+  background-color: ${({ theme }) => theme.color.white};
+  display: flex;
+  align-items: center;
+  padding: 1.6rem;
+  border-top: 1px solid ${({ theme }) => theme.color.blueGrey03};
+`;
+
+const TimeArea = styled.div`
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  .txt {
+    font-size: ${({ theme }) => theme.fontSize.xs};
+    font-weight: ${({ theme }) => theme.fontWeight.semiBold};
+    color: ${({ theme }) => theme.color.blueGrey50};
+  }
+  .time {
+    font-weight: ${({ theme }) => theme.fontWeight.bold};
+  }
+`;
+const CancelBtn = styled.button`
+  border-radius: 5rem;
+  padding: 0.4rem 1.2rem;
+  background-color: ${({ theme }) => theme.color.blueGrey05};
+  font-size: ${({ theme }) => theme.fontSize.xs};
+  font-weight: ${({ theme }) => theme.fontWeight.bold};
+`;

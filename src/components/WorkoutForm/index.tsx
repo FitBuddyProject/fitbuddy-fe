@@ -12,32 +12,36 @@ import {
   TopArea,
   WorkoutCategory,
   Label,
-  NameBox,
   Note,
   Wrap,
   TimeInput,
   RadioWrap,
   RadioBox,
+  WorkoutRadioGroup,
+  WorkoutLabel,
 } from "./index.styled";
 import InputField from "components/common/InputField";
-import { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import styled from "styled-components";
+import { debounce } from "lodash";
 
-export interface WorkoutProps {
-  value: string;
+export interface WorkoutOptionProps {
   label: string;
+  value: string;
 }
 
 // default 운동 항목 리스트
-const workoutList: WorkoutProps[] = [
-  { value: "cardio", label: "🏃‍♂️ 유산소" },
-  { value: "gym", label: "🏋️‍♂️️ 헬스" },
-  { value: "swimming", label: "🏊‍♂️ 수영" },
-  { value: "cycle", label: "🚴‍♂️ 자전거" },
-  { value: "climbing", label: "️🧗‍♀️ 클라이밍" },
-  { value: "yoga", label: "🧘‍♀ 요가/필라테스" },
-  { value: "tennis", label: "🎾️ 테니스" },
-  { value: "badminton", label: "🏸 배드민턴" },
-  { value: "ball", label: "️⛹️‍♂️ 축구/농구" },
+const workoutOptions: WorkoutOptionProps[] = [
+  { label: "🏃‍♂️ 유산소", value: "유산소" },
+  { label: "🏋️‍♂️️ 헬스", value: "헬스" },
+  { label: "🏊‍♂️ 수영", value: "수영" },
+  { label: "🚴‍♂️ 자전거", value: "자전거" },
+  { label: "️🧗‍♀️ 클라이밍", value: "클라이밍" },
+  { label: "🧘‍♀ 요가/필라테스", value: "요가/필라테스" },
+  { label: "🎾️ 테니스", value: "테니스" },
+  { label: "🏸 배드민턴", value: "배드민턴" },
+  { label: "️⛹️‍♂️ 축구/농구", value: "축구/농구" },
+  { label: "+ 추가하기", value: "ADD" },
 ];
 
 const Levels = [
@@ -61,11 +65,20 @@ const WorkoutForm = () => {
 
   const formRef = useRef<null | HTMLFormElement>(null);
 
-  const [name, setName] = useState("");
-  const [time, setTime] = useState("");
+  const [workoutName, setWorkoutName] = useState("");
+  const [time, setTime] = useState("60");
   const [level, setLevel] = useState("high");
   const [contents, setContents] = useState("");
+  const [isAddWorkout, setIsAddWorkout] = useState(false);
+  const [selected, setSelected] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
+  // 운동하기 폼 닫기
+  const handleClose = () => {
+    dispatch(activityActions.showWorkoutForm({ isShowForm: false }));
+  };
+
+  // 기록 완료 저장
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (formRef.current) {
@@ -78,14 +91,41 @@ const WorkoutForm = () => {
       };
     }
     // TODO :: 유효성 검사 및 form submit
-    console.log({ name, time, level, contents });
+    console.log({ workoutName, time, level, contents });
     // dispatch(activityActions.showWorkoutForm({ isShowForm: false }));
     // dispatch(activityActions.activeActivity({ isActive: true }));
   };
 
-  const handleClose = () => {
-    dispatch(activityActions.showWorkoutForm({ isShowForm: false }));
+  // 운동 이름 선택
+  const handleSelectLabel = (value: string) => {
+    setSelected(value);
+
+    if (value === "ADD") {
+      setIsAddWorkout(true);
+    } else {
+      setIsAddWorkout(false);
+    }
   };
+
+  const validateInput = (input: string) => {
+    const exists = workoutOptions.some((option) => option.value === input.trim());
+    if (exists) {
+      setError("중복되는 이름이 있어요.");
+    } else {
+      setError(null);
+    }
+  };
+
+  const debouncedValidate = debounce((input: string) => {
+    validateInput(input);
+  }, 300); // 300ms 대기
+
+  useEffect(() => {
+    debouncedValidate(workoutName);
+    return () => {
+      debouncedValidate.cancel(); // 컴포넌트 언마운트 시 debounce 취소
+    };
+  }, [workoutName, debouncedValidate]);
 
   return (
     <>
@@ -101,18 +141,26 @@ const WorkoutForm = () => {
         <FormContainer onSubmit={handleSubmit} ref={formRef}>
           <WorkoutCategory>
             <Label>운동이름</Label>
-            <NameBox>
-              {workoutList.map((item) => (
-                <li>{item.label}</li>
+            <WorkoutRadioGroup>
+              {workoutOptions.map((option) => (
+                <WorkoutLabel
+                  key={option.value}
+                  selected={selected === option.value}
+                  onClick={() => handleSelectLabel(option.value)}
+                >
+                  <input type="radio" name="activity" value={option.label} checked={selected === option.label} />
+                  <span>{option.label}</span>
+                </WorkoutLabel>
               ))}
-              <li className="add">+ 추가하기</li>
-            </NameBox>
-            <InputField
-              placeholder="운동 이름을 입력해 주세요 (최대 15자)"
-              maxLength={15}
-              validationText="중복되는 이름이 있어요."
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
-            />
+            </WorkoutRadioGroup>
+            {isAddWorkout && (
+              <InputField
+                placeholder="운동 이름을 입력해 주세요 (최대 15자)"
+                maxLength={15}
+                validationText={error as string}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setWorkoutName(e.target.value)}
+              />
+            )}
           </WorkoutCategory>
           <Wrap>
             <div>
@@ -153,7 +201,8 @@ const WorkoutForm = () => {
             maxLength={300}
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setContents(e.target.value)}
           ></Note>
-          {/*  완료 버튼 */}
+
+          {/* 기록 저장 버튼 */}
           <Button className="bottom" type="submit" btnType="square" onClick={handleSubmit}>
             기록 완료
           </Button>

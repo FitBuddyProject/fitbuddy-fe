@@ -1,5 +1,17 @@
 import styled from "styled-components";
 
+const WeeklyContainer = styled.div`
+  position: relative;
+  z-index: 2;
+  padding: 0.6rem 1.6rem 1.6rem 1.6rem;
+  background-color: ${({ theme }) => theme.color.white};
+  border-radius: 1rem 1rem 0 0;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
+`;
+
 const Overlay = styled.div`
   height: 100%;
   width: 100%;
@@ -10,18 +22,20 @@ const Overlay = styled.div`
 
   visibility: hidden;
   opacity: 0;
-  transition: 0.3s;
+  transition: 0.25s;
+  z-index: 2;
 
   &.on {
     visibility: visible;
     opacity: 1;
-    transition: 0.3s;
   }
 `;
 
 const Container = styled.div`
-  position: relative;
-  z-index: 2;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  position: fixed;
   padding: 0.6rem 1.6rem 1.6rem 1.6rem;
   background-color: ${({ theme }) => theme.color.white};
   border-radius: 1rem 1rem 0 0;
@@ -29,21 +43,18 @@ const Container = styled.div`
   align-items: center;
   flex-direction: column;
   gap: 1rem;
+  visibility: hidden;
+  z-index: 10;
+  transition: 0.25s;
 
   &.on {
-    align-items: flex-start;
-    padding: 1.6rem;
+    visibility: visible;
+    opacity: 1;
   }
-`;
 
-const InfoBox = styled.div`
-  width: 100%;
-  background-color: ${({ theme }) => theme.color.blueGrey03};
-  padding: 1rem;
-  border-radius: 0.4rem;
-  text-align: center;
-  font-size: ${({ theme }) => theme.fontSize.xs};
-  color: ${({ theme }) => theme.color.blueGrey40};
+  &.off {
+    transform: translateY(100%);
+  }
 `;
 
 const DetailBox = styled.div`
@@ -98,4 +109,4 @@ const WorkoutWrap = styled.div`
   }
 `;
 
-export { Overlay, Container, InfoBox, DetailBox, Top, WorkoutWrap };
+export { WeeklyContainer, Overlay, Container, DetailBox, Top, WorkoutWrap };
