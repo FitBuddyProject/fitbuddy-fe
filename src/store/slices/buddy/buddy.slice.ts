@@ -1,3 +1,7 @@
+/**
+ * @description buddy 관련 slice
+ */
+
 import { createSlice } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 import { BuddyDTO } from "types/buddy.types";
