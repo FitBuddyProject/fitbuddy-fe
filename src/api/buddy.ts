@@ -1,5 +1,5 @@
-import api from "./api"
+import api from "./api";
 
 export const fetchBuddies = async () => {
-  return await api.get(`/buddy/123`)
-}
+  return await api.get(`/v1/buddy/`);
+};

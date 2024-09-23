@@ -1,9 +1,11 @@
 import ActionNav from "components/ActionNav";
-import Calendar from "components/Calendar";
-import CanvasComponent from "components/Object/Canvas";
+// import Calendar from "components/Calendar";
+import BuddyComponent from "components/BuddyComponent";
 import ProgressBar from "components/ProgressBar";
 import Timer from "components/Timer";
 import WorkoutForm from "components/WorkoutForm";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { theme } from "styles/theme";
 
@@ -21,6 +23,10 @@ const GaugeArea = styled.div`
 `;
 
 const Home = () => {
+  const dispatch = useDispatch()
+  useEffect(() => {
+    // dispatch(getBuddies)÷
+  }, []);
   return (
     <MainContainer>
       {/* 게이지 영역 */}
@@ -33,7 +39,7 @@ const Home = () => {
       <Timer />
 
       {/* 캐릭터 영역 */}
-      <CanvasComponent />
+      <BuddyComponent />
 
       {/* 행동 영역 */}
       <ActionNav />
