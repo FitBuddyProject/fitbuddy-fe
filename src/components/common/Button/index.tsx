@@ -41,6 +41,9 @@ const ButtonStyle = styled.button<ButtonProps>`
 const COLORS = {
   primary: css`
     background-color: #9544ff;
+    &:disabled {
+      background-color: #eceff1;
+    }
   `,
   secondary: css`
     background-color: #eceff1;
