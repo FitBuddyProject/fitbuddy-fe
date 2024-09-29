@@ -8,6 +8,7 @@ import ReceiveVerification from "../../components/ReceiveVerification/ReceiveVer
 import VerifyVerification from "../../components/VerifyVerification/VerifyVerification";
 import { useNavigate } from "react-router-dom";
 import main from "../../../.storybook/main";
+import { signin } from "../../api/user";
 
 
 const LoginPage = () => {
@@ -54,7 +55,9 @@ const LoginPage = () => {
     const handleSubmit = (step: number) => () => {
         console.log(step);
         if (step === 2) {
-            setLoginStep(2);
+            // phone true
+            // setLoginStep(2);
+
 
         } else if (step === 3) {
             setLoginStep(3);
@@ -71,11 +74,22 @@ const LoginPage = () => {
 
     };
 
+    const handleSubmitPhone = async (payload: any) => {
+        console.log(payload)
+
+        // TODO:: API TEST
+        const res = await signin(payload);
+        console.log(res)
+
+
+        setLoginStep(2)
+    }
+
     return (
         <main>
             {
                 loginStep === 1
-                    ? (<ReceiveVerification onSubmit={handleSubmit(2)}/>)
+                    ? (<ReceiveVerification onSubmit={(payload)=>handleSubmitPhone(payload)}/>)
                     : (<VerifyVerification onSubmit={handleSubmit(3)}/>)
             }
         </main>

@@ -1,18 +1,17 @@
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store/store";
 import React, { useEffect, useMemo, useState } from "react";
 import { headerActions } from "../../store/slices/header";
 import { BottomSect, ReceiveVerificationWrapper, Subtitle, Title, TopSect } from "./ReceiveVerification.styles";
 import { Button } from "../common/Button";
-import main from "../../../.storybook/main";
 
 interface ReceiveVerificationProps {
-    onSubmit: () => void;
+    onSubmit: (params: any) => void;
 }
 
 const ReceiveVerification: React.FC<ReceiveVerificationProps> = ({ onSubmit }) => {
     const dispatch = useDispatch();
-
+    const [phone, setPhone] = useState('');
+    const [isError, setError] = useState(false);
     useEffect(() => {
         dispatch(headerActions.setTitle("회원가입/로그인"));
     }, [dispatch]);
@@ -20,12 +19,18 @@ const ReceiveVerification: React.FC<ReceiveVerificationProps> = ({ onSubmit }) =
 
     const handleClickStart = () => {
         // validation (인증번호)
-
-        // if - validation 성공 시
-        onSubmit();
-
-        // else - validation 실패 시
+        const validTest = /^010\d{7,8}$/.test(phone);
+        if (validTest) onSubmit(phone);
+        else setError(true);
     };
+
+
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (isError) setError(false);
+        const { value } = event?.target;
+        setPhone(value);
+    };
+
 
     return (
         <ReceiveVerificationWrapper>
@@ -39,13 +44,14 @@ const ReceiveVerification: React.FC<ReceiveVerificationProps> = ({ onSubmit }) =
 
 
             <BottomSect>
-                <input type="text"/>
+                <input type="text" value={phone} onChange={handleInputChange} placeholder=" - 를 빼고 입력해주세요."/>
 
-                <div className="validation">
-                    유효성 문구 노출 영역
-                </div>
+                {isError
+                    ? <div className="validation">유효성 문구 노출 영역</div>
+                    : <div className="validation" style={{ visibility: 'hidden' }}>비밀!</div>
+                }
 
-                <Button type="button" color="primary" size="large" onClick={handleClickStart}>
+                <Button type="button" color="primary" size="large" onClick={handleClickStart} disabled={isError}>
                     인증번호 받기
                 </Button>
                 <div className="hint">
