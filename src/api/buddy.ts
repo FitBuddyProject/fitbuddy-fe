@@ -4,7 +4,7 @@
 
 import api from "./api";
 
-const PREFIX = "/vi/buddy";
+const PREFIX = "/v1/buddy";
 
 // 내 버디 리스트
 export const getBuddies = async (payload: any) => {

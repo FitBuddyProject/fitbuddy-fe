@@ -1,31 +1,26 @@
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+
+import { getDetail } from "api/action";
+
 import ActionNav from "components/ActionNav";
 // import Calendar from "components/Calendar";
 import BuddyComponent from "components/BuddyComponent";
 import ProgressBar from "components/ProgressBar";
 import Timer from "components/Timer";
 import WorkoutForm from "components/WorkoutForm";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+
 import styled from "styled-components";
 import { theme } from "styles/theme";
 
-const MainContainer = styled.main`
-  height: 100%;
-  background-color: ${({ theme }) => theme.color.blueLight};
-`;
-
-const GaugeArea = styled.div`
-  background-color: ${({ theme }) => theme.color.white};
-  padding: 0 16px 16px 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-`;
-
 const Home = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+
+  const fetchDetail = async () => {
+    const res = await getDetail({ uuid: "bbed0831f930773513d68b98" });
+    console.log(res);
+  };
   useEffect(() => {
-    // dispatch(getBuddies)÷
   }, []);
   return (
     <MainContainer>
@@ -54,3 +49,16 @@ const Home = () => {
 };
 
 export default Home;
+
+const MainContainer = styled.main`
+  height: 100%;
+  background-color: ${({ theme }) => theme.color.blueLight};
+`;
+
+const GaugeArea = styled.div`
+  background-color: ${({ theme }) => theme.color.white};
+  padding: 0 16px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
