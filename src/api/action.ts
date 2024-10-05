@@ -4,7 +4,7 @@
 
 import api from "./api";
 
-const PREFIX = "/vi/action";
+const PREFIX = "/v1/action";
 
 // 상세
 export const getDetail = async (payload: any) => {

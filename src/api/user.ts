@@ -2,7 +2,6 @@
  * @description call user api
  */
 
-import axios from "axios";
 import api from "./api";
 
 const PREFIX = "/v1/user";
@@ -12,7 +11,7 @@ export const sendable = async (payload: any) => {
 };
 
 export const signin = async (payload: any) => {
-  return await api.patch(`${PREFIX}/sign/in`, { phone: "01011112222" });
+  return await api.patch(`${PREFIX}/sign/in`, { phone: payload.phone });
 };
 
 export const signout = async (payload: any) => {
