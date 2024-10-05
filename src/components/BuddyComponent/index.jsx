@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { useDispatch } from "react-redux";
 import { modalActions } from "store/slices/modal";
 import { Canvas } from "@react-three/fiber";
-import { Html, OrbitControls, useProgress } from "@react-three/drei";
+import { Html, useProgress } from "@react-three/drei";
 
 import Character from "./Character";
 import LightController from "./controls/LightController";
@@ -36,7 +36,7 @@ const BuddyComponent = () => {
           <LightController />
           <CustomOrbitControls />
           {/* 캐릭터 */}
-          <Character url="otter_lv_3" />
+          <Character url="chick_lv_3" />
         </Suspense>
       </Canvas>
       <LabelBox>
