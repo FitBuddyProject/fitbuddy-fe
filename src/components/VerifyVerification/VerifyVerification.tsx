@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { headerActions } from "../../store/slices/header";
 import {
     BottomSect,
@@ -13,28 +13,41 @@ import {
 } from "./VerifyVerification.styles";
 import { Button } from "../common/Button";
 import main from "../../../.storybook/main";
+import { verifyPhone } from "../../api/user";
 
 
 interface VerifyVerificationProps {
     onSubmit: () => void;
+    verifyCode: string;
 }
 
-const VerifyVerification: React.FC<VerifyVerificationProps> = ({ onSubmit }) => {
-
+const VerifyVerification: React.FC<VerifyVerificationProps> = ({ onSubmit, verifyCode }) => {
+    const [stateVerifyCode, setStateVerifyCode] = useState<any[]>([]); // 사용자 입력한 번호
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(headerActions.setTitle("회원가입/로그인"));
     }, [dispatch]);
 
+    useEffect(() => {
+        console.log(123, stateVerifyCode); // 설정된
+
+    }, [stateVerifyCode]);
 
     const handleClickNext = () => {
-        // validation
+        const blockVerifyCode = stateVerifyCode.reduce((acc, cur) => {
+            return acc += cur;
+        }, '');
 
-        // if - validation 성공 시
+        // validation 여섯 글자인지 체크
+        if (blockVerifyCode.length !== 6) {
+            console.log('FAILED1');
+            return false;
+        } else if ((+blockVerifyCode !== +verifyCode)) { // validation 같은 번호인지 체크
+            console.log('FAILED2');
+            return false;
+        }
         onSubmit();
-
-        // else - validation 실패 시
     };
 
 
@@ -45,7 +58,15 @@ const VerifyVerification: React.FC<VerifyVerificationProps> = ({ onSubmit }) => 
             url = 'https://www.google.com';
         }
         window.open(url);
+    };
 
+    const handleInput = (payload: { index: number, value: string }) => {
+        console.log(payload);
+        setStateVerifyCode((prev: any[]) => {
+            const updatedArray: any[] = [...prev];
+            updatedArray[payload.index] = payload.value;
+            return updatedArray;
+        });
     };
 
     return (
@@ -53,12 +74,18 @@ const VerifyVerification: React.FC<VerifyVerificationProps> = ({ onSubmit }) => 
             <TopSect>
                 <Title>인증번호 6자리를 입력하세요. </Title>
                 <InputWrapper>
-                    <InputBox maxLength={1}></InputBox>
-                    <InputBox maxLength={1}></InputBox>
-                    <InputBox maxLength={1}></InputBox>
-                    <InputBox maxLength={1}></InputBox>
-                    <InputBox maxLength={1}></InputBox>
-                    <InputBox maxLength={1}></InputBox>
+                    <InputBox maxLength={1} type="number"
+                              onChange={(event) => handleInput({ index: 0, value: event.target.value })}></InputBox>
+                    <InputBox maxLength={1} type="number"
+                              onChange={(event) => handleInput({ index: 1, value: event.target.value })}></InputBox>
+                    <InputBox maxLength={1} type="number"
+                              onChange={(event) => handleInput({ index: 2, value: event.target.value })}></InputBox>
+                    <InputBox maxLength={1} type="number"
+                              onChange={(event) => handleInput({ index: 3, value: event.target.value })}></InputBox>
+                    <InputBox maxLength={1} type="number"
+                              onChange={(event) => handleInput({ index: 4, value: event.target.value })}></InputBox>
+                    <InputBox maxLength={1} type="number"
+                              onChange={(event) => handleInput({ index: 5, value: event.target.value })}></InputBox>
                 </InputWrapper>
                 <HintWrapper>
                     <HintText>인증번호 다시 받기</HintText>

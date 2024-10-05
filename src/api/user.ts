@@ -31,5 +31,5 @@ export const syncTired = async (payload: any) => {
 };
 
 export const verifyPhone = async (payload: any) => {
-  return await api.get(`${PREFIX}/verify/phone/${payload.phone}`);
+  return await api.get(`${PREFIX}/verify/${payload.phone}`);
 };
