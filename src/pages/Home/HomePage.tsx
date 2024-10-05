@@ -21,7 +21,6 @@ const Home = () => {
     console.log(res);
   };
   useEffect(() => {
-    fetchDetail();
   }, []);
   return (
     <MainContainer>
