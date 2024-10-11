@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 import * as THREE from "three";
 import { useLoader } from "@react-three/fiber";
@@ -11,6 +11,8 @@ const Character = ({ url, color = "black", ...props }) => {
   // OBJ model 불러오기
   const obj = useLoader(OBJLoader, `models/${url}.obj`);
   const ref = useRef();
+  const [rotation, setRotation] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
 
   useLayoutEffect(() => {
     obj.traverse((child) => {
@@ -33,16 +35,37 @@ const Character = ({ url, color = "black", ...props }) => {
 
   useEffect(() => {
     if (ref.current) {
-      // 캐릭터가 중앙에 오도록 위치 조정
       const box = new THREE.Box3().setFromObject(ref.current);
       const center = new THREE.Vector3();
       box.getCenter(center);
       ref.current.position.sub(center);
+      ref.current.rotation.y = THREE.MathUtils.degToRad(rotation);
     }
-  }, [obj]);
+  }, [obj, rotation]);
+
+  const handlePointerDown = () => {
+    setIsDragging(true);
+  };
+
+  const handlePointerMove = (event) => {
+    if (isDragging) {
+      const delta = event.movementX > 0 ? 10 : -10;
+      setRotation((prev) => (prev + delta) % 60);
+    }
+  };
+
+  const handlePointerUp = () => {
+    setIsDragging(false);
+  };
 
   return (
-    <group ref={ref}>
+    <group
+      ref={ref}
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerUp}
+      onPointerLeave={handlePointerUp}
+    >
       <primitive object={obj} />
     </group>
   );

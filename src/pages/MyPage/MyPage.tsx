@@ -110,13 +110,13 @@ const MyPage = () => {
           <Icon icon="IconNote" />
           이용약관
         </MenuBox>
-        <MenuBox className="push">
+        {/* <MenuBox className="push">
           <div className="label">
             <Icon icon="IconBell" />
             푸시 알림
           </div>
           <Toggle isActive={isActive} handleChange={handleToggle} />
-        </MenuBox>
+        </MenuBox> */}
       </ul>
       {showModal && (
         <Modal type="confirm" confirmText="로그아웃" handleConfirm={logout}>
