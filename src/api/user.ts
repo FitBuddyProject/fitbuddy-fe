@@ -19,7 +19,7 @@ export const signout = async (payload: any) => {
 };
 
 export const signup = async (payload: any) => {
-  return await api.post(`${PREFIX}/sign/up`);
+  return await api.post(`${PREFIX}/sign/up`, payload);
 };
 
 export const syncPushToken = async (payload: any) => {

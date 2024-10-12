@@ -18,7 +18,12 @@ const persistConfig = {
 
 const sagaMiddleware = createSagaMiddleware();
 const persistedReducer = persistReducer(persistConfig, rootReducer);
+const persistedUser = localStorage.getItem('user_data');
 
+
+const initialState = {
+    auth: { userData: persistedUser ? JSON.parse(persistedUser) : null }
+};
 
 const store = configureStore({
     reducer: persistedReducer,

@@ -45,7 +45,6 @@ const ReceiveVerification: React.FC<ReceiveVerificationProps> = ({ onSubmit }) =
 
             <BottomSect>
                 <input type="text" value={phone} onChange={handleInputChange} placeholder=" - 를 빼고 입력해주세요."/>
-
                 {isError
                     ? <div className="validation">유효성 문구 노출 영역</div>
                     : <div className="validation" style={{ visibility: 'hidden' }}>비밀!</div>

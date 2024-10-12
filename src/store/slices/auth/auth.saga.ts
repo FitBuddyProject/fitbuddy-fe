@@ -2,39 +2,42 @@ import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { PayloadAction } from "@reduxjs/toolkit";
 import { authActions } from "./auth.slice";
+import api from "../../../api/api";
 
-
-// TODO: 다른 페이지로 빼주기
 const headerConfig: AxiosRequestConfig = {
     headers: {
         'Content-Type': 'application/json'
     }
 };
 
-const testUrl = process.env.REACT_APP_STAR_WARS_API;
+const prefix = '/v1/user'
 
 function* authSaga() {
-    yield takeLatest(authActions.loginRequest.type, login);
+    yield takeLatest(authActions.loginRequest.type, loginRequest);
 
 }
 
-
 /*
-* DESC: login
+* DESC: loginRequest
 * */
-function* login({ payload }: PayloadAction<any>) {
+function* loginRequest({ payload }: PayloadAction<any>) {
     let config: AxiosRequestConfig = { ...headerConfig };
+
     try {
         const response: AxiosResponse<any> = yield call(
-            axios.get,
-            `${testUrl}/people/1`,
+            axios.patch,
+            `${prefix}/sign/in`,
+            {phone: payload.phone},
             config
         );
-
-        const { status, data } = response;
+        const { status,data, headers} = response;
+        console.log("response:: ", response)
         if (status === 200) {
+            console.log('success')
             yield put(authActions.loginRequestSuccess(data));
+            yield put(authActions.loginRequestSuccessSetHeaders(headers));
         }
+        return data;
 
     } catch (e) {
         console.log("error occured:: ", e);
