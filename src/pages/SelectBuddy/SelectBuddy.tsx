@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "components/common/Button";
 import {
     TopSect,
@@ -15,17 +15,64 @@ import {
 } from "./SelectBuddy.styles";
 import { headerActions } from "../../store/slices/header";
 import main from "../../../.storybook/main";
+import { signin, signup } from "../../api/user";
+import { enqueueSnackbar } from "notistack";
+import { useNavigate } from "react-router-dom";
+import { setAuthorizationHeader } from "../../api/api";
+import { authActions } from "../../store/slices/auth/auth.slice";
 
 const SelectBuddy = () => {
     const dispatch = useDispatch();
+    const [statePhone, setStatePhone] = useState('');
+    const [stateNickname, setStateNickname] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
         dispatch(headerActions.setTitle("캐릭터 선택"));
     }, [dispatch]);
 
-    const handleClickNext = () => {
-        console.log("handleClickNext:: ");
+    useEffect(() => {
+        const phone = localStorage.getItem("temp_phone");
+        if (phone) {
+            setStatePhone(phone);
+        }
+    }, []);
+
+    const handleClickNext = async () => {
+        // sign-up 하기
+        const payload = {
+            phone: statePhone,
+            nickname: stateNickname,
+            password: '1q2w3e4r!'
+        };
+        try {
+            const res = await signup(payload);
+            console.log(123, res);
+            if (res.status == 200) {
+                // 회원가입 성공
+                navigate(`/login`);
+            }
+        } catch (error: any) {
+            enqueueSnackbar(error?.response?.data, {
+                variant: 'error',
+                autoHideDuration: 3000,
+                anchorOrigin: { vertical: "top", horizontal: "center" }
+            });
+            const params = {
+                phone: statePhone
+            }
+            const { headers, data} = await signin(params);
+            setAuthorizationHeader(headers.authorization);
+            dispatch(authActions.loginRequestSuccess(data));
+            navigate("/");
+        }
     };
+
+    const handleInput = (payload: { value: string }) => {
+        console.log(payload);
+        setStateNickname(payload?.value);
+    };
+
 
     return (
         <main>
@@ -36,7 +83,8 @@ const SelectBuddy = () => {
                 </TopSect>
 
                 <NameSect className="name-sect">
-                    <InputBox type="text" placeholder={"캐릭터에게 이름을 지어주세요!"}/>
+                    <InputBox type="text" placeholder={"캐릭터에게 이름을 지어주세요!"}
+                              onChange={(event) => handleInput({ value: event.target.value })}/>
                     <Validation>유효성 문구 노출 영역</Validation>
                 </NameSect>
 

@@ -11,7 +11,7 @@ import main from "../../../.storybook/main";
 import { signin, verifyPhone } from "../../api/user";
 import { UserResponseDTO } from "../../types/user.types";
 import { AxiosResponse } from "axios";
-
+import api, { setAuthorizationHeader } from "../../api/api";
 
 
 
@@ -24,6 +24,11 @@ const LoginPage = () => {
     const [loginStep, setLoginStep] = useState(1);
     const [verifyCode, setVerifyCode] = useState<string>('');
     const [statePhone, setStatePhone] = useState<string>('');
+
+
+    useEffect(() => {
+        console.log('change in userData:: ', userData)
+    }, [userData]);
 
     useEffect(() => {
         dispatch(headerActions.setTitle("회원가입/로그인"));
@@ -52,14 +57,16 @@ const LoginPage = () => {
         dispatch(authActions?.logout());
     };
 
-    const checkValidId = async () => {
+    const validAccount = async () => {
         // validation (인증번호)
         try {
             const params = {
                 phone: statePhone
             };
             const userRes = await signin(params);
-            return userRes;
+            // dispatch(authActions?.loginRequest(params));
+            console.log("verifyPhone::: ", userRes)
+            return userRes
         } catch (e) {
             return false;
         }
@@ -70,14 +77,17 @@ const LoginPage = () => {
         if (step === 3) {
             //  보낸 번호가 일치하는 경우.
             setLoginStep(3);
-            const userRes: AxiosResponse<UserResponseDTO> | boolean = await checkValidId();
+            const userRes = await validAccount();
             if (userRes) {
                 // SEL-1: 아이디 있는 경우 > mainPage 로 이동
-                // SEL-1-1: 아이디 있는 경우, store 에 저장 후, persist 사용
+                const { headers, data} = userRes;
+                setAuthorizationHeader(headers.authorization);
+                dispatch(authActions.loginRequestSuccess(data));
                 navigate("/");
             } else {
                 // SEL-2: 아이디 없는 경우 > select buddy 로 이동
-                navigate("/select-buddy");
+                localStorage.setItem('temp_phone', statePhone);
+                navigate(`/select-buddy`);
             }
         }
 

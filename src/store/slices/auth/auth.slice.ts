@@ -7,6 +7,7 @@ import { AuthState } from "../../../types/auth.types";
 // initial state
 const initialState: AuthState = {
     userData: null,
+    headers: null,
     isLoading: false,
     isSuccess: false,
     isError: false
@@ -17,6 +18,7 @@ const helperClear = (state: any) => {
     state.isLoading = false;
     state.isSuccess = false;
     state.isError = false;
+    state.headers = null
 };
 
 
@@ -31,9 +33,15 @@ const authSlice = createSlice({
             state.isLoading = false;
             state.userData = action.payload;
         },
+        loginRequestSuccessSetHeaders(state, action: PayloadAction<any>) {
+            console.log("loginRequestSuccessSetHeaders:::", action)
+            state.headers = action.payload.headers;
+        },
+
         loginRequestFailed(state) {
             helperClear(state);
         },
+
         logout(state) {
             helperClear(state);
             state.userData = null;
