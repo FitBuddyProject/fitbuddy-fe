@@ -18,3 +18,4 @@ export { ReactComponent as IconKey } from "assets/icons/icon-key.svg";
 export { ReactComponent as IconNote } from "assets/icons/icon-note.svg";
 export { ReactComponent as IconBell } from "assets/icons/icon-bell.svg";
 export { ReactComponent as IconClose } from "assets/icons/icon-close.svg";
+export { ReactComponent as IconCloseThin } from "assets/icons/icon-close-thin.svg";

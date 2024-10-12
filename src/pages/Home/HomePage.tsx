@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import { getDetail } from "api/action";
@@ -12,16 +12,28 @@ import WorkoutForm from "components/WorkoutForm";
 
 import styled from "styled-components";
 import { theme } from "styles/theme";
+import { getBuddies } from "api/buddy";
 
 const Home = () => {
   const dispatch = useDispatch();
+  const uuid = localStorage.getItem("uuid");
 
   const fetchDetail = async () => {
-    const res = await getDetail({ uuid: "bbed0831f930773513d68b98" });
+    const uuid = localStorage.getItem("uuid");
+    const res = await getDetail({ uuid: uuid });
+    console.log(res);
+  };
+
+  const fetchBuddies = async () => {
+    if (!uuid) return;
+    const res = await getBuddies({ uuid });
     console.log(res);
   };
   useEffect(() => {
-  }, []);
+    console.log(uuid);
+    fetchBuddies();
+  }, [fetchBuddies]);
+
   return (
     <MainContainer>
       {/* 게이지 영역 */}
