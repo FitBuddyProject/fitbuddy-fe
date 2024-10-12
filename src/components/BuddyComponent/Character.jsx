@@ -7,9 +7,9 @@ import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
 // 색상 파일
 import { colorMapping } from "./colors";
 
-const Character = ({ url, color = "black", ...props }) => {
+const Character = ({ fileName }) => {
   // OBJ model 불러오기
-  const obj = useLoader(OBJLoader, `models/${url}.obj`);
+  const obj = useLoader(OBJLoader, `models/${fileName}.obj`);
   const ref = useRef();
   const [rotation, setRotation] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
@@ -20,7 +20,7 @@ const Character = ({ url, color = "black", ...props }) => {
         let newMaterial = child.material.clone();
 
         // 캐릭터 url 마다 색상 설정 변경
-        const colors = colorMapping[url];
+        const colors = colorMapping[fileName];
         if (colors) {
           const meshIndex = parseInt(child.name.replace("meshes[", "").replace("]", ""), 10);
           if (!isNaN(meshIndex) && colors[meshIndex] !== undefined) {
@@ -31,7 +31,7 @@ const Character = ({ url, color = "black", ...props }) => {
         child.material = newMaterial;
       }
     });
-  }, [obj, color, url]);
+  }, [obj, fileName]);
 
   useEffect(() => {
     if (ref.current) {

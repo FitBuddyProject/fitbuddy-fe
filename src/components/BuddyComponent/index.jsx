@@ -1,4 +1,4 @@
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import { useDispatch } from "react-redux";
 import { modalActions } from "store/slices/modal";
 import { Canvas } from "@react-three/fiber";
@@ -16,13 +16,15 @@ function Loader() {
   return <Html center>{progress} % loaded</Html>;
 }
 
-const BuddyComponent = () => {
+const BuddyComponent = ({ fileName = "chick_lv_1", isComponent = false }) => {
   const dispatch = useDispatch();
+  const [level, setLevel] = useState(1);
+  const [name, setName] = useState("");
 
   const handlePet = () => {
+    if (isComponent) return;
     dispatch(
       modalActions.pushNotificationModal({
-        // content: `쓰다듬어줘서 고마워요.\n내일 다시 쓰다듬어 주세요.🥰`,
         content: `쓰다듬어줘서 고마워요.\n내일 다시 쓰다듬어 주세요.🥰`,
         subContent: `피로도 -2 경험치 +6`,
       })
@@ -31,18 +33,20 @@ const BuddyComponent = () => {
 
   return (
     <Container onClick={handlePet}>
-      <Canvas camera={{ position: [0, 0, 3], fov: 30 }}>
+      <Canvas camera={{ position: [0, 0, 3], fov: isComponent ? 15 : 30 }}>
         <Suspense fallback={<Loader />}>
           <LightController />
           <CustomOrbitControls />
           {/* 캐릭터 */}
-          <Character url="chick_lv_3" />
+          <Character fileName={fileName} />
         </Suspense>
       </Canvas>
-      <LabelBox>
-        <span className="level">LV 2</span>
-        <span className="name">올망이</span>
-      </LabelBox>
+      {!isComponent && (
+        <LabelBox>
+          <span className="level">LV 2</span>
+          <span className="name">올망이</span>
+        </LabelBox>
+      )}
     </Container>
   );
 };
