@@ -41,12 +41,10 @@ const BuddyComponent = ({ fileName = "chick_lv_1", isComponent = false }) => {
           <Character fileName={fileName} />
         </Suspense>
       </Canvas>
-      {!isComponent && (
-        <LabelBox>
-          <span className="level">LV 2</span>
-          <span className="name">올망이</span>
-        </LabelBox>
-      )}
+      <LabelBox>
+        <span className="level">LV 2</span>
+        <span className="name">올망이</span>
+      </LabelBox>
     </Container>
   );
 };

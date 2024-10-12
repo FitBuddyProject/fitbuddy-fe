@@ -30,8 +30,7 @@ const Home = () => {
     console.log(res);
   };
   useEffect(() => {
-    console.log(uuid);
-    fetchBuddies();
+    // fetchBuddies();
   }, [fetchBuddies]);
 
   return (

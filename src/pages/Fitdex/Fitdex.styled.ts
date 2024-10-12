@@ -118,4 +118,8 @@ export const ModalContainer = styled.div`
   button {
     text-align: right;
   }
+
+  :nth-of-type(2) {
+    position: static;
+  }
 `;
