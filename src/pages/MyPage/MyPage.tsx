@@ -72,6 +72,7 @@ const MyPage = () => {
     console.log("logging out");
     dispatch(modalActions.closeModal());
     dispatch(authActions?.logout());
+    localStorage.removeItem("userData");
     navigate("/login");
   };
 
@@ -88,7 +89,7 @@ const MyPage = () => {
     <main>
       {userData && (
         <NicknameBox>
-          <h3>{userData?.name}</h3>
+          <h3>{userData?.nickname}</h3>
           <button onClick={openModal}>로그아웃</button>
         </NicknameBox>
       )}
