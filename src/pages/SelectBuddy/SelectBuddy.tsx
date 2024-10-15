@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { Button } from "components/common/Button";
 import {
@@ -28,13 +28,16 @@ import "swiper/css/pagination";
 
 import BuddyComponent from "components/BuddyComponent";
 import { makeFriends } from "api/buddy";
+import { RootState } from "store/store";
 
 const SelectBuddy = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const { userData } = useSelector((state: RootState) => state.auth);
   const [statePhone, setStatePhone] = useState("");
   const [stateNickname, setStateNickname] = useState("");
+  const [stateBuddy, setStateBuddy] = useState("");
   const [isSelected, setIsSelected] = useState(false);
 
   const characters = [
@@ -55,6 +58,9 @@ const SelectBuddy = () => {
   }, []);
 
   const handleClickNext = async () => {
+    // 캐릭터 생성
+    createBuddy();
+
     // sign-up 하기
     const payload = {
       phone: statePhone,
@@ -89,11 +95,13 @@ const SelectBuddy = () => {
     setStateNickname(payload?.value);
   };
 
-  const selectCharacter = async (value: string) => {
-    const res = await makeFriends({ buddy: value });
-    if (res) {
-      setIsSelected(true);
-    }
+  const createBuddy = async () => {
+    const payload = {
+      userUuid: userData?.uuid,
+      name: stateNickname,
+      buddy: stateBuddy,
+    };
+    await makeFriends(payload);
   };
 
   return (
@@ -119,7 +127,10 @@ const SelectBuddy = () => {
               <SwiperSlide
                 key={item.value}
                 style={{ background: item.bgColor }}
-                onClick={() => selectCharacter(item.value)}
+                onClick={() => {
+                  setStateBuddy(item.value);
+                  setIsSelected(true);
+                }}
               >
                 <div className="box">
                   <BuddyComponent fileName={item.fileName} isComponent={true} isShowLabel={false} />
