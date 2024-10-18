@@ -10,7 +10,7 @@ import { actionActions } from "./action.slice";
 
 function* getHistories(action: PayloadAction<any>) {
   try {
-    const response: AxiosResponse<any> = yield call(actionAPI.getHistories);
+    const response: AxiosResponse<any> = yield call(actionAPI.getHistories, action.payload);
     yield put(actionActions.getHistoriesSuccess(response.data));
   } catch (error: any) {
     yield put(actionActions.getHistoriesFailed(error.message));

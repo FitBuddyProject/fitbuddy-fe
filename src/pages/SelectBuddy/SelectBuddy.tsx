@@ -35,6 +35,7 @@ const SelectBuddy = () => {
 
   const [statePhone, setStatePhone] = useState("");
   const [stateNickname, setStateNickname] = useState("");
+  const [stateBuddy, setStateBuddy] = useState("");
   const [isSelected, setIsSelected] = useState(false);
 
   const characters = [
@@ -64,9 +65,18 @@ const SelectBuddy = () => {
     try {
       const res = await signup(payload);
       console.log(123, res);
-      if (res.status == 200) {
+      if (res.status === 200) {
         // 회원가입 성공
-        navigate(`/login`);
+        const { headers, data } = res;
+        setAuthorizationHeader(headers.authorization);
+        localStorage.setItem("authToken", headers.authorization);
+
+        // 캐릭터 생성
+        createBuddy(data.uuid);
+
+        // store에 user data 저장
+        dispatch(authActions.loginRequestSuccess(data));
+        navigate("/");
       }
     } catch (error: any) {
       enqueueSnackbar(error?.response?.data, {
@@ -74,26 +84,20 @@ const SelectBuddy = () => {
         autoHideDuration: 3000,
         anchorOrigin: { vertical: "top", horizontal: "center" },
       });
-      const params = {
-        phone: statePhone,
-      };
-      const { headers, data } = await signin(params);
-      setAuthorizationHeader(headers.authorization);
-      dispatch(authActions.loginRequestSuccess(data));
-      navigate("/");
     }
   };
 
   const handleInput = (payload: { value: string }) => {
-    console.log(payload);
     setStateNickname(payload?.value);
   };
 
-  const selectCharacter = async (value: string) => {
-    const res = await makeFriends({ buddy: value });
-    if (res) {
-      setIsSelected(true);
-    }
+  const createBuddy = async (uuid: string) => {
+    const payload = {
+      userUuid: uuid,
+      name: stateNickname,
+      buddy: stateBuddy,
+    };
+    await makeFriends(payload);
   };
 
   return (
@@ -119,7 +123,10 @@ const SelectBuddy = () => {
               <SwiperSlide
                 key={item.value}
                 style={{ background: item.bgColor }}
-                onClick={() => selectCharacter(item.value)}
+                onClick={() => {
+                  setStateBuddy(item.value);
+                  setIsSelected(true);
+                }}
               >
                 <div className="box">
                   <BuddyComponent fileName={item.fileName} isComponent={true} isShowLabel={false} />

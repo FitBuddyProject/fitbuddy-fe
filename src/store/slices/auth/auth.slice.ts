@@ -23,32 +23,30 @@ const helperClear = (state: any) => {
 
 
 const authSlice = createSlice({
-    name: 'auth',
-    initialState: initialState,
-    reducers: {
-        loginRequest(state, action: PayloadAction<any>) {
-            state.isLoading = true;
-        },
-        loginRequestSuccess(state, action: PayloadAction<UserDTO>) {
-            state.isLoading = false;
-            state.userData = action.payload;
-        },
-        loginRequestSuccessSetHeaders(state, action: PayloadAction<any>) {
-            console.log("loginRequestSuccessSetHeaders:::", action)
-            state.headers = action.payload.headers;
-        },
+  name: "auth",
+  initialState: initialState,
+  reducers: {
+    loginRequest(state, action: PayloadAction<any>) {
+      state.isLoading = true;
+    },
+    loginRequestSuccess(state, action: PayloadAction<UserDTO>) {
+      state.isLoading = false;
+      state.userData = action.payload;
+    },
+    loginRequestSuccessSetHeaders(state, action: PayloadAction<any>) {
+      console.log("loginRequestSuccessSetHeaders:::", action);
+      state.headers = action.payload.headers;
+    },
 
-        loginRequestFailed(state) {
-            helperClear(state);
-        },
+    loginRequestFailed(state) {
+      helperClear(state);
+    },
 
-        logout(state) {
-            helperClear(state);
-            state.userData = null;
-        },
-
-
-    }
+    logout(state) {
+      helperClear(state);
+      state.userData = null;
+    },
+  },
 });
 
 

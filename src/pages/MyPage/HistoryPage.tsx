@@ -112,7 +112,11 @@ const HistoryPage = () => {
   }, []);
 
   const fetchHistory = async () => {
-    const res = await getHistories();
+    const params = {
+      year: 2024,
+      month: 10,
+    };
+    const res = await getHistories(params);
     console.log(res);
   };
 

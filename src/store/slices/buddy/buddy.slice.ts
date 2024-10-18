@@ -3,20 +3,21 @@
  */
 
 import { createSlice } from "@reduxjs/toolkit";
-import { AxiosError } from "axios";
 import { BuddyDTO } from "types/buddy.types";
 
 interface BuddyState {
-  loading: boolean;
+  isLoading: boolean;
+  isSuccess: boolean;
+  isError: boolean;
   data: BuddyDTO[] | null;
-  // erorr: AxiosError | null;
   buddy: any | null;
 }
 
 const initialState: BuddyState = {
-  loading: false,
+  isLoading: false,
+  isSuccess: false,
+  isError: false,
   data: null,
-  // error: null,
   buddy: null,
 };
 
@@ -25,17 +26,17 @@ const buddySlice = createSlice({
   initialState,
   reducers: {
     getBuddies: (state) => {
-      // loading => true
-      state.loading = true;
+      state.isLoading = true;
     },
     getBuddiesSuccess: (state, { payload }) => {
-      // API 요청이 성공적이면 데이터를 payload에 들어온다.
+      state.isLoading = false;
+      state.isSuccess = true;
       state.data = payload;
-      state.loading = false;
+      state.buddy = payload[0];
     },
     getBuddiesError: (state, { payload }) => {
-      // state.error = payload;
-      state.loading = false;
+      state.isLoading = false;
+      state.isError = true;
     },
   },
 });

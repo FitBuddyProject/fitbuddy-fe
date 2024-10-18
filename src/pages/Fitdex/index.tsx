@@ -14,6 +14,8 @@ import { headerActions } from "../../store/slices/header";
 import BuddyComponent from "components/BuddyComponent";
 import Icon from "components/common/Icon/Icon";
 import { getDictionary } from "api/buddy";
+import { useSelector } from "react-redux";
+import { RootState } from "store/store";
 
 interface FitdexProps {}
 
@@ -35,7 +37,7 @@ const importAll = (r: any) => {
 const images = importAll(require.context("assets/images/buddies/", false, /\.(png|jpe?g|svg)$/));
 
 const Fitdex: React.FC<FitdexProps> = () => {
-  const uuid = localStorage.getItem("uuid");
+  const { userData } = useSelector((state: RootState) => state.auth);
 
   const dispatch = useDispatch();
   const [buddies, setBuddies] = useState<[]>([]);
@@ -76,8 +78,8 @@ const Fitdex: React.FC<FitdexProps> = () => {
   };
 
   const fetchBuddyDictionary = async () => {
-    if (!uuid) return;
-    const res = await getDictionary({ uuid });
+    if (!userData) return;
+    const res = await getDictionary({ uuid: userData.uuid });
     console.log(res.data);
   };
 

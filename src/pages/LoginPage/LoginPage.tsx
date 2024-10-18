@@ -78,8 +78,9 @@ const LoginPage = () => {
       if (userRes) {
         // SEL-1: 아이디 있는 경우 > mainPage 로 이동
         const { headers, data } = userRes;
-
         setAuthorizationHeader(headers.authorization);
+        localStorage.setItem("authToken", headers.authorization);
+        
         dispatch(authActions.loginRequestSuccess(data));
         navigate("/");
       } else {

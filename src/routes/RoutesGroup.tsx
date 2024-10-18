@@ -16,7 +16,6 @@ import MyInfoModify from "pages/MyInfo";
 const RoutesGroup = () => {
   const isAuthenticated = () => {
     const userData = localStorage.getItem("userData");
-    console.log("userData:: {}", userData);
     return !!userData;
   };
   return (
@@ -30,7 +29,7 @@ const RoutesGroup = () => {
       <Route path="/info" element={<AuthRoute element={<InfoPage />} isAuthenticated={isAuthenticated()} />} />
       <Route path="/my-info" element={<AuthRoute element={<MyInfo />} isAuthenticated={isAuthenticated()} />} />
       <Route path="/history" element={<AuthRoute element={<HistoryPage />} isAuthenticated={isAuthenticated()} />} />
-      {/* <Route path="/my-fitdex" element={<AuthRoute element={<Fitdex />} isAuthenticated={isAuthenticated()} />} /> */}
+      <Route path="/my-fitdex" element={<AuthRoute element={<Fitdex />} isAuthenticated={isAuthenticated()} />} />
       <Route
         path="/my-info-modify"
         element={<AuthRoute element={<MyInfoModify />} isAuthenticated={isAuthenticated()} />}

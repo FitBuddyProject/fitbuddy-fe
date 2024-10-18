@@ -12,8 +12,8 @@ export const getDetail = async (payload: any) => {
 };
 
 // 액션 히스토리
-export const getHistories = async () => {
-  return await api.get(`${PREFIX}/histories`);
+export const getHistories = async (payload: any) => {
+  return await api.get(`${PREFIX}/histories?year=${payload.year}&month=${payload.month}`);
 };
 
 // 캘린더

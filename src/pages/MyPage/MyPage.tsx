@@ -72,6 +72,7 @@ const MyPage = () => {
     console.log("logging out");
     dispatch(modalActions.closeModal());
     dispatch(authActions?.logout());
+    localStorage.removeItem("autoToken");
     localStorage.removeItem("userData");
     navigate("/login");
   };
