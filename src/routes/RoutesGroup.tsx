@@ -16,7 +16,6 @@ import MyInfoModify from "pages/MyInfo";
 const RoutesGroup = () => {
   const isAuthenticated = () => {
     const userData = localStorage.getItem("userData");
-    console.log("userData:: {}", userData);
     return !!userData;
   };
   return (

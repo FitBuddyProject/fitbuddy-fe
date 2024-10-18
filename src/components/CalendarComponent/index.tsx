@@ -17,11 +17,12 @@ export interface CalendarProps {
   workoutDayList: string[];
 }
 
-const CalendarComponent = ({ isCalendarUp, setIsCalendarUp }: any) => {
+const CalendarComponent = () => {
   const today = new Date();
   const [value, setValue] = useState<Value>(today);
   const [workoutDayList, setWorkoutDayList] = useState<string[]>([]);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [isCalendarUp, setIsCalendarUp] = useState<boolean | null>(false);
 
   const data = {
     contents: "내용입니다 내용내용내용입니다 내용내용내용입니다 내용내용내용입니다 내용내용",

@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { Button } from "components/common/Button";
 import {
@@ -28,13 +28,11 @@ import "swiper/css/pagination";
 
 import BuddyComponent from "components/BuddyComponent";
 import { makeFriends } from "api/buddy";
-import { RootState } from "store/store";
 
 const SelectBuddy = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { userData } = useSelector((state: RootState) => state.auth);
   const [statePhone, setStatePhone] = useState("");
   const [stateNickname, setStateNickname] = useState("");
   const [stateBuddy, setStateBuddy] = useState("");
@@ -58,9 +56,6 @@ const SelectBuddy = () => {
   }, []);
 
   const handleClickNext = async () => {
-    // 캐릭터 생성
-    createBuddy();
-
     // sign-up 하기
     const payload = {
       phone: statePhone,
@@ -70,9 +65,18 @@ const SelectBuddy = () => {
     try {
       const res = await signup(payload);
       console.log(123, res);
-      if (res.status == 200) {
+      if (res.status === 200) {
         // 회원가입 성공
-        navigate(`/login`);
+        const { headers, data } = res;
+        setAuthorizationHeader(headers.authorization);
+        localStorage.setItem("authToken", headers.authorization);
+
+        // 캐릭터 생성
+        createBuddy(data.uuid);
+
+        // store에 user data 저장
+        dispatch(authActions.loginRequestSuccess(data));
+        navigate("/");
       }
     } catch (error: any) {
       enqueueSnackbar(error?.response?.data, {
@@ -80,24 +84,16 @@ const SelectBuddy = () => {
         autoHideDuration: 3000,
         anchorOrigin: { vertical: "top", horizontal: "center" },
       });
-      const params = {
-        phone: statePhone,
-      };
-      const { headers, data } = await signin(params);
-      setAuthorizationHeader(headers.authorization);
-      dispatch(authActions.loginRequestSuccess(data));
-      navigate("/");
     }
   };
 
   const handleInput = (payload: { value: string }) => {
-    console.log(payload);
     setStateNickname(payload?.value);
   };
 
-  const createBuddy = async () => {
+  const createBuddy = async (uuid: string) => {
     const payload = {
-      userUuid: userData?.uuid,
+      userUuid: uuid,
       name: stateNickname,
       buddy: stateBuddy,
     };

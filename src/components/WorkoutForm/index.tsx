@@ -92,8 +92,8 @@ const WorkoutForm = () => {
     }
     // TODO :: 유효성 검사 및 form submit
     console.log({ workoutName, time, level, contents });
-    // dispatch(activityActions.showWorkoutForm({ isShowForm: false }));
-    // dispatch(activityActions.activeActivity({ isActive: true }));
+    dispatch(activityActions.showWorkoutForm({ isShowForm: false }));
+    dispatch(activityActions.activeActivity({ isActive: true }));
   };
 
   // 운동 이름 선택

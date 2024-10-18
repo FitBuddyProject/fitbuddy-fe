@@ -10,15 +10,15 @@ import CustomOrbitControls from "./controls/CustomOrbitControls";
 
 import styled from "styled-components";
 import { theme } from "styles/theme";
+import { useSelector } from "react-redux";
 
 function Loader() {
   const { progress } = useProgress();
   return <Html center>{progress} % loaded</Html>;
 }
 
-const BuddyComponent = ({ fileName = "chick_lv_1", isComponent = false, isShowLabel = true, level = 1 }) => {
+const BuddyComponent = ({ fileName = "chick_lv_1", isComponent = false, isShowLabel = true, level = 1, name = "" }) => {
   const dispatch = useDispatch();
-  const [name, setName] = useState("");
 
   const handlePet = () => {
     if (isComponent) return;
@@ -42,8 +42,8 @@ const BuddyComponent = ({ fileName = "chick_lv_1", isComponent = false, isShowLa
       </Canvas>
       {isShowLabel && (
         <LabelBox>
-          <span className="level">LV {level}</span>
-          <span className="name">올망이</span>
+          <span className="level">LV 1</span>
+          <span className="name"></span>
         </LabelBox>
       )}
     </Container>
