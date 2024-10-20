@@ -3,6 +3,9 @@ import { activityActions } from "store/slices/activity";
 
 import styled from "styled-components";
 import Icon, { IconType } from "components/common/Icon/Icon";
+import { startAction } from "api/action";
+import { useSelector } from "react-redux";
+import { RootState } from "store/store";
 
 type ActionProps = {
   value: string;
@@ -12,37 +15,53 @@ type ActionProps = {
 
 const ActionNav = () => {
   const dispatch = useDispatch();
+  const { userData } = useSelector((state: RootState) => state.auth);
 
   // 활동 네비게이션 목록
   const actionList: ActionProps[] = [
     {
       label: "운동",
-      value: "workout",
+      value: "EXERCISE",
       icon: "LiftingWeights",
     },
     {
       label: "샤워",
-      value: "shower",
+      value: "SHOWER",
       icon: "Bathtub",
     },
     {
       label: "잠자기",
-      value: "sleep",
+      value: "SLEEP",
       icon: "Bad",
     },
     {
       label: "대화",
-      value: "talk",
+      value: "TALK",
       icon: "ThoughtBalloon",
     },
   ];
 
   const openForm = (value: string) => {
-    switch (value) {
-      case "workout":
-        return dispatch(activityActions.showWorkoutForm({ isShowForm: true }));
-      default:
-        return dispatch(activityActions.activeActivity({ isActive: true }));
+    if (value === "EXERCISE") {
+      // 운동하기일 경우 운동일지 작성 폼 작성
+      dispatch(activityActions.showWorkoutForm({ isShowForm: true }));
+    } else {
+      activeAction(value);
+      dispatch(activityActions.activeActivity({ isActive: true }));
+    }
+  };
+
+  const activeAction = async (action: string) => {
+    const params = {
+      userUuid: userData?.uuid,
+      myBuddyUuid: userData?.uuid,
+      action: action,
+      actionStatus: "ON_GOING",
+      start: new Date(),
+    };
+    const res = await startAction(params);
+    localStorage.setItem("action", action);
+    if (res.status === 200) {
     }
   };
   return (

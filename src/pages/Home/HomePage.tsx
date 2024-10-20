@@ -21,12 +21,14 @@ const Home = () => {
   const dispatch = useDispatch();
   const { userData } = useSelector((state: RootState) => state.auth);
   const { buddy } = useSelector((state: RootState) => state.buddy);
-  const [character, setCharacter] = useState("");
   const { isActive } = useSelector((state: RootState) => state.activity);
+  const [character, setCharacter] = useState("");
+  const [name, setName] = useState("");
+  const [level, setLevel] = useState(0);
 
   const fetchDetail = async () => {
     const res = await getDetail({ uuid: userData?.uuid });
-    console.log(res);
+    console.log("fetchDetail :: {}", res);
   };
 
   useEffect(() => {
@@ -34,16 +36,20 @@ const Home = () => {
 
     const fetchBuddies = async () => {
       const res = await getBuddies({ uuid: userData.uuid });
-      dispatch(buddyActions.getBuddiesSuccess(res.data));
+      console.log("fetchBuddies :: {}", res);
+
+      if (res.status === 200) {
+        dispatch(buddyActions.getBuddiesSuccess(res.data));
+      } else {
+        dispatch(buddyActions.getBuddiesError());
+      }
     };
 
     fetchBuddies();
     fetchDetail();
-    getFileName();
-  }, [dispatch, userData]);
+  }, [userData]);
 
   const getFileName = () => {
-    if (!buddy) return;
     let type = "";
     switch (buddy.buddy) {
       case "CHICKEN":
@@ -59,11 +65,19 @@ const Home = () => {
     setCharacter(`${type}_lv_1`);
   };
 
+  useEffect(() => {
+    if (!buddy) return;
+    getFileName();
+
+    setName(buddy.name);
+    setLevel(buddy.exp);
+  }, [buddy]);
+
   return (
     <MainContainer>
       {/* 게이지 영역 */}
       <GaugeArea>
-        <ProgressBar label={`레벨${1}`} value={1} color={theme.color.primary} />
+        <ProgressBar label={`레벨${level}`} value={1} color={theme.color.primary} />
         <ProgressBar label="피로도" value={1} color={theme.color.error} />
       </GaugeArea>
 
@@ -71,21 +85,24 @@ const Home = () => {
       {isActive && <Timer />}
 
       {/* 캐릭터 영역 */}
-      <BuddyComponent fileName={character} level={1} name={"임시이름"} />
+      <BuddyComponent fileName={character} level={level} name={name} />
 
-      {/* 행동 영역 */}
-      <ActionNav />
+      <BottomArea>
+        {/* 행동 영역 */}
+        {!isActive && <ActionNav />}
+
+        {/* 달력 영역 */}
+        <CalendarComponent />
+      </BottomArea>
 
       {/* 운동하기 폼 */}
       <WorkoutForm />
-
-      {/* 달력 영역 */}
-      <CalendarComponent />
     </MainContainer>
   );
 };
 
 export default Home;
+
 
 const MainContainer = styled.main`
   height: 100%;
@@ -98,4 +115,11 @@ const GaugeArea = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
+`;
+
+
+const BottomArea = styled.div`
+  position: absolute;
+  width: 100%;
+  bottom: 0;
 `;

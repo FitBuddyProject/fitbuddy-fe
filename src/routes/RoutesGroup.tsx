@@ -12,6 +12,7 @@ import SelectBuddy from "pages/SelectBuddy/SelectBuddy";
 import Fitdex from "pages/Fitdex";
 import MyInfo from "pages/MyInfo";
 import MyInfoModify from "pages/MyInfo";
+import TermsPolicy from "pages/LoginPage/TermsPolicy";
 
 const RoutesGroup = () => {
   const isAuthenticated = () => {
@@ -34,6 +35,7 @@ const RoutesGroup = () => {
         path="/my-info-modify"
         element={<AuthRoute element={<MyInfoModify />} isAuthenticated={isAuthenticated()} />}
       />
+      <Route path="/terms" element={<AuthRoute element={<TermsPolicy />} isAuthenticated={isAuthenticated()} />} />
     </Routes>
   );
 };
