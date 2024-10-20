@@ -6,17 +6,20 @@ import { headerActions } from "store/slices/header";
 import { IconBox, ListItem } from "./HistoryPage.styles";
 import Icon from "components/common/Icon/Icon";
 import { getHistories } from "api/action";
+import { RootState } from "store/store";
+import dayjs from "dayjs";
 
 interface HistoryListProps {
   id: number;
-  type: string;
-  date: string;
+  action: "EXERCISE" | "SHOWER" | "SLEEP" | "TALK";
+  start: string;
   mp?: number;
   hp?: number;
 }
 
 const HistoryPage = () => {
   const dispatch = useDispatch();
+  const { userData } = useSelector((state: RootState) => state.auth);
   const [historyList, setHistoryList] = useState<HistoryListProps[]>([]);
 
   useEffect(() => {
@@ -25,7 +28,7 @@ const HistoryPage = () => {
 
   const renderIcon = (type: string) => {
     switch (type) {
-      case "WORKOUT":
+      case "EXERCISE":
         return <Icon icon="LiftingWeights" />;
       case "SHOWER":
         return <Icon icon="Bathtub" />;
@@ -44,7 +47,7 @@ const HistoryPage = () => {
 
   const renderAction = (type: string) => {
     switch (type) {
-      case "WORKOUT":
+      case "EXERCISE":
         return "운동하기";
       case "SHOWER":
         return "샤워하기";
@@ -61,63 +64,16 @@ const HistoryPage = () => {
     }
   };
 
-  useEffect(() => {
-    // TODO :: API 연결, 무한 스크롤 적용
-    const fetchHistoryList = async () => {
-      const data = [
-        {
-          id: 1,
-          type: "WORKOUT",
-          date: "7월 6일 13:11",
-          mp: 10,
-          hp: -10,
-        },
-        {
-          id: 2,
-          type: "SHOWER",
-          date: "7월 6일 13:11",
-          hp: -10,
-        },
-        {
-          id: 3,
-          type: "SLEEP",
-          date: "7월 6일 13:11",
-          mp: 10,
-          hp: -10,
-        },
-        {
-          id: 4,
-          type: "TALK",
-          date: "7월 6일 13:11",
-          mp: 10,
-          hp: -10,
-        },
-        {
-          id: 5,
-          type: "PAT",
-          date: "7월 6일 13:11",
-          mp: 10,
-          hp: -10,
-        },
-        {
-          id: 6,
-          type: "RECOVERY",
-          date: "7월 6일 13:11",
-          mp: 10,
-        },
-      ];
-      setHistoryList(data);
-    };
-    fetchHistoryList();
-  }, []);
-
   const fetchHistory = async () => {
     const params = {
+      uuid: userData?.uuid,
       year: 2024,
       month: 10,
     };
     const res = await getHistories(params);
-    console.log(res);
+    if (res.status === 200) {
+      setHistoryList(res.data);
+    }
   };
 
   useEffect(() => {
@@ -130,10 +86,10 @@ const HistoryPage = () => {
         {historyList.map((item: HistoryListProps) => (
           <ListItem key={item.id}>
             <div className="left">
-              <IconBox>{renderIcon(item.type)}</IconBox>
+              <IconBox>{renderIcon(item.action)}</IconBox>
               <div className="text">
-                <span className="action">{renderAction(item.type)}</span>
-                <span className="date">{item.date}</span>
+                <span className="action">{renderAction(item.action)}</span>
+                <span className="date">{dayjs(item.start).format("MM월 DD일 HH:mm")}</span>
               </div>
             </div>
             <div className="right">

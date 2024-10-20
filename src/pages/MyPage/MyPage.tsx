@@ -108,7 +108,7 @@ const MyPage = () => {
           <Icon icon="IconHistory" />
           <span>행동 기록</span>
         </MenuBox>
-        <MenuBox>
+        <MenuBox onClick={() => navigate("/terms")}>
           <Icon icon="IconNote" />
           이용약관
         </MenuBox>

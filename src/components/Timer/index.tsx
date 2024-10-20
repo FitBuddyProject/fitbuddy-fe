@@ -7,19 +7,33 @@ import { modalActions } from "store/slices/modal";
 import Modal from "components/Modal/Modal";
 import { theme } from "styles/theme";
 import { activityActions } from "store/slices/activity";
+import { cancelAction } from "api/action";
 
 const Timer = () => {
   const dispatch = useDispatch();
   const { showModal } = useSelector((state: RootState) => state.modal);
+  const { userData } = useSelector((state: RootState) => state.auth);
 
   const openModal = () => {
     dispatch(modalActions.openModal());
   };
 
-  const handelCancel = () => {
-    // TODO :: 운동 취소 api
-    dispatch(modalActions.closeModal());
-    dispatch(activityActions.activeActivity({ isActive: false }));
+  const handelCancel = async () => {
+    const params = {
+      userUuid: userData?.uuid,
+      myBuddyUuid: userData?.uuid,
+      action: localStorage.getItem("action"),
+      actionStatus: "CANCEL",
+      end: new Date(),
+    };
+    // 액션 취소
+    const res = await cancelAction(params);
+    console.log("res :: {}", res);
+    if (res.status === 200) {
+      dispatch(modalActions.closeModal());
+      dispatch(activityActions.activeActivity({ isActive: false }));
+      localStorage.removeItem("action");
+    }
   };
 
   return (

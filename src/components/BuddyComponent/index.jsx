@@ -1,4 +1,4 @@
-import { Suspense, useState } from "react";
+import { Suspense } from "react";
 import { useDispatch } from "react-redux";
 import { modalActions } from "store/slices/modal";
 import { Canvas } from "@react-three/fiber";
@@ -10,7 +10,6 @@ import CustomOrbitControls from "./controls/CustomOrbitControls";
 
 import styled from "styled-components";
 import { theme } from "styles/theme";
-import { useSelector } from "react-redux";
 
 function Loader() {
   const { progress } = useProgress();
@@ -42,8 +41,8 @@ const BuddyComponent = ({ fileName = "chick_lv_1", isComponent = false, isShowLa
       </Canvas>
       {isShowLabel && (
         <LabelBox>
-          <span className="level">LV 1</span>
-          <span className="name"></span>
+          <span className="level">LV {level}</span>
+          <span className="name">{name}</span>
         </LabelBox>
       )}
     </Container>

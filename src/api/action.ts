@@ -13,7 +13,8 @@ export const getDetail = async (payload: any) => {
 
 // 액션 히스토리
 export const getHistories = async (payload: any) => {
-  return await api.get(`${PREFIX}/histories?year=${payload.year}&month=${payload.month}`);
+  const { uuid, year, month } = payload;
+  return await api.get(`${PREFIX}/histories?userUuid=${uuid}&year=${year}&month=${month}`);
 };
 
 // 캘린더
@@ -27,11 +28,11 @@ export const startAction = async (payload: any) => {
 };
 
 // 액션/운동 취소
-export const cancelAction = async () => {
-  return await api.delete(`${PREFIX}/cancel`);
+export const cancelAction = async (payload: any) => {
+  return await api.delete(`${PREFIX}/cancel`, payload);
 };
 
 // 액션/운동 종료
-export const finishAction = async (payload: any) => {
+export const doneAction = async (payload: any) => {
   return await api.patch(`${PREFIX}/done`);
 };
