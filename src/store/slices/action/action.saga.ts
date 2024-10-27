@@ -19,7 +19,7 @@ function* getHistories(action: PayloadAction<any>) {
 
 function* getCalendar(action: PayloadAction<any>) {
   try {
-    const response: AxiosResponse<any> = yield call(actionAPI.getCalendar);
+    const response: AxiosResponse<any> = yield call(actionAPI.getCalendar,  action.payload);
     yield put(actionActions.getCalendarSuccess(response.data));
   } catch (error: any) {
     yield put(actionActions.getCalendarFailed(error.message));

@@ -29,7 +29,7 @@ const Container = styled.div`
   padding: 1.6rem;
   transition: 0.25s;
   visibility: hidden;
-  z-index: 10;
+  z-index: 1000;
   transition: 0.25s;
 
   &.on {

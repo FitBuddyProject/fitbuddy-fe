@@ -95,6 +95,7 @@ const Home = () => {
         <CalendarComponent />
       </BottomArea>
 
+
       {/* 운동하기 폼 */}
       <WorkoutForm />
     </MainContainer>

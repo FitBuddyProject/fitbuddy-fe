@@ -6,6 +6,7 @@ import api from "./api";
 
 const PREFIX = "/v1/action";
 
+
 // 상세
 export const getDetail = async (payload: any) => {
   return await api.get(`${PREFIX}/${payload.uuid}`);
@@ -18,8 +19,9 @@ export const getHistories = async (payload: any) => {
 };
 
 // 캘린더
-export const getCalendar = async () => {
-  return await api.get(`${PREFIX}/calendar`);
+export const getCalendar = async (payload: {year: string, month: string, userUuid: string}) => {
+  console.log('payload check:: ', payload)
+  return await api.get(`${PREFIX}/calendar?year=${payload?.year}&month=${payload?.month}&userUuid=${payload?.userUuid}`);
 };
 
 // 액션/운동 시작

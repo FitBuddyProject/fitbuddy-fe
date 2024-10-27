@@ -3,7 +3,7 @@ import { StyledCalendar, Box } from "./calendar.styled";
 import dayjs from "dayjs";
 import { CalendarProps } from "components/CalendarComponent";
 
-const FullCalendar = ({ today, value, setValue, onClickDay, workoutDayList }: CalendarProps) => {
+const FullCalendar = ({ today, value, setValue, onClickDay, workoutDayList, onClickMonth }: CalendarProps) => {
   // 클래스를 지정합니다.
   const tileClassName = ({ date }: any) => {
     if (dayjs(date).format("YYYY-MM-DD") === dayjs(today).format("YYYY-MM-DD")) return "today";
@@ -37,6 +37,7 @@ const FullCalendar = ({ today, value, setValue, onClickDay, workoutDayList }: Ca
       formatDay={(locale, date) => dayjs(date).format("DD")}
       tileClassName={tileClassName}
       onChange={setValue}
+      onClickMonth={onClickMonth}
       onClickDay={onClickDay}
       tileContent={addContent}
       showNeighboringMonth={false}
