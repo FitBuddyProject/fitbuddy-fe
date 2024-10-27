@@ -24,6 +24,8 @@ import InputField from "components/common/InputField";
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { debounce } from "lodash";
+import { stat } from "fs";
+import { startAction } from "api/action";
 
 export interface WorkoutOptionProps {
   label: string;
@@ -47,15 +49,15 @@ const workoutOptions: WorkoutOptionProps[] = [
 const Levels = [
   {
     label: "상",
-    value: "high",
+    value: "STRONG",
   },
   {
     label: "중",
-    value: "middle",
+    value: "MEDIUM",
   },
   {
     label: "하",
-    value: "low",
+    value: "WEAK",
   },
 ];
 
@@ -68,6 +70,7 @@ const initForm = {
 
 const WorkoutForm = () => {
   const dispatch = useDispatch();
+  const { userData } = useSelector((state: RootState) => state.auth);
   const isShowForm = useSelector((state: RootState) => state.activity.isShowForm);
   const isFormModify = useSelector((state: RootState) => state.activity.isModify);
   const formRef = useRef<null | HTMLFormElement>(null);
@@ -97,26 +100,31 @@ const WorkoutForm = () => {
   };
 
   // 기록 완료 저장
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (formRef.current) {
       const formData = new FormData(formRef.current);
-
-      const data = {
-        name: formData.get("name") as string,
-        time: formData.get("time") as string,
-        level: formData.get("level") as string,
-        contents: formData.get("contents") as string,
+      const params = {
+        userUuid: userData?.uuid,
+        myBuddyUuid: userData?.uuid,
+        action: "EXERCISE",
+        actionStatus: "ON_GOING",
+        start: new Date(),
+        athlete: {
+          exerciseType: formData.get("name") as string,
+          duration: formData.get("time") as string,
+          intensity: formData.get("level") as string,
+          diary: formData.get("contents") as string,
+        },
       };
+
+      const res = await startAction(params);
+      if (res.status === 200) {
+        localStorage.setItem("action", "EXERCISE");
+        dispatch(activityActions.showWorkoutForm({ isShowForm: false }));
+        dispatch(activityActions.activeActivity({ isActive: true }));
+      }
     }
-    if(isFormModify){
-      // 수정인 경우 API
-    } else {
-      // 수정이 아닌경우
-    }
-    // TODO :: 유효성 검사 및 form submit
-    handleClose();
-    dispatch(activityActions.activeActivity({ isActive: true }));
   };
 
   // 운동 이름 선택

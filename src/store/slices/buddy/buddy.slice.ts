@@ -34,7 +34,7 @@ const buddySlice = createSlice({
       state.data = payload;
       state.buddy = payload[0];
     },
-    getBuddiesError: (state, { payload }) => {
+    getBuddiesError: (state) => {
       state.isLoading = false;
       state.isError = true;
     },
