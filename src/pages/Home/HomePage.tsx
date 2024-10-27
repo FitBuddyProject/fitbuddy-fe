@@ -76,6 +76,7 @@ const Home = () => {
       {/* 행동 영역 */}
       <ActionNav />
 
+
       {/* 운동하기 폼 */}
       <WorkoutForm />
 

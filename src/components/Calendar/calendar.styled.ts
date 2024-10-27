@@ -56,9 +56,13 @@ const StyledCalendar = styled(Calendar)`
   .react-calendar__month-view__days {
     button {
       display: flex;
+      height: 60px;  
       flex-direction: column;
       align-items: center;
       gap: 0.6rem;
+        abbr{
+            padding: 1px;
+        }
     }
   }
 

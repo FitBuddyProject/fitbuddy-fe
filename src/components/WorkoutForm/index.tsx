@@ -59,23 +59,41 @@ const Levels = [
   },
 ];
 
+const initForm = {
+  time: "60",
+  level: "high",
+  workoutName: "",
+  contents: ""
+}
+
 const WorkoutForm = () => {
   const dispatch = useDispatch();
   const isShowForm = useSelector((state: RootState) => state.activity.isShowForm);
-
+  const isFormModify = useSelector((state: RootState) => state.activity.isModify);
   const formRef = useRef<null | HTMLFormElement>(null);
 
-  const [workoutName, setWorkoutName] = useState("");
-  const [time, setTime] = useState("60");
-  const [level, setLevel] = useState("high");
-  const [contents, setContents] = useState("");
+  const [workoutName, setWorkoutName] = useState(initForm.workoutName);
+  const [time, setTime] = useState(initForm.time);
+  const [level, setLevel] = useState(initForm.level);
+  const [contents, setContents] = useState(initForm.contents);
   const [isAddWorkout, setIsAddWorkout] = useState(false);
   const [selected, setSelected] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+
+  const clearInputs = () => {
+    console.log("clear")
+    setContents(initForm.contents);
+    setLevel(initForm.level);
+    setTime(initForm.time);
+    setWorkoutName(initForm.workoutName);
+  }
+
   // 운동하기 폼 닫기
   const handleClose = () => {
+    clearInputs();
     dispatch(activityActions.showWorkoutForm({ isShowForm: false }));
+    dispatch(activityActions?.isWorkoutFormModify({isModify: false}));
   };
 
   // 기록 완료 저장
@@ -83,6 +101,7 @@ const WorkoutForm = () => {
     e.preventDefault();
     if (formRef.current) {
       const formData = new FormData(formRef.current);
+
       const data = {
         name: formData.get("name") as string,
         time: formData.get("time") as string,
@@ -90,21 +109,25 @@ const WorkoutForm = () => {
         contents: formData.get("contents") as string,
       };
     }
+    if(isFormModify){
+      // 수정인 경우 API
+    } else {
+      // 수정이 아닌경우
+    }
     // TODO :: 유효성 검사 및 form submit
-    console.log({ workoutName, time, level, contents });
-    dispatch(activityActions.showWorkoutForm({ isShowForm: false }));
+    handleClose();
     dispatch(activityActions.activeActivity({ isActive: true }));
   };
 
   // 운동 이름 선택
   const handleSelectLabel = (value: string) => {
     setSelected(value);
-
     if (value === "ADD") {
       setIsAddWorkout(true);
     } else {
       setIsAddWorkout(false);
     }
+    setWorkoutName(value);
   };
 
   const validateInput = (input: string) => {
