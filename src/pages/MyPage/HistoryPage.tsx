@@ -8,6 +8,7 @@ import Icon from "components/common/Icon/Icon";
 import { getHistories } from "api/action";
 import { RootState } from "store/store";
 import dayjs from "dayjs";
+import { EmptyData } from "components/EmptyData";
 
 interface HistoryListProps {
   id: number;
@@ -79,9 +80,9 @@ const HistoryPage = () => {
   useEffect(() => {
     fetchHistory();
   }, []);
-
   return (
     <main>
+      {historyList.length === 0 && <EmptyData />}
       <ul>
         {historyList.map((item: HistoryListProps) => (
           <ListItem key={item.id}>
