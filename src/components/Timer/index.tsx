@@ -48,13 +48,13 @@ const Timer = () => {
   const handelCancel = async () => {
     const params = {
       userUuid: userData?.uuid,
+      uuid: localStorage.getItem("exercise-uuid"),
       myBuddyUuid: userData?.uuid,
       action: action,
       actionStatus: "CANCEL",
       end: new Date(),
     };
     const res = await cancelAction(params);
-    console.log("cancelAction :: {}", res);
     if (res.status === 200) {
       dispatch(modalActions.closeModal());
       dispatch(activityActions.inactiveActivity());
