@@ -31,7 +31,7 @@ export const startAction = async (payload: any) => {
 
 // 액션/운동 취소
 export const cancelAction = async (payload: any) => {
-  return await api.delete(`${PREFIX}/cancel`, payload);
+  return await api.delete(`${PREFIX}/cancel`, {data: payload});
 };
 
 // 액션/운동 종료

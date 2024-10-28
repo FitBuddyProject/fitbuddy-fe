@@ -123,6 +123,7 @@ const WorkoutForm = () => {
         dispatch(activityActions.showWorkoutForm({ isShowForm: false }));
         dispatch(activityActions.activeActivity({ action: "EXERCISE" }));
         localStorage.setItem("timeLeft", (60 * 60).toString());
+        localStorage.setItem('exercise-uuid', res.data);
       }
     }
   };
