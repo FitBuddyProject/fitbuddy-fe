@@ -36,5 +36,5 @@ export const cancelAction = async (payload: any) => {
 
 // 액션/운동 종료
 export const doneAction = async (payload: any) => {
-  return await api.patch(`${PREFIX}/done`);
+  return await api.patch(`${PREFIX}/done`, payload);
 };

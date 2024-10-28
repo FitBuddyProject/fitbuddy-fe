@@ -27,7 +27,7 @@ export const syncPushToken = async (payload: any) => {
 };
 
 export const syncTired = async (payload: any) => {
-  return await api.patch(`${PREFIX}/sync/tired`);
+  return await api.patch(`${PREFIX}/sync/tired`, payload);
 };
 
 export const verifyPhone = async (payload: any) => {

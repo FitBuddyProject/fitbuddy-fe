@@ -16,6 +16,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "store/store";
 import { buddyActions } from "store/slices/buddy/buddy.slice";
 import CalendarComponent from "components/CalendarComponent";
+import { syncTired } from "api/user";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -95,7 +96,6 @@ const Home = () => {
         <CalendarComponent />
       </BottomArea>
 
-
       {/* 운동하기 폼 */}
       <WorkoutForm />
     </MainContainer>
@@ -103,7 +103,6 @@ const Home = () => {
 };
 
 export default Home;
-
 
 const MainContainer = styled.main`
   height: 100%;
@@ -117,7 +116,6 @@ const GaugeArea = styled.div`
   flex-direction: column;
   gap: 10px;
 `;
-
 
 const BottomArea = styled.div`
   position: absolute;

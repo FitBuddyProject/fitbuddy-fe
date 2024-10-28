@@ -24,7 +24,7 @@ const BuddyComponent = ({ fileName = "chick_lv_1", isComponent = false, isShowLa
     dispatch(
       modalActions.pushNotificationModal({
         content: `쓰다듬어줘서 고마워요.\n내일 다시 쓰다듬어 주세요.🥰`,
-        subContent: `피로도 -2 경험치 +6`,
+        subContent: `피로도 -25 경험치 +5`,
       })
     );
   };
