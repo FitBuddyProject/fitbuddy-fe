@@ -6,6 +6,7 @@ import Icon, { IconType } from "components/common/Icon/Icon";
 import { startAction } from "api/action";
 import { useSelector } from "react-redux";
 import { RootState } from "store/store";
+import { earnExp } from "api/buddy";
 
 type ActionProps = {
   value: string;
@@ -42,13 +43,43 @@ const ActionNav = () => {
   ];
 
   const openForm = (value: string) => {
+    // timeLeft;
     if (value === "EXERCISE") {
       // 운동하기일 경우 운동일지 작성 폼 작성
       dispatch(activityActions.showWorkoutForm({ isShowForm: true }));
     } else {
       activeAction(value);
-      dispatch(activityActions.activeActivity({ isActive: true }));
+
+      if (value === "TALK") {
+        handleExp();
+      }
+
+      let timeLeft = 0;
+      switch (value) {
+        case "SHOWER":
+          timeLeft = 0.1;
+          dispatch(activityActions.activeActivity({ action: value }));
+          break;
+        case "SLEEP":
+          timeLeft = 120;
+          dispatch(activityActions.activeActivity({ action: value }));
+          break;
+      }
+
+      // 대화하기는 경험치만 올림
+      if (timeLeft !== 0) {
+        localStorage.setItem("timeLeft", (timeLeft * 60).toString());
+      }
     }
+  };
+
+  const handleExp = async () => {
+    const params = {
+      uuid: userData?.uuid,
+      exp: 5,
+    };
+    const res = await earnExp(params);
+    console.log("earnExp :: {}", res);
   };
 
   const activeAction = async (action: string) => {
@@ -60,9 +91,7 @@ const ActionNav = () => {
       start: new Date(),
     };
     const res = await startAction(params);
-    localStorage.setItem("action", action);
-    if (res.status === 200) {
-    }
+    console.log("startAction :: {}", res);
   };
   return (
     <Container>

@@ -7,41 +7,100 @@ import { modalActions } from "store/slices/modal";
 import Modal from "components/Modal/Modal";
 import { theme } from "styles/theme";
 import { activityActions } from "store/slices/activity";
-import { cancelAction } from "api/action";
+import { cancelAction, doneAction } from "api/action";
+import { useEffect, useState } from "react";
+import { earnExp } from "api/buddy";
 
 const Timer = () => {
   const dispatch = useDispatch();
   const { showModal } = useSelector((state: RootState) => state.modal);
   const { userData } = useSelector((state: RootState) => state.auth);
+  const { action, isActive } = useSelector((state: RootState) => state.activity);
+  const [timeLeft, setTimeLeft] = useState<number>(() => {
+    const savedTime = localStorage.getItem("timeLeft");
+    return savedTime ? parseInt(savedTime, 10) : 0;
+  });
 
+  useEffect(() => {
+    if (isActive) {
+      let timer: NodeJS.Timeout;
+
+      if (isActive && timeLeft > 0) {
+        timer = setInterval(() => {
+          setTimeLeft((prevTime) => prevTime - 1);
+        }, 1000);
+      } else if (timeLeft === 0) {
+        handleTimerEnd();
+      }
+
+      localStorage.setItem("timeLeft", timeLeft.toString());
+
+      return () => clearInterval(timer);
+    }
+  }, [isActive, timeLeft]);
+
+  // 액션 취소 컨펌 팝업
   const openModal = () => {
     dispatch(modalActions.openModal());
   };
 
+  // 액션 취소
   const handelCancel = async () => {
     const params = {
       userUuid: userData?.uuid,
       myBuddyUuid: userData?.uuid,
-      action: localStorage.getItem("action"),
+      action: action,
       actionStatus: "CANCEL",
       end: new Date(),
     };
-    // 액션 취소
     const res = await cancelAction(params);
-    console.log("res :: {}", res);
+    console.log("cancelAction :: {}", res);
     if (res.status === 200) {
       dispatch(modalActions.closeModal());
-      dispatch(activityActions.activeActivity({ isActive: false }));
-      localStorage.removeItem("action");
+      dispatch(activityActions.inactiveActivity());
     }
   };
 
+  // 액션 종료
+  const handleTimerEnd = async () => {
+    const params = {
+      userUuid: userData?.uuid,
+      myBuddyUuid: userData?.uuid,
+      action: action,
+      actionStatus: "DONE",
+      end: new Date(),
+    };
+    const res = await doneAction(params);
+    console.log("doneAction:: {}", res);
+    if (res.status === 200) {
+      dispatch(activityActions.inactiveActivity());
+      localStorage.removeItem("timeLeft");
+      handleExp();
+    }
+  };
+
+  const handleExp = async () => {
+    const params = {
+      uuid: userData?.uuid,
+      exp: action === "SHOWER" ? 5 : 0,
+    };
+    const res = await earnExp(params);
+    console.log("earnExp :: {}", res);
+  };
+
+  // 시간 포맷
+  const formatTime = (seconds: number) => {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+    return `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+  };
   return (
     <>
       <Container>
         <TimeArea>
           <span className="txt">남은시간</span>
-          <span className="time">01:33:26</span>
+          <span className="time">{formatTime(timeLeft)}</span>
         </TimeArea>
         <CancelBtn onClick={openModal}>운동 취소하기</CancelBtn>
       </Container>

@@ -27,6 +27,6 @@ export const changeBuddy = async (payload: any) => {
 };
 
 // 경험치 조정
-export const earnExp = async () => {
-  return await api.patch(`${PREFIX}/earn-exp`);
+export const earnExp = async (payload: any) => {
+  return await api.patch(`${PREFIX}/earn-exp`, payload);
 };

@@ -120,9 +120,9 @@ const WorkoutForm = () => {
 
       const res = await startAction(params);
       if (res.status === 200) {
-        localStorage.setItem("action", "EXERCISE");
         dispatch(activityActions.showWorkoutForm({ isShowForm: false }));
-        dispatch(activityActions.activeActivity({ isActive: true }));
+        dispatch(activityActions.activeActivity({ action: "EXERCISE" }));
+        localStorage.setItem("timeLeft", (60 * 60).toString());
       }
     }
   };
