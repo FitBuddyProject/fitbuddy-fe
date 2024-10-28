@@ -16,8 +16,8 @@ import TermsPolicy from "pages/LoginPage/TermsPolicy";
 
 const RoutesGroup = () => {
   const isAuthenticated = () => {
-    const userData = localStorage.getItem("userData");
-    return !!userData;
+    const authToken = localStorage.getItem("authToken");
+    return !!authToken;
   };
   return (
     <Routes>
