@@ -43,7 +43,6 @@ const ActionNav = () => {
   ];
 
   const openForm = (value: string) => {
-    // timeLeft;
     if (value === "EXERCISE") {
       // 운동하기일 경우 운동일지 작성 폼 작성
       dispatch(activityActions.showWorkoutForm({ isShowForm: true }));
@@ -91,7 +90,9 @@ const ActionNav = () => {
       start: new Date(),
     };
     const res = await startAction(params);
-    console.log("startAction :: {}", res);
+    if (res.status === 200) {
+      localStorage.setItem("exercise-uuid", res.data);
+    }
   };
   return (
     <Container>
