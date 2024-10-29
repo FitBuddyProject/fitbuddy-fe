@@ -59,6 +59,7 @@ const Timer = () => {
       localStorage.removeItem("exercise-uuid");
       dispatch(modalActions.closeModal());
       dispatch(activityActions.inactiveActivity());
+      localStorage.removeItem("exercise-uuid");
     }
   };
 
@@ -76,6 +77,7 @@ const Timer = () => {
     if (res.status === 200) {
       dispatch(activityActions.inactiveActivity());
       localStorage.removeItem("timeLeft");
+      localStorage.removeItem("exercise-uuid");
       handleExp();
     }
   };
