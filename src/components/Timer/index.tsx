@@ -56,6 +56,7 @@ const Timer = () => {
     };
     const res = await cancelAction(params);
     if (res.status === 200) {
+      localStorage.removeItem("exercise-uuid");
       dispatch(modalActions.closeModal());
       dispatch(activityActions.inactiveActivity());
     }

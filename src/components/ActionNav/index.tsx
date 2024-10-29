@@ -91,7 +91,7 @@ const ActionNav = () => {
       start: new Date(),
     };
     const res = await startAction(params);
-    console.log("startAction :: {}", res);
+    localStorage.setItem('exercise-uuid', res.data);
   };
   return (
     <Container>
