@@ -22,8 +22,9 @@ interface VerifyVerificationProps {
 }
 
 const VerifyVerification: React.FC<VerifyVerificationProps> = ({ onSubmit, verifyCode }) => {
-    const [stateVerifyCode, setStateVerifyCode] = useState<any[]>([]); // 사용자 입력한 번호
+    const [stateVerifyCode, setStateVerifyCode] = useState<any[]>(['', '', '', '', '', '']); // 사용자 입력한 번호
     const dispatch = useDispatch();
+
 
     useEffect(() => {
         dispatch(headerActions.setTitle("회원가입/로그인"));
@@ -61,13 +62,17 @@ const VerifyVerification: React.FC<VerifyVerificationProps> = ({ onSubmit, verif
     };
 
     const handleInput = (payload: { index: number, value: string }) => {
+        payload.value = payload.value.substring(0, 1);
         setStateVerifyCode((prev: any[]) => {
-            const updatedArray: any[] = [...prev];
-            if((updatedArray[payload.index]?.length ?? 0) >= 1){
-                console.log("over limit:: ", updatedArray[payload.index])
-                return updatedArray[payload.index];
+            const updatedArray = [...prev];
+            const formElements = document.querySelectorAll("input");
+            if ((updatedArray[payload.index]?.length || 0) <= 1) {
+                updatedArray[payload.index] = payload.value;
+                if (updatedArray[payload.index].length >= 0) {
+                    formElements[payload.index + 1]?.focus();
+                }
             }
-            updatedArray[payload.index] = payload.value;
+
             return updatedArray;
         });
     };
