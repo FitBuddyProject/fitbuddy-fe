@@ -61,9 +61,12 @@ const VerifyVerification: React.FC<VerifyVerificationProps> = ({ onSubmit, verif
     };
 
     const handleInput = (payload: { index: number, value: string }) => {
-        console.log(payload);
         setStateVerifyCode((prev: any[]) => {
             const updatedArray: any[] = [...prev];
+            if((updatedArray[payload.index]?.length ?? 0) >= 1){
+                console.log("over limit:: ", updatedArray[payload.index])
+                return updatedArray[payload.index];
+            }
             updatedArray[payload.index] = payload.value;
             return updatedArray;
         });
@@ -74,17 +77,17 @@ const VerifyVerification: React.FC<VerifyVerificationProps> = ({ onSubmit, verif
             <TopSect>
                 <Title>인증번호 6자리를 입력하세요. </Title>
                 <InputWrapper>
-                    <InputBox maxLength={1} type="number"
+                    <InputBox maxLength={1} type="number" value={stateVerifyCode[0]}
                               onChange={(event) => handleInput({ index: 0, value: event.target.value })}></InputBox>
-                    <InputBox maxLength={1} type="number"
+                    <InputBox maxLength={1} type="number" value={stateVerifyCode[1]}
                               onChange={(event) => handleInput({ index: 1, value: event.target.value })}></InputBox>
-                    <InputBox maxLength={1} type="number"
+                    <InputBox maxLength={1} type="number" value={stateVerifyCode[2]}
                               onChange={(event) => handleInput({ index: 2, value: event.target.value })}></InputBox>
-                    <InputBox maxLength={1} type="number"
+                    <InputBox maxLength={1} type="number" value={stateVerifyCode[3]}
                               onChange={(event) => handleInput({ index: 3, value: event.target.value })}></InputBox>
-                    <InputBox maxLength={1} type="number"
+                    <InputBox maxLength={1} type="number" value={stateVerifyCode[4]}
                               onChange={(event) => handleInput({ index: 4, value: event.target.value })}></InputBox>
-                    <InputBox maxLength={1} type="number"
+                    <InputBox maxLength={1} type="number" value={stateVerifyCode[5]}
                               onChange={(event) => handleInput({ index: 5, value: event.target.value })}></InputBox>
                 </InputWrapper>
                 <HintWrapper>
