@@ -48,6 +48,19 @@ const GlobalStyle = createGlobalStyle`
    textarea:focus, input:focus {
         outline: none;
     }
+   
+   .blink{
+       animation: blink 1.5s step-start infinite;
+   }
+   
+   @keyframes blink {
+       0%, 100% {
+           visibility: hidden;
+       }
+       50% {
+           visibility: visible;
+       }
+   }
 `;
 
 export default GlobalStyle;

@@ -64,7 +64,6 @@ const SelectBuddy = () => {
     };
     try {
       const res = await signup(payload);
-      console.log(123, res);
       if (res.status === 200) {
         // 회원가입 성공
         const { headers, data } = res;

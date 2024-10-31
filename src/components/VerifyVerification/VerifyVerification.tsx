@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { headerActions } from "../../store/slices/header";
 import {
     BottomSect,
@@ -14,6 +14,7 @@ import {
 import { Button } from "../common/Button";
 import main from "../../../.storybook/main";
 import { verifyPhone } from "../../api/user";
+import LoginTimer from "../LoginTimer";
 
 
 interface VerifyVerificationProps {
@@ -22,7 +23,8 @@ interface VerifyVerificationProps {
 }
 
 const VerifyVerification: React.FC<VerifyVerificationProps> = ({ onSubmit, verifyCode }) => {
-    const [stateVerifyCode, setStateVerifyCode] = useState<any[]>([]); // 사용자 입력한 번호
+    const [stateVerifyCode, setStateVerifyCode] = useState<any[]>(['', '', '', '', '', '']); // 사용자 입력한 번호
+    const timerRef = useRef<HTMLDivElement>(null);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -61,35 +63,53 @@ const VerifyVerification: React.FC<VerifyVerificationProps> = ({ onSubmit, verif
     };
 
     const handleInput = (payload: { index: number, value: string }) => {
-        console.log(payload);
+        payload.value = payload.value.substring(0, 1);
         setStateVerifyCode((prev: any[]) => {
-            const updatedArray: any[] = [...prev];
-            updatedArray[payload.index] = payload.value;
+            const updatedArray = [...prev];
+            const formElements = document.querySelectorAll("input");
+            if ((updatedArray[payload.index]?.length || 0) <= 1) {
+                updatedArray[payload.index] = payload.value;
+                if (updatedArray[payload.index].length >= 0) {
+                    formElements[payload.index + 1]?.focus();
+                }
+            }
+
             return updatedArray;
         });
     };
+
+
+    const onEndTimer =() => {
+        if(timerRef.current){
+            timerRef.current.classList.add("blink");
+            timerRef.current.style.color = 'red';
+        }
+
+    }
 
     return (
         <VerifyVerificationWrapper>
             <TopSect>
                 <Title>인증번호 6자리를 입력하세요. </Title>
                 <InputWrapper>
-                    <InputBox maxLength={1} type="number"
+                    <InputBox maxLength={1} type="number" value={stateVerifyCode[0]}
                               onChange={(event) => handleInput({ index: 0, value: event.target.value })}></InputBox>
-                    <InputBox maxLength={1} type="number"
+                    <InputBox maxLength={1} type="number" value={stateVerifyCode[1]}
                               onChange={(event) => handleInput({ index: 1, value: event.target.value })}></InputBox>
-                    <InputBox maxLength={1} type="number"
+                    <InputBox maxLength={1} type="number" value={stateVerifyCode[2]}
                               onChange={(event) => handleInput({ index: 2, value: event.target.value })}></InputBox>
-                    <InputBox maxLength={1} type="number"
+                    <InputBox maxLength={1} type="number" value={stateVerifyCode[3]}
                               onChange={(event) => handleInput({ index: 3, value: event.target.value })}></InputBox>
-                    <InputBox maxLength={1} type="number"
+                    <InputBox maxLength={1} type="number" value={stateVerifyCode[4]}
                               onChange={(event) => handleInput({ index: 4, value: event.target.value })}></InputBox>
-                    <InputBox maxLength={1} type="number"
+                    <InputBox maxLength={1} type="number" value={stateVerifyCode[5]}
                               onChange={(event) => handleInput({ index: 5, value: event.target.value })}></InputBox>
                 </InputWrapper>
                 <HintWrapper>
                     <HintText>인증번호 다시 받기</HintText>
-                    <TimeLeft>3:00</TimeLeft>
+                    <TimeLeft ref={timerRef}>
+                        <LoginTimer onEnd={onEndTimer}  min={3} second={0}/>
+                    </TimeLeft>
                 </HintWrapper>
             </TopSect>
 
