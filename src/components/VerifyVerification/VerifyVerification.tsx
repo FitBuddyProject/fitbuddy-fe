@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { headerActions } from "../../store/slices/header";
 import {
     BottomSect,
@@ -14,6 +14,7 @@ import {
 import { Button } from "../common/Button";
 import main from "../../../.storybook/main";
 import { verifyPhone } from "../../api/user";
+import LoginTimer from "../LoginTimer";
 
 
 interface VerifyVerificationProps {
@@ -23,8 +24,8 @@ interface VerifyVerificationProps {
 
 const VerifyVerification: React.FC<VerifyVerificationProps> = ({ onSubmit, verifyCode }) => {
     const [stateVerifyCode, setStateVerifyCode] = useState<any[]>(['', '', '', '', '', '']); // 사용자 입력한 번호
+    const timerRef = useRef<HTMLDivElement>(null);
     const dispatch = useDispatch();
-
 
     useEffect(() => {
         dispatch(headerActions.setTitle("회원가입/로그인"));
@@ -77,6 +78,15 @@ const VerifyVerification: React.FC<VerifyVerificationProps> = ({ onSubmit, verif
         });
     };
 
+
+    const onEndTimer =() => {
+        if(timerRef.current){
+            timerRef.current.classList.add("blink");
+            timerRef.current.style.color = 'red';
+        }
+
+    }
+
     return (
         <VerifyVerificationWrapper>
             <TopSect>
@@ -97,7 +107,9 @@ const VerifyVerification: React.FC<VerifyVerificationProps> = ({ onSubmit, verif
                 </InputWrapper>
                 <HintWrapper>
                     <HintText>인증번호 다시 받기</HintText>
-                    <TimeLeft>3:00</TimeLeft>
+                    <TimeLeft ref={timerRef}>
+                        <LoginTimer onEnd={onEndTimer}  min={3} second={0}/>
+                    </TimeLeft>
                 </HintWrapper>
             </TopSect>
 
