@@ -68,6 +68,7 @@ const Timer = () => {
     const params = {
       userUuid: userData?.uuid,
       myBuddyUuid: userData?.uuid,
+      uuid: localStorage.getItem("exercise-uuid"),
       action: action,
       actionStatus: "DONE",
       end: new Date(),
