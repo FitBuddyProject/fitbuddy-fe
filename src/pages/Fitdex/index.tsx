@@ -43,21 +43,38 @@ const Fitdex: React.FC<FitdexProps> = () => {
   const [buddies, setBuddies] = useState<[]>([]);
   const [isShowModal, setIsShowModal] = useState(false);
   const [fileName, setFileName] = useState<string>("");
+  const [myBuddies, setMyBuddies] = useState<string[]>([]);
 
   useEffect(() => {
     dispatch(headerActions.setTitle("나의 도감"));
   }, [dispatch]);
 
+  // 도감 리스트 가져오기
+  const fetchBuddyDictionary = async () => {
+    if (!userData) return;
+    const res = await getDictionary({ uuid: userData.uuid });
+    if (res.status === 200) {
+      setMyBuddies(res.data);
+    }
+  };
+
   useEffect(() => {
     const modifiedBuddies = images
       .filter((item: any) => {
         const fileNM = item.name.split("/")[0];
+        const level = fileNM.split("_lv_")[0];
 
-        // 이름설정
-        if (fileNM.includes("chick")) item.characterName = "삐약이";
+        // 이름 설정
+        if (fileNM.includes("chicken")) item.characterName = "삐약이";
         if (fileNM.includes("otter")) item.characterName = "수달이";
         if (fileNM.includes("monster")) item.characterName = "이상이";
-        return item.name.split("/").length === 1;
+
+        // myBuddies에 포함된 친구만 보여주기
+        const array = item.name.split("/");
+        if (array.length === 1) {
+          return myBuddies.map((buddy) => buddy.toLowerCase()).includes(level.toLowerCase());
+        }
+        return false;
       })
       .reduce((accumulator: any[], currentValue: any, index: number) => {
         if (index % 3 === 0) {
@@ -70,17 +87,11 @@ const Fitdex: React.FC<FitdexProps> = () => {
 
     // @ts-ignore
     setBuddies([...modifiedBuddies]);
-  }, []);
+  }, [myBuddies]);
 
   const showModal = (name: string) => {
     setFileName(name);
     setIsShowModal(true);
-  };
-
-  const fetchBuddyDictionary = async () => {
-    if (!userData) return;
-    const res = await getDictionary({ uuid: userData.uuid });
-    console.log(res.data);
   };
 
   useEffect(() => {

@@ -6,21 +6,20 @@ import { AuthState } from "../../../types/auth.types";
 
 // initial state
 const initialState: AuthState = {
-    userData: null,
-    headers: null,
-    isLoading: false,
-    isSuccess: false,
-    isError: false
+  userData: null,
+  headers: null,
+  isLoading: false,
+  isSuccess: false,
+  isError: false,
 };
 
 // helper
 const helperClear = (state: any) => {
-    state.isLoading = false;
-    state.isSuccess = false;
-    state.isError = false;
-    state.headers = null
+  state.isLoading = false;
+  state.isSuccess = false;
+  state.isError = false;
+  state.headers = null;
 };
-
 
 const authSlice = createSlice({
   name: "auth",
@@ -46,9 +45,11 @@ const authSlice = createSlice({
       helperClear(state);
       state.userData = null;
     },
+    setUserData(state, action: PayloadAction<UserDTO>) {
+      state.userData = action.payload;
+    },
   },
 });
-
 
 export const authActions = authSlice.actions;
 export default authSlice.reducer;

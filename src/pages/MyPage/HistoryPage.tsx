@@ -9,6 +9,7 @@ import { getHistories } from "api/action";
 import { RootState } from "store/store";
 import dayjs from "dayjs";
 import { EmptyData } from "components/EmptyData";
+import { actionActions } from "store/slices/action/action.slice";
 
 interface HistoryListProps {
   id: number;

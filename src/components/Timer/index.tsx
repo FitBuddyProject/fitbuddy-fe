@@ -1,25 +1,35 @@
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-
-import styled from "styled-components";
-
 import { RootState } from "store/store";
 import { modalActions } from "store/slices/modal";
-import Modal from "components/Modal/Modal";
-import { theme } from "styles/theme";
 import { activityActions } from "store/slices/activity";
+import { actionActions } from "store/slices/action/action.slice";
 import { cancelAction, doneAction } from "api/action";
-import { useEffect, useState } from "react";
-import { earnExp } from "api/buddy";
+import useUpdateUserData from "hooks/useUpdateUserData";
+
+import styled from "styled-components";
+import { theme } from "styles/theme";
+import Modal from "components/Modal/Modal";
 
 const Timer = () => {
   const dispatch = useDispatch();
   const { showModal } = useSelector((state: RootState) => state.modal);
   const { userData } = useSelector((state: RootState) => state.auth);
+  const { buddy } = useSelector((state: RootState) => state.buddy);
   const { action, isActive } = useSelector((state: RootState) => state.activity);
   const [timeLeft, setTimeLeft] = useState<number>(() => {
     const savedTime = localStorage.getItem("timeLeft");
     return savedTime ? parseInt(savedTime, 10) : 0;
   });
+  const { updateExp, updateTired } = useUpdateUserData(userData);
+
+  // 시간 포맷
+  const formatTime = (seconds: number) => {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+    return `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+  };
 
   useEffect(() => {
     if (isActive) {
@@ -39,17 +49,12 @@ const Timer = () => {
     }
   }, [isActive, timeLeft]);
 
-  // 액션 취소 컨펌 팝업
-  const openModal = () => {
-    dispatch(modalActions.openModal());
-  };
-
   // 액션 취소
   const handelCancel = async () => {
     const params = {
       userUuid: userData?.uuid,
       uuid: localStorage.getItem("exercise-uuid"),
-      myBuddyUuid: userData?.uuid,
+      myBuddyUuid: buddy?.uuid,
       action: action,
       actionStatus: "CANCEL",
       end: new Date(),
@@ -57,9 +62,9 @@ const Timer = () => {
     const res = await cancelAction(params);
     if (res.status === 200) {
       localStorage.removeItem("exercise-uuid");
+      // dispatch(actionActions.setActionUuid(""));
       dispatch(modalActions.closeModal());
       dispatch(activityActions.inactiveActivity());
-      localStorage.removeItem("exercise-uuid");
     }
   };
 
@@ -67,37 +72,35 @@ const Timer = () => {
   const handleTimerEnd = async () => {
     const params = {
       userUuid: userData?.uuid,
-      myBuddyUuid: userData?.uuid,
+      uuid: localStorage.getItem("exercise-uuid"),
+      myBuddyUuid: buddy?.uuid,
       action: action,
       actionStatus: "DONE",
       end: new Date(),
     };
     const res = await doneAction(params);
-    console.log("doneAction:: {}", res);
     if (res.status === 200) {
       dispatch(activityActions.inactiveActivity());
       localStorage.removeItem("timeLeft");
       localStorage.removeItem("exercise-uuid");
-      handleExp();
+      // dispatch(actionActions.setActionUuid(""));
+
+      // 경험치, 피로도 업데이트
+      handleUpdateExp();
+      handleUpdateTired();
     }
   };
 
-  const handleExp = async () => {
-    const params = {
-      uuid: userData?.uuid,
-      exp: action === "SHOWER" ? 5 : 0,
-    };
-    const res = await earnExp(params);
-    console.log("earnExp :: {}", res);
+  const handleUpdateExp = async () => {
+    const exp = action === "SHOWER" ? 5 : 0;
+    updateExp(buddy.uuid, exp);
   };
 
-  // 시간 포맷
-  const formatTime = (seconds: number) => {
-    const hours = Math.floor(seconds / 3600);
-    const minutes = Math.floor((seconds % 3600) / 60);
-    const secs = seconds % 60;
-    return `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+  const handleUpdateTired = async () => {
+    const tired = action === "SHOWER" ? -20 : -40;
+    updateTired(buddy.uuid, tired);
   };
+
   return (
     <>
       <Container>
@@ -105,7 +108,7 @@ const Timer = () => {
           <span className="txt">남은시간</span>
           <span className="time">{formatTime(timeLeft)}</span>
         </TimeArea>
-        <CancelBtn onClick={openModal}>운동 취소하기</CancelBtn>
+        <CancelBtn onClick={() => dispatch(modalActions.openModal())}>운동 취소하기</CancelBtn>
       </Container>
       {showModal && (
         <Modal type="confirm" confirmText="확인" handleConfirm={handelCancel}>
@@ -113,7 +116,7 @@ const Timer = () => {
           <div className="content">
             <p>
               지금 취소하면 경험치는 원래 받는 것의 <br />
-              <span style={{ color: theme.color.blue }}>NN%</span>만 얻을 수 있어요
+              <span style={{ color: theme.color.blue }}>0%</span>만 얻을 수 있어요
             </p>
           </div>
         </Modal>

@@ -39,7 +39,7 @@ const SelectBuddy = () => {
   const [isSelected, setIsSelected] = useState(false);
 
   const characters = [
-    { value: "CHICKEN", fileName: "chick_lv_3", bgColor: "#EEF7FF" },
+    { value: "CHICKEN", fileName: "chicken_lv_3", bgColor: "#EEF7FF" },
     { value: "OTTER", fileName: "otter_lv_3", bgColor: "#EEFFF5" },
     { value: "MONSTER", fileName: "monster_lv_3", bgColor: "#FFFDEE" },
   ];
