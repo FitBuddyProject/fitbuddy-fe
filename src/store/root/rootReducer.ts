@@ -1,16 +1,20 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import authSlice from "../slices/auth/auth.slice";
-import headerSlice from "../slices/header";
-import modalSlice from "../slices/modal";
-import activitySlice from "../slices/activity";
+
+import headerSlice from "store/slices/header";
+import modalSlice from "store/slices/modal";
+
+import authSlice from "store/slices/auth/auth.slice";
 import buddySlice from "store/slices/buddy/buddy.slice";
+import activitySlice from "store/slices/activity";
+import levelSlice from "store/slices/level";
 
 const rootReducer = combineReducers({
-  auth: authSlice,
-  buddy: buddySlice,
   header: headerSlice,
   modal: modalSlice,
+  auth: authSlice,
+  buddy: buddySlice,
   activity: activitySlice,
+  level: levelSlice,
 });
 
 export default rootReducer;

@@ -80,7 +80,7 @@ const LoginPage = () => {
         const { headers, data } = userRes;
         setAuthorizationHeader(headers.authorization);
         localStorage.setItem("authToken", headers.authorization);
-        
+
         dispatch(authActions.loginRequestSuccess(data));
         navigate("/");
       } else {

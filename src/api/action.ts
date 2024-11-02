@@ -20,7 +20,6 @@ export const getHistories = async (payload: any) => {
 
 // 캘린더
 export const getCalendar = async (payload: {year: string, month: string, userUuid: string}) => {
-  console.log('payload check:: ', payload)
   return await api.get(`${PREFIX}/calendar?year=${payload?.year}&month=${payload?.month}&userUuid=${payload?.userUuid}`);
 };
 

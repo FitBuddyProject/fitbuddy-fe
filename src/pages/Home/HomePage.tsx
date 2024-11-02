@@ -1,92 +1,103 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { RootState } from "store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { buddyActions } from "store/slices/buddy/buddy.slice";
+import { levelActions } from "store/slices/level";
+import { syncTired } from "api/user";
 
-import { getDetail } from "api/action";
-
-import ActionNav from "components/ActionNav";
-import BuddyComponent from "components/BuddyComponent";
 import ProgressBar from "components/ProgressBar";
 import Timer from "components/Timer";
+import ActionNav from "components/ActionNav";
+import BuddyComponent from "components/BuddyComponent";
 import WorkoutForm from "components/WorkoutForm";
+import CalendarComponent from "components/CalendarComponent";
 
 import styled from "styled-components";
 import { theme } from "styles/theme";
-import { getBuddies } from "api/buddy";
-import { useSelector } from "react-redux";
-import { RootState } from "store/store";
-import { buddyActions } from "store/slices/buddy/buddy.slice";
-import CalendarComponent from "components/CalendarComponent";
-import { syncTired } from "api/user";
+import { getBuddies, getOneBuddy } from "api/buddy";
 
 const Home = () => {
   const dispatch = useDispatch();
   const { userData } = useSelector((state: RootState) => state.auth);
   const { buddy } = useSelector((state: RootState) => state.buddy);
+  const { level, currentEXP, requiredEXP } = useSelector((state: RootState) => state.level);
   const { isActive } = useSelector((state: RootState) => state.activity);
   const [character, setCharacter] = useState("");
-  const [name, setName] = useState("");
-  const [level, setLevel] = useState(0);
+  const progressPercentage = (currentEXP / requiredEXP) * 100;
 
-  const fetchDetail = async () => {
-    const res = await getDetail({ uuid: userData?.uuid });
-    console.log("fetchDetail :: {}", res);
+  // 버디 가져오기
+  const fetchBuddies = async () => {
+    if (!userData) return;
+    const res = await getBuddies({ uuid: userData.uuid });
+    console.log("fetchBuddies :: {}", res);
+    if (res.status === 200) {
+      dispatch(buddyActions.getBuddiesSuccess(res.data));
+    } else {
+      dispatch(buddyActions.getBuddiesError());
+    }
   };
+
+  // 경험치, 캐릭터 세팅
+  useEffect(() => {
+    if (!buddy) return;
+    setCharacter(`${buddy.buddy.toLowerCase()}_lv_1`);
+    dispatch(levelActions.setEXP({ exp: buddy.exp }));
+  }, [buddy]);
+
+  const resetTiredIfNeeded = () => {
+    if (!userData) return;
+
+    //  exerciseCount: 0,
+    //     showerCount: 0,
+    //     talkCount: 0,
+    //     petCount: 0,
+    if (userData.lastResetDate) {
+      const updatedData = { ...userData, tired: 0, lastResetDate: new Date().toISOString() };
+      localStorage.setItem("userData", JSON.stringify(updatedData));
+    } else {
+      const lastResetDate = new Date(userData.lastResetDate);
+      const now = new Date();
+
+      // 00시가 지났는지 확인
+      if (
+        now.getDate() !== lastResetDate.getDate() ||
+        now.getMonth() !== lastResetDate.getMonth() ||
+        now.getFullYear() !== lastResetDate.getFullYear()
+      ) {
+        // 피로도 리셋
+        const updatedData = { ...userData, tired: 0, lastResetDate: now.toISOString() };
+        localStorage.setItem("userData", JSON.stringify(updatedData));
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchBuddies();
+    resetTiredIfNeeded();
+  }, []);
 
   useEffect(() => {
     if (!userData) return;
-
-    const fetchBuddies = async () => {
-      const res = await getBuddies({ uuid: userData.uuid });
-      console.log("fetchBuddies :: {}", res);
-
-      if (res.status === 200) {
-        dispatch(buddyActions.getBuddiesSuccess(res.data));
-      } else {
-        dispatch(buddyActions.getBuddiesError());
-      }
+    const getBuddy = async () => {
+      const res = await getOneBuddy({ uuid: userData.uuid });
+      console.log("getOneBuddy :: {]", res);
     };
-
-    fetchBuddies();
-    fetchDetail();
-  }, [userData]);
-
-  const getFileName = () => {
-    let type = "";
-    switch (buddy.buddy) {
-      case "CHICKEN":
-        type = "chick";
-        break;
-      case "OTTER":
-        type = "otter";
-        break;
-      case "MONSTER":
-        type = "monster";
-        break;
-    }
-    setCharacter(`${type}_lv_1`);
-  };
-
-  useEffect(() => {
-    if (!buddy) return;
-    getFileName();
-
-    setName(buddy.name);
-    setLevel(buddy.exp);
-  }, [buddy]);
+    getBuddy();
+  }, []);
 
   return (
     <MainContainer>
       {/* 게이지 영역 */}
       <GaugeArea>
-        <ProgressBar label={`레벨${level}`} value={1} color={theme.color.primary} />
-        <ProgressBar label="피로도" value={1} color={theme.color.error} />
+        <ProgressBar label={`레벨${level}`} value={Math.round(progressPercentage)} color={theme.color.primary} />
+        <ProgressBar label="피로도" value={userData ? userData.tired : 0} color={theme.color.error} />
       </GaugeArea>
 
       {/* 운동 시간 영역 */}
       {isActive && <Timer />}
 
       {/* 캐릭터 영역 */}
-      <BuddyComponent fileName={character} level={level} name={name} />
+      <BuddyComponent fileName={character} level={level} name={buddy ? buddy.name : ""} />
 
       <BottomArea>
         {/* 행동 영역 */}

@@ -1,23 +1,30 @@
 import { Suspense } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { modalActions } from "store/slices/modal";
 import { Canvas } from "@react-three/fiber";
 import { Html, useProgress } from "@react-three/drei";
+import { RootState } from "store/store";
+import { levelActions } from "store/slices/level";
+
+import styled from "styled-components";
+import { theme } from "styles/theme";
 
 import Character from "./Character";
 import LightController from "./controls/LightController";
 import CustomOrbitControls from "./controls/CustomOrbitControls";
-
-import styled from "styled-components";
-import { theme } from "styles/theme";
+import { authActions } from "store/slices/auth/auth.slice";
+import { earnExp } from "api/buddy";
+import { syncTired } from "api/user";
 
 function Loader() {
   const { progress } = useProgress();
   return <Html center>{progress} % loaded</Html>;
 }
 
-const BuddyComponent = ({ fileName = "chick_lv_1", isComponent = false, isShowLabel = true, level = 1, name = "" }) => {
+const BuddyComponent = ({ fileName, isComponent = false, isShowLabel = true, level = 1, name = "" }) => {
   const dispatch = useDispatch();
+  const { userData } = useSelector((state: RootState) => state.auth);
+  const { buddy } = useSelector((state: RootState) => state.buddy);
 
   const handlePet = () => {
     if (isComponent) return;
@@ -27,6 +34,34 @@ const BuddyComponent = ({ fileName = "chick_lv_1", isComponent = false, isShowLa
         subContent: `피로도 -25 경험치 +5`,
       })
     );
+    updateExp();
+    updateTired();
+  };
+
+  // 경험치 업데이트
+  const updateExp = async () => {
+    const exp = 5;
+    const params = { uuid: buddy.uuid, exp };
+    const res = await earnExp(params);
+    dispatch(levelActions.gainXP({ exp }));
+    console.log("earnExp :: {}", res);
+  };
+
+ // 피로도 업데이트
+  const updateTired = async () => {
+    if (!userData) return;
+    const tired = 25;
+    const params = { uuid: buddy.uuid, tired };
+    const res = await syncTired(params);
+    console.log("handleTired :: {}", res);
+
+    // tired 값 증가
+     const updatedTired = Math.max(0, Math.min(userData.tired + 1, 100));
+    const updatedData = { ...userData, tired: updatedTired };
+
+    // 변경된 데이터 다시 localStorage에 저장
+    localStorage.setItem("userData", JSON.stringify(updatedData));
+    dispatch(authActions.setUserData(updatedData));
   };
 
   return (

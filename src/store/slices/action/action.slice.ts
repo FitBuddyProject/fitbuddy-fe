@@ -9,51 +9,24 @@ interface BuddyState {
   isLoading: boolean;
   data: any;
   error: AxiosError | null;
+  actionUuid: string;
+  historyList: any;
 }
 
 const initialState: BuddyState = {
   isLoading: false,
   data: null,
   error: null,
+  actionUuid: "",
+  historyList: [],
 };
 
 const ActionSlice = createSlice({
   name: "action",
   initialState,
   reducers: {
-    getHistories: (state) => {
-      state.isLoading = true;
-    },
-    getHistoriesSuccess: (state, { payload }) => {
-      state.data = payload;
-      state.isLoading = false;
-    },
-    getHistoriesFailed: (state, { payload }) => {
-      state.error = payload;
-      state.isLoading = false;
-    },
-    getCalendar: (state) => {
-      state.isLoading = true;
-    },
-    getCalendarSuccess: (state, { payload }) => {
-      state.data = payload;
-      state.isLoading = false;
-    },
-    getCalendarFailed: (state, { payload }) => {
-      state.error = payload;
-      state.isLoading = false;
-    },
-    startAction: (state, { payload }) => {
-      state.data = payload;
-      state.isLoading = false;
-    },
-    startActionSuccess: (state, { payload }) => {
-      state.data = payload;
-      state.isLoading = false;
-    },
-    startActionFailed: (state, { payload }) => {
-      state.error = payload;
-      state.isLoading = false;
+    setActionUuid: (state, { payload }) => {
+      state.actionUuid = payload;
     },
   },
 });

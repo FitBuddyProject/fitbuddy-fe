@@ -23,7 +23,7 @@ export const signup = async (payload: any) => {
 };
 
 export const syncPushToken = async (payload: any) => {
-  return await api.patch(`${PREFIX}/sync/push-token`);
+  return await api.patch(`${PREFIX}/sync/push-token`, payload);
 };
 
 export const syncTired = async (payload: any) => {

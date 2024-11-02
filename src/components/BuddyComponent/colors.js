@@ -35,9 +35,9 @@ const monsterColors = {
 };
 
 export const colorMapping = {
-  chick_lv_1: [chickColors.egg, chickColors.beak, chickColors.body, chickColors.eye],
-  chick_lv_2: [chickColors.beak, chickColors.body, chickColors.eye],
-  chick_lv_3: [
+  chicken_lv_1: [chickColors.egg, chickColors.beak, chickColors.body, chickColors.eye],
+  chicken_lv_2: [chickColors.beak, chickColors.body, chickColors.eye],
+  chicken_lv_3: [
     chickColors.ribbon,
     chickColors.ribbon,
     chickColors.ribbon,
