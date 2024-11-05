@@ -79,9 +79,9 @@ const LoginPage = () => {
   return (
     <main>
       {loginStep !== 1 ? (
-        <VerifyVerification onSubmit={handleSubmit(3)} verifyCode={verifyCode} />
-      ) : (
         <ReceiveVerification onSubmit={(payload) => handleSubmitPhone(payload)} />
+      ) : (
+        <VerifyVerification onSubmit={handleSubmit(3)} verifyCode={verifyCode} />
       )}
     </main>
   );
