@@ -21,7 +21,7 @@ const Home = () => {
   const { userData } = useSelector((state: RootState) => state.auth);
   const { buddy } = useSelector((state: RootState) => state.buddy);
   const { level, currentEXP, requiredEXP } = useSelector((state: RootState) => state.level);
-  const { isActive } = useSelector((state: RootState) => state.activity);
+  const { isActive } = useSelector((state: RootState) => state.action);
   const [character, setCharacter] = useState("");
   const progressPercentage = (currentEXP / requiredEXP) * 100;
 

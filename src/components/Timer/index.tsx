@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "store/store";
 import { modalActions } from "store/slices/modal";
-import { activityActions } from "store/slices/activity";
 import { actionActions } from "store/slices/action/action.slice";
 import { cancelAction, doneAction } from "api/action";
 import useUpdateUserData from "hooks/useUpdateUserData";
@@ -16,7 +15,7 @@ const Timer = () => {
   const { showModal } = useSelector((state: RootState) => state.modal);
   const { userData } = useSelector((state: RootState) => state.auth);
   const { buddy } = useSelector((state: RootState) => state.buddy);
-  const { action, isActive } = useSelector((state: RootState) => state.activity);
+  const { isActive, action, actionUuid } = useSelector((state: RootState) => state.action);
   const [timeLeft, setTimeLeft] = useState<number>(() => {
     const savedTime = localStorage.getItem("timeLeft");
     return savedTime ? parseInt(savedTime, 10) : 0;
@@ -53,7 +52,7 @@ const Timer = () => {
   const handelCancel = async () => {
     const params = {
       userUuid: userData?.uuid,
-      uuid: localStorage.getItem("exercise-uuid"),
+      uuid: actionUuid,
       myBuddyUuid: buddy?.uuid,
       action: action,
       actionStatus: "CANCEL",
@@ -61,10 +60,8 @@ const Timer = () => {
     };
     const res = await cancelAction(params);
     if (res.status === 200) {
-      localStorage.removeItem("exercise-uuid");
-      // dispatch(actionActions.setActionUuid(""));
       dispatch(modalActions.closeModal());
-      dispatch(activityActions.inactiveActivity());
+      dispatch(actionActions.inactiveActivity());
     }
   };
 
@@ -72,7 +69,7 @@ const Timer = () => {
   const handleTimerEnd = async () => {
     const params = {
       userUuid: userData?.uuid,
-      uuid: localStorage.getItem("exercise-uuid"),
+      uuid: actionUuid,
       myBuddyUuid: buddy?.uuid,
       action: action,
       actionStatus: "DONE",
@@ -80,10 +77,8 @@ const Timer = () => {
     };
     const res = await doneAction(params);
     if (res.status === 200) {
-      dispatch(activityActions.inactiveActivity());
       localStorage.removeItem("timeLeft");
-      localStorage.removeItem("exercise-uuid");
-      // dispatch(actionActions.setActionUuid(""));
+      dispatch(actionActions.inactiveActivity());
 
       // 경험치, 피로도 업데이트
       handleUpdateExp();
@@ -92,12 +87,21 @@ const Timer = () => {
   };
 
   const handleUpdateExp = async () => {
-    const exp = action === "SHOWER" ? 5 : 0;
-    updateExp(buddy.uuid, exp);
+    if (action !== "SLEEP") {
+      const exp = action === "EXERCISE" ? 25 : 5;
+      updateExp(buddy.uuid, exp);
+    }
   };
 
   const handleUpdateTired = async () => {
-    const tired = action === "SHOWER" ? -20 : -40;
+    let tired = 0;
+    if (action === "EXERCISE") {
+      tired = 60;
+    } else if (action === "SHOWER") {
+      tired = -20;
+    } else if (action === "SLEEP") {
+      tired = -40;
+    }
     updateTired(buddy.uuid, tired);
   };
 

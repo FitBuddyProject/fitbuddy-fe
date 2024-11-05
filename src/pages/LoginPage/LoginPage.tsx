@@ -1,17 +1,14 @@
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store/store";
-import { authActions } from "../../store/slices/auth/auth.slice";
-import { useEffect, useMemo, Fragment, useState } from "react";
-import { Button } from "components/common/Button";
-import { headerActions } from "../../store/slices/header";
-import ReceiveVerification from "../../components/ReceiveVerification/ReceiveVerification";
-import VerifyVerification from "../../components/VerifyVerification/VerifyVerification";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import main from "../../../.storybook/main";
-import { signin, verifyPhone } from "../../api/user";
-// import { UserResponseDTO } from "../../types/user.types";
-import { AxiosResponse } from "axios";
-import api, { setAuthorizationHeader } from "../../api/api";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "store/store";
+import { authActions } from "store/slices/auth/auth.slice";
+import { headerActions } from "store/slices/header";
+import { setAuthorizationHeader } from "api/api";
+import { signin, verifyPhone } from "api/user";
+
+import ReceiveVerification from "components/ReceiveVerification/ReceiveVerification";
+import VerifyVerification from "components/VerifyVerification/VerifyVerification";
 
 const LoginPage = () => {
   const dispatch = useDispatch();
@@ -23,46 +20,23 @@ const LoginPage = () => {
   const [statePhone, setStatePhone] = useState<string>("");
 
   useEffect(() => {
-    console.log("change in userData:: ", userData);
-  }, [userData]);
-
-  useEffect(() => {
     dispatch(headerActions.setTitle("회원가입/로그인"));
   }, [dispatch]);
 
   useEffect(() => {
     if (userData) {
-      console.log("user data added:: ", userData);
-      localStorage.setItem("userData", JSON.stringify(userData));
+      // 행동 카운트 변수 추가
+      const updatedData = { ...userData, exerciseCount: 0, showerCount: 0, talkCount: 0, sleepCount: 0, petCount: 0 };
+      localStorage.setItem("userData", JSON.stringify(updatedData));
     } else {
       console.log("there is no user data");
     }
   }, [userData]);
 
-  const isLogin = useMemo(() => {
-    return !!(userData && Object.entries(userData)?.length > 0);
-  }, [userData]);
-
-  const handleClickLogin = () => {
-    const payload = {
-      id: "hello@world.com",
-      pw: "1234",
-    };
-    dispatch(authActions?.loginRequest(payload));
-  };
-  const handleClickLogout = () => {
-    dispatch(authActions?.logout());
-  };
-
   const validAccount = async () => {
     // validation (인증번호)
     try {
-      const params = {
-        phone: statePhone,
-      };
-      const userRes = await signin(params);
-      // dispatch(authActions?.loginRequest(params));
-      console.log("verifyPhone::: ", userRes);
+      const userRes = await signin({ phone: statePhone });
       return userRes;
     } catch (e) {
       return false;
@@ -105,9 +79,9 @@ const LoginPage = () => {
   return (
     <main>
       {loginStep !== 1 ? (
-        <ReceiveVerification onSubmit={(payload) => handleSubmitPhone(payload)} />
-      ) : (
         <VerifyVerification onSubmit={handleSubmit(3)} verifyCode={verifyCode} />
+      ) : (
+        <ReceiveVerification onSubmit={(payload) => handleSubmitPhone(payload)} />
       )}
     </main>
   );

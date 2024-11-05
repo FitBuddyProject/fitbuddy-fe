@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store/store";
-import { activityActions } from "store/slices/activity";
 import { actionActions } from "store/slices/action/action.slice";
 
 import { startAction } from "api/action";
@@ -13,15 +12,16 @@ const ActionNav = () => {
   const dispatch = useDispatch();
   const { userData } = useSelector((state: RootState) => state.auth);
   const { buddy } = useSelector((state: RootState) => state.buddy);
-  const { updateExp, updateTired } = useUpdateUserData(userData);
+  const { updateExp, updateTired, updateActionCount } = useUpdateUserData(userData);
 
   // 운동하기는 운동일지 작성 폼 작성 먼저 작성
   const handleExerciseAction = () => {
-    dispatch(activityActions.showWorkoutForm({ isShowForm: true }));
+    dispatch(actionActions.showWorkoutForm({ isShowForm: true }));
   };
 
   // 대화하기
   const handleTalkAction = () => {
+    if (userData && userData?.talkCount > 2) return;
     handleStartAction("TALK");
     updateExp(buddy.uuid, 5);
     updateTired(buddy.uuid, 25);
@@ -32,15 +32,18 @@ const ActionNav = () => {
     let timeLeft = 0;
     if (value === "SHOWER") {
       timeLeft = 30;
+      if (userData && userData?.showerCount > 1) return;
     } else {
       timeLeft = 120;
+      if (userData && userData?.sleepCount > 1) return;
     }
     localStorage.setItem("timeLeft", (timeLeft * 60).toString());
-    dispatch(activityActions.activeActivity({ action: value }));
     handleStartAction(value);
   };
 
+  // 행동 시작
   const handleStartAction = async (action: string) => {
+    updateActionCount(action);
     const params = {
       userUuid: userData?.uuid,
       myBuddyUuid: buddy.uuid,
@@ -49,9 +52,8 @@ const ActionNav = () => {
       start: new Date(),
     };
     const res = await startAction(params);
-    if (res.status === 200) {
-      localStorage.setItem("exercise-uuid", res.data);
-      // dispatch(actionActions.setActionUuid(res.data));
+    if (res.status === 200 && action !== "TALK") {
+      dispatch(actionActions.activeActivity({ action: action, actionUuid: res.data }));
     }
   };
 
