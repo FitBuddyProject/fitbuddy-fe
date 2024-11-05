@@ -12,7 +12,6 @@ const useUpdateUserData = (userData: any) => {
     const params = { uuid, exp };
     const res = await earnExp(params);
     dispatch(levelActions.gainXP({ exp }));
-    console.log("earnExp :: {}", res);
   };
 
   // 피로도 업데이트
@@ -20,7 +19,6 @@ const useUpdateUserData = (userData: any) => {
     if (!userData) return;
     const params = { uuid, tired };
     const res = await syncTired(params);
-    console.log("handleTired :: {}", res);
 
     // tired 값 증가
     const updatedTired = Math.max(0, Math.min(userData.tired + 1, 100));
@@ -34,15 +32,15 @@ const useUpdateUserData = (userData: any) => {
   const updateActionCount = (type: string) => {
     let updatedData = { ...userData };
     if (type === "EXERCISE") {
-      userData = { ...userData, exerciseCount: userData.exerciseCount + 1 };
+      userData = { ...userData, exerciseCount: userData.exerciseCount ? userData.exerciseCount + 1 : 1 };
     } else if (type === "SHOWER") {
-      userData = { ...userData, exerciseCount: userData.showerCount + 1 };
+      userData = { ...userData, showerCount: userData.showerCount ? userData.showerCount + 1 : 1 };
     } else if (type === "TALK") {
-      userData = { ...userData, exerciseCount: userData.talkCount + 1 };
+      userData = { ...userData, talkCount: userData.talkCount ? userData.talkCount + 1 : 1 };
     } else if (type === "SLEEP") {
-      userData = { ...userData, exerciseCount: userData.sleepCount + 1 };
+      userData = { ...userData, sleepCount: userData.sleepCount ? userData.sleepCount + 1 : 1 };
     } else if (type === "PET") {
-      userData = { ...userData, exerciseCount: userData.petCount + 1 };
+      userData = { ...userData, petCount: userData.petCount ? userData.petCount + 1 : 1 };
     }
     localStorage.setItem("userData", JSON.stringify(updatedData));
     dispatch(authActions.setUserData(updatedData));

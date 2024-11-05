@@ -58,23 +58,12 @@ const MyPage = () => {
     dispatch(modalActions.openModal());
   };
 
-  // const handleIDInput = (event: any) => {
-  //     const { value } = event?.target;
-  //     setIdInput(value);
-  // };
-  //
-  // const handlePWInput = (event: any) => {
-  //     const { value } = event?.target;
-  //     setPwInput(value);
-  // };
-
   const logout = () => {
-    console.log("logging out");
     dispatch(modalActions.closeModal());
     dispatch(authActions?.logout());
     localStorage.removeItem("autoToken");
     localStorage.removeItem("userData");
-    navigate("/login");
+    navigate("/intro");
   };
 
   const login = () => {

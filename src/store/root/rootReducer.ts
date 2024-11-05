@@ -5,7 +5,7 @@ import modalSlice from "store/slices/modal";
 
 import authSlice from "store/slices/auth/auth.slice";
 import buddySlice from "store/slices/buddy/buddy.slice";
-import activitySlice from "store/slices/activity";
+import actionSlice from "store/slices/action/action.slice";
 import levelSlice from "store/slices/level";
 
 const rootReducer = combineReducers({
@@ -13,7 +13,7 @@ const rootReducer = combineReducers({
   modal: modalSlice,
   auth: authSlice,
   buddy: buddySlice,
-  activity: activitySlice,
+  action: actionSlice,
   level: levelSlice,
 });
 

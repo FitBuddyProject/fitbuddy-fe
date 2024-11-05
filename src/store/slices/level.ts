@@ -52,11 +52,6 @@ const levelSlice = createSlice({
         if (newLevel === 3) state.requiredEXP = 500;
       }
     },
-    resetXP: (state) => {
-      state.level = 0;
-      state.currentEXP = 0;
-      state.requiredEXP = 30;
-    },
   },
 });
 

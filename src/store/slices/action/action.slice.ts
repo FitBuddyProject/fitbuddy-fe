@@ -3,30 +3,44 @@
  */
 
 import { createSlice } from "@reduxjs/toolkit";
-import { AxiosError } from "axios";
 
 interface BuddyState {
-  isLoading: boolean;
-  data: any;
-  error: AxiosError | null;
+  isActive: boolean;
+  isShowForm: boolean;
+  isModify: boolean;
+  action: string; // 진행 중인 행동
   actionUuid: string;
-  historyList: any;
 }
 
 const initialState: BuddyState = {
-  isLoading: false,
-  data: null,
-  error: null,
+  isActive: false,
+  isShowForm: false,
+  isModify: false,
+  action: "",
   actionUuid: "",
-  historyList: [],
 };
 
 const ActionSlice = createSlice({
   name: "action",
   initialState,
   reducers: {
-    setActionUuid: (state, { payload }) => {
-      state.actionUuid = payload;
+    // 행동 시작
+    activeActivity(state, { payload }) {
+      state.isActive = true;
+      state.action = payload.action;
+      state.actionUuid = payload.actionUuid;
+    },
+    // 행동 취소/종료
+    inactiveActivity(state) {
+      state.isActive = false;
+      state.action = "";
+      state.actionUuid = "";
+    },
+    showWorkoutForm(state, { payload }) {
+      state.isShowForm = payload.isShowForm;
+    },
+    isWorkoutFormModify(state, { payload }) {
+      state.isModify = payload.isModify;
     },
   },
 });
