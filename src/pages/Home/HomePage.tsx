@@ -3,7 +3,6 @@ import { RootState } from "store/store";
 import { useDispatch, useSelector } from "react-redux";
 import { buddyActions } from "store/slices/buddy/buddy.slice";
 import { levelActions } from "store/slices/level";
-import { syncTired } from "api/user";
 
 import ProgressBar from "components/ProgressBar";
 import Timer from "components/Timer";
@@ -14,7 +13,8 @@ import CalendarComponent from "components/CalendarComponent";
 
 import styled from "styled-components";
 import { theme } from "styles/theme";
-import { getBuddies, getOneBuddy } from "api/buddy";
+import { getBuddies } from "api/buddy";
+import { authActions } from "store/slices/auth/auth.slice";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -29,7 +29,6 @@ const Home = () => {
   const fetchBuddies = async () => {
     if (!userData) return;
     const res = await getBuddies({ uuid: userData.uuid });
-    console.log("fetchBuddies :: {}", res);
     if (res.status === 200) {
       dispatch(buddyActions.getBuddiesSuccess(res.data));
     } else {
@@ -40,17 +39,13 @@ const Home = () => {
   // 경험치, 캐릭터 세팅
   useEffect(() => {
     if (!buddy) return;
-    setCharacter(`${buddy.buddy.toLowerCase()}_lv_1`);
+    setCharacter(`${buddy.buddy.toLowerCase()}_lv_${level}`);
     dispatch(levelActions.setEXP({ exp: buddy.exp }));
-  }, [buddy]);
+  }, [buddy, character, level]);
 
   const resetTiredIfNeeded = () => {
     if (!userData) return;
 
-    //  exerciseCount: 0,
-    //     showerCount: 0,
-    //     talkCount: 0,
-    //     petCount: 0,
     if (userData.lastResetDate) {
       const updatedData = { ...userData, tired: 0, lastResetDate: new Date().toISOString() };
       localStorage.setItem("userData", JSON.stringify(updatedData));
@@ -65,8 +60,18 @@ const Home = () => {
         now.getFullYear() !== lastResetDate.getFullYear()
       ) {
         // 피로도 리셋
-        const updatedData = { ...userData, tired: 0, lastResetDate: now.toISOString() };
+        const updatedData = {
+          ...userData,
+          lastResetDate: now.toISOString(),
+          tired: 0,
+          exerciseCount: 0,
+          showerCount: 0,
+          sleepCount: 0,
+          talkCount: 0,
+          petCount: 0,
+        };
         localStorage.setItem("userData", JSON.stringify(updatedData));
+        dispatch(authActions.setUserData(updatedData));
       }
     }
   };
@@ -74,15 +79,6 @@ const Home = () => {
   useEffect(() => {
     fetchBuddies();
     resetTiredIfNeeded();
-  }, []);
-
-  useEffect(() => {
-    if (!userData) return;
-    const getBuddy = async () => {
-      const res = await getOneBuddy({ uuid: userData.uuid });
-      console.log("getOneBuddy :: {]", res);
-    };
-    getBuddy();
   }, []);
 
   return (

@@ -17,11 +17,16 @@ const useUpdateUserData = (userData: any) => {
   // 피로도 업데이트
   const updateTired = async (uuid: string, tired: number) => {
     if (!userData) return;
-    const params = { uuid, tired };
+
+    let sumTired = tired + userData.tired;
+    // 기존 피로도보다 업데이트 될 피로도가 낮을 경우 피로도 0
+    if (sumTired <= 0) sumTired = 0;
+
+    const params = { uuid, tired: sumTired };
     const res = await syncTired(params);
 
     // tired 값 증가
-    const updatedTired = Math.max(0, Math.min(userData.tired + 1, 100));
+    const updatedTired = Math.max(0, Math.min(sumTired, 100));
     const updatedData = { ...userData, tired: updatedTired };
 
     // 변경된 데이터 다시 localStorage에 저장

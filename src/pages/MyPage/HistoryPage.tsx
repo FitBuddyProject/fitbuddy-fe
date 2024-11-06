@@ -9,7 +9,6 @@ import { getHistories } from "api/action";
 import { RootState } from "store/store";
 import dayjs from "dayjs";
 import { EmptyData } from "components/EmptyData";
-import { actionActions } from "store/slices/action/action.slice";
 
 interface HistoryListProps {
   id: number;
@@ -67,10 +66,11 @@ const HistoryPage = () => {
   };
 
   const fetchHistory = async () => {
+    const now = new Date();
     const params = {
       uuid: userData?.uuid,
-      year: 2024,
-      month: 10,
+      year: now.getFullYear(),
+      month: now.getMonth(),
     };
     const res = await getHistories(params);
     if (res.status === 200) {
