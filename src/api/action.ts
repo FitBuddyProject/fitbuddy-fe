@@ -6,7 +6,6 @@ import api from "./api";
 
 const PREFIX = "/v1/action";
 
-
 // 상세
 export const getDetail = async (payload: any) => {
   return await api.get(`${PREFIX}/${payload.uuid}`);
@@ -19,8 +18,10 @@ export const getHistories = async (payload: any) => {
 };
 
 // 캘린더
-export const getCalendar = async (payload: {year: string, month: string, userUuid: string}) => {
-  return await api.get(`${PREFIX}/calendar?year=${payload?.year}&month=${payload?.month}&userUuid=${payload?.userUuid}`);
+export const getCalendar = async (payload: { year: string; month: string; userUuid: string }) => {
+  return await api.get(
+    `${PREFIX}/calendar?year=${payload?.year}&month=${payload?.month}&userUuid=${payload?.userUuid}`
+  );
 };
 
 // 액션/운동 시작
@@ -30,7 +31,7 @@ export const startAction = async (payload: any) => {
 
 // 액션/운동 취소
 export const cancelAction = async (payload: any) => {
-  return await api.delete(`${PREFIX}/cancel`, {data: payload});
+  return await api.delete(`${PREFIX}/cancel`, { data: payload });
 };
 
 // 액션/운동 종료

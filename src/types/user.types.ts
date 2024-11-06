@@ -9,10 +9,10 @@ export interface UserDTO {
   joinDate: Date;
   lastModifiedDate: Date;
   lastSignInDate: Date;
-  lastResetDate: Date;
+  lastResetDate: string;
   tired: number;
   name: string;
-  
+
   // 하루 행동 개수 저장
   exerciseCount: number;
   showerCount: number;
