@@ -1,6 +1,5 @@
 import { RootState } from "store/store";
 import { useDispatch, useSelector } from "react-redux";
-import { activityActions } from "store/slices/activity";
 
 import { Button } from "components/common/Button/index";
 import Icon from "components/common/Icon/Icon";
@@ -26,6 +25,8 @@ import styled from "styled-components";
 import { debounce } from "lodash";
 import { stat } from "fs";
 import { startAction } from "api/action";
+import { actionActions } from "store/slices/action/action.slice";
+import useUpdateUserData from "hooks/useUpdateUserData";
 
 export interface WorkoutOptionProps {
   label: string;
@@ -46,34 +47,18 @@ const workoutOptions: WorkoutOptionProps[] = [
   { label: "+ 추가하기", value: "ADD" },
 ];
 
-const Levels = [
-  {
-    label: "상",
-    value: "STRONG",
-  },
-  {
-    label: "중",
-    value: "MEDIUM",
-  },
-  {
-    label: "하",
-    value: "WEAK",
-  },
-];
-
 const initForm = {
   time: "60",
   level: "high",
   workoutName: "",
-  contents: ""
-}
+  contents: "",
+};
 
 const WorkoutForm = () => {
   const dispatch = useDispatch();
   const { userData } = useSelector((state: RootState) => state.auth);
-  const isShowForm = useSelector((state: RootState) => state.activity.isShowForm);
-  const isFormModify = useSelector((state: RootState) => state.activity.isModify);
-  const formRef = useRef<null | HTMLFormElement>(null);
+  const { isShowForm } = useSelector((state: RootState) => state.action);
+  const { updateActionCount } = useUpdateUserData(userData);
 
   const [workoutName, setWorkoutName] = useState(initForm.workoutName);
   const [time, setTime] = useState(initForm.time);
@@ -83,48 +68,44 @@ const WorkoutForm = () => {
   const [selected, setSelected] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-
   const clearInputs = () => {
-    console.log("clear")
     setContents(initForm.contents);
     setLevel(initForm.level);
     setTime(initForm.time);
     setWorkoutName(initForm.workoutName);
-  }
+  };
 
   // 운동하기 폼 닫기
   const handleClose = () => {
     clearInputs();
-    dispatch(activityActions.showWorkoutForm({ isShowForm: false }));
-    dispatch(activityActions?.isWorkoutFormModify({isModify: false}));
+    dispatch(actionActions.showWorkoutForm({ isShowForm: false }));
+    dispatch(actionActions?.isWorkoutFormModify({ isModify: false }));
   };
 
   // 기록 완료 저장
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    if (userData && userData.exerciseCount > 1) return;
     e.preventDefault();
-    if (formRef.current) {
-      const formData = new FormData(formRef.current);
-      const params = {
-        userUuid: userData?.uuid,
-        myBuddyUuid: userData?.uuid,
-        action: "EXERCISE",
-        actionStatus: "ON_GOING",
-        start: new Date(),
-        athlete: {
-          exerciseType: formData.get("name") as string,
-          duration: formData.get("time") as string,
-          intensity: formData.get("level") as string,
-          diary: formData.get("contents") as string,
-        },
-      };
+    const params = {
+      userUuid: userData?.uuid,
+      myBuddyUuid: userData?.uuid,
+      action: "EXERCISE",
+      actionStatus: "ON_GOING",
+      start: new Date(),
+      athlete: {
+        exerciseType: workoutName,
+        duration: time,
+        intensity: level,
+        diary: contents,
+      },
+    };
 
-      const res = await startAction(params);
-      if (res.status === 200) {
-        dispatch(activityActions.showWorkoutForm({ isShowForm: false }));
-        dispatch(activityActions.activeActivity({ action: "EXERCISE" }));
-        localStorage.setItem("timeLeft", (60 * 60).toString());
-        localStorage.setItem('exercise-uuid', res.data);
-      }
+    const res = await startAction(params);
+    if (res.status === 200) {
+      dispatch(actionActions.showWorkoutForm({ isShowForm: false }));
+      dispatch(actionActions.activeActivity({ action: "EXERCISE", actionUuid: res.data }));
+      updateActionCount("EXERCISE");
+      localStorage.setItem("timeLeft", (parseInt(time) * 60).toString());
     }
   };
 
@@ -170,7 +151,7 @@ const WorkoutForm = () => {
           </button>
         </TopArea>
         {/*  운동이름 */}
-        <FormContainer onSubmit={handleSubmit} ref={formRef}>
+        <FormContainer onSubmit={handleSubmit}>
           <WorkoutCategory>
             <Label>운동이름</Label>
             <WorkoutRadioGroup>

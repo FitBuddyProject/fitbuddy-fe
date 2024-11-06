@@ -66,10 +66,11 @@ const HistoryPage = () => {
   };
 
   const fetchHistory = async () => {
+    const now = new Date();
     const params = {
       uuid: userData?.uuid,
-      year: 2024,
-      month: 10,
+      year: now.getFullYear(),
+      month: now.getMonth(),
     };
     const res = await getHistories(params);
     if (res.status === 200) {

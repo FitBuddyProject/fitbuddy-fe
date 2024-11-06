@@ -8,37 +8,8 @@ import { call, put, takeLatest } from "redux-saga/effects";
 import * as actionAPI from "api/action";
 import { actionActions } from "./action.slice";
 
-function* getHistories(action: PayloadAction<any>) {
-  try {
-    const response: AxiosResponse<any> = yield call(actionAPI.getHistories, action.payload);
-    yield put(actionActions.getHistoriesSuccess(response.data));
-  } catch (error: any) {
-    yield put(actionActions.getHistoriesFailed(error.message));
-  }
-}
-
-function* getCalendar(action: PayloadAction<any>) {
-  try {
-    const response: AxiosResponse<any> = yield call(actionAPI.getCalendar,  action.payload);
-    yield put(actionActions.getCalendarSuccess(response.data));
-  } catch (error: any) {
-    yield put(actionActions.getCalendarFailed(error.message));
-  }
-}
-
-function* startAction(action: PayloadAction<any>) {
-  try {
-    const response: AxiosResponse<any> = yield call(actionAPI.startAction, action.payload);
-    yield put(actionActions.startActionSuccess(response.data));
-  } catch (error: any) {
-    yield put(actionActions.startActionFailed(error.message));
-  }
-}
-
 function* actionSaga() {
-  yield takeLatest(actionActions.getHistories.type, getHistories);
-  yield takeLatest(actionActions.getCalendar.type, getCalendar);
-  yield takeLatest(actionActions.startAction.type, startAction);
+  // yield takeLatest(actionActions.getHistories.type, getHistories);
 }
 
 export default actionSaga;

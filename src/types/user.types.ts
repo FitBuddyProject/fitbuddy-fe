@@ -1,34 +1,44 @@
 export interface UserDTO {
-    uuid: string;
-    phone: string;
-    nickname: string;
-    email: string;
-    refreshToken: string;
-    pushToken: string;
-    sendable: boolean;
-    joinDate: Date;
-    lastModifiedDate: Date;
-    lastSignInDate: Date;
+  uuid: string;
+  phone: string;
+  nickname: string;
+  email: string;
+  refreshToken: string;
+  pushToken: string;
+  sendable: boolean;
+  joinDate: Date;
+  lastModifiedDate: Date;
+  lastSignInDate: Date;
+  lastResetDate: string;
+  tired: number;
+  name: string;
 
-
-    name: string;
+  // 하루 행동 개수 저장
+  exerciseCount: number;
+  showerCount: number;
+  talkCount: number;
+  sleepCount: number;
+  petCount: number;
 }
 
-
-
-
 export interface UserResponseDTO {
-    buddies: any[] | null;  // 타입이 명확하지 않으므로 임시로 any[]로 설정
-    email: string | null;
-    id: string;
-    joinDate: string;  // ISO 형식의 문자열
-    lastModifiedDate: string;  // ISO 형식의 문자열
-    lastSignInDate: string | null;
-    new: boolean;
-    nickname: string;
-    phone: string;
-    pushToken: string | null;
-    sendable: boolean;
-    tired: number;
-    uuid: string;
+  buddies: any[] | null; // 타입이 명확하지 않으므로 임시로 any[]로 설정
+  email: string | null;
+  id: string;
+  joinDate: string; // ISO 형식의 문자열
+  lastModifiedDate: string; // ISO 형식의 문자열
+  lastSignInDate: string | null;
+  lastResetDate: string; // ISO 형식의 문자열
+  new: boolean;
+  nickname: string;
+  phone: string;
+  pushToken: string | null;
+  sendable: boolean;
+  tired: number;
+  uuid: string;
+  exerciseCount: 0;
+  showerCount: 0;
+  talkCount: 0;
+  sleepCount: 0;
+  petCount: 0;
 }

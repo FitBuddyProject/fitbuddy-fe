@@ -1,10 +1,14 @@
 /**
  * @description call action api
  */
-
 import api from "./api";
 
 const PREFIX = "/v1/buddy";
+
+// 내 버디 가져오기 (단일)
+export const getOneBuddy = async ({ uuid }: { uuid: string }) => {
+  return await api.get(`${PREFIX}/one/${uuid}`);
+};
 
 // 내 버디 리스트
 export const getBuddies = async ({ uuid }: { uuid: string }) => {
@@ -23,7 +27,7 @@ export const getDictionary = async ({ uuid }: { uuid: string }) => {
 
 // 메인 버디 변경
 export const changeBuddy = async (payload: any) => {
-  return await api.patch(`${PREFIX}/see-ya`);
+  return await api.patch(`${PREFIX}/see-ya`, payload);
 };
 
 // 경험치 조정

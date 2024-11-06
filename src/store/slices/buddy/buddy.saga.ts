@@ -7,6 +7,7 @@ import { buddyActions } from "./buddy.slice";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { call, put, takeLatest } from "redux-saga/effects";
 import * as buddyAPI from "api/buddy";
+import gainXP from "./buddy.slice";
 
 function* getBuddiesSaga(action: PayloadAction<any>) {
   try {
@@ -15,6 +16,10 @@ function* getBuddiesSaga(action: PayloadAction<any>) {
   } catch (error: any) {
     yield put(buddyActions.getBuddiesError(error.message));
   }
+}
+
+function* handleGainXP(action: ReturnType<typeof gainXP>) {
+  // const { level, curruentXP } = action.payload;
 }
 
 // Watcher saga: 특정 액션을 감시하고

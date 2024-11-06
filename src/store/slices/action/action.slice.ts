@@ -3,57 +3,44 @@
  */
 
 import { createSlice } from "@reduxjs/toolkit";
-import { AxiosError } from "axios";
 
 interface BuddyState {
-  isLoading: boolean;
-  data: any;
-  error: AxiosError | null;
+  isActive: boolean;
+  isShowForm: boolean;
+  isModify: boolean;
+  action: string; // 진행 중인 행동
+  actionUuid: string;
 }
 
 const initialState: BuddyState = {
-  isLoading: false,
-  data: null,
-  error: null,
+  isActive: false,
+  isShowForm: false,
+  isModify: false,
+  action: "",
+  actionUuid: "",
 };
 
 const ActionSlice = createSlice({
   name: "action",
   initialState,
   reducers: {
-    getHistories: (state) => {
-      state.isLoading = true;
+    // 행동 시작
+    activeActivity(state, { payload }) {
+      state.isActive = true;
+      state.action = payload.action;
+      state.actionUuid = payload.actionUuid;
     },
-    getHistoriesSuccess: (state, { payload }) => {
-      state.data = payload;
-      state.isLoading = false;
+    // 행동 취소/종료
+    inactiveActivity(state) {
+      state.isActive = false;
+      state.action = "";
+      state.actionUuid = "";
     },
-    getHistoriesFailed: (state, { payload }) => {
-      state.error = payload;
-      state.isLoading = false;
+    showWorkoutForm(state, { payload }) {
+      state.isShowForm = payload.isShowForm;
     },
-    getCalendar: (state) => {
-      state.isLoading = true;
-    },
-    getCalendarSuccess: (state, { payload }) => {
-      state.data = payload;
-      state.isLoading = false;
-    },
-    getCalendarFailed: (state, { payload }) => {
-      state.error = payload;
-      state.isLoading = false;
-    },
-    startAction: (state, { payload }) => {
-      state.data = payload;
-      state.isLoading = false;
-    },
-    startActionSuccess: (state, { payload }) => {
-      state.data = payload;
-      state.isLoading = false;
-    },
-    startActionFailed: (state, { payload }) => {
-      state.error = payload;
-      state.isLoading = false;
+    isWorkoutFormModify(state, { payload }) {
+      state.isModify = payload.isModify;
     },
   },
 });

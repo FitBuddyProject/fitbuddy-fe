@@ -1,32 +1,42 @@
 import { Suspense } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { modalActions } from "store/slices/modal";
 import { Canvas } from "@react-three/fiber";
 import { Html, useProgress } from "@react-three/drei";
-
-import Character from "./Character";
-import LightController from "./controls/LightController";
-import CustomOrbitControls from "./controls/CustomOrbitControls";
+import useUpdateUserData from "hooks/useUpdateUserData";
 
 import styled from "styled-components";
 import { theme } from "styles/theme";
+import Character from "./Character";
+import LightController from "./controls/LightController";
+import CustomOrbitControls from "./controls/CustomOrbitControls";
 
 function Loader() {
   const { progress } = useProgress();
   return <Html center>{progress} % loaded</Html>;
 }
 
-const BuddyComponent = ({ fileName = "chick_lv_1", isComponent = false, isShowLabel = true, level = 1, name = "" }) => {
+const BuddyComponent = ({ fileName, isComponent = false, isShowLabel = true, level = 1, name = "" }) => {
   const dispatch = useDispatch();
+  const { userData } = useSelector((state) => state.auth);
+  const { buddy } = useSelector((state) => state.buddy);
+  const { updateExp, updateTired, updateActionCount } = useUpdateUserData(userData);
 
   const handlePet = () => {
     if (isComponent) return;
     dispatch(
       modalActions.pushNotificationModal({
-        content: `쓰다듬어줘서 고마워요.\n내일 다시 쓰다듬어 주세요.🥰`,
+        content:
+          userData.petCount === 1
+            ? `오늘의 쓰다듬기가 1번 남았어요`
+            : `쓰다듬어줘서 고마워요.\n내일 다시 쓰다듬어 주세요.🥰`,
         subContent: `피로도 -25 경험치 +5`,
       })
     );
+    if (userData.petCount > 2) return;
+    updateExp(buddy.uuid, 5);
+    updateTired(buddy.uuid, 25);
+    updateActionCount("PET");
   };
 
   return (
